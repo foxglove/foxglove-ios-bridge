@@ -41,12 +41,38 @@ func getIPAddress() -> String? {
     return address
 }
 
+extension NWConnection: Hashable, Comparable, Identifiable {
+  public static func < (lhs: NWConnection, rhs: NWConnection) -> Bool {
+    switch (lhs.endpoint, rhs.endpoint) {
+    case (.hostPort(let host1, _), .hostPort(host: let host2, _)):
+      return host1.debugDescription < host2.debugDescription
+
+    default:
+      return ObjectIdentifier(lhs) < ObjectIdentifier(rhs)
+    }
+  }
+
+  public static func == (lhs: NWConnection, rhs: NWConnection) -> Bool {
+    return lhs === rhs
+  }
+
+  public func hash(into hasher: inout Hasher) {
+    ObjectIdentifier(self).hash(into: &hasher)
+  }
+
+  public var id: ObjectIdentifier {
+    return ObjectIdentifier(self)
+  }
+}
+
 class Server: ObservableObject {
   let queue = DispatchQueue(label: "ServerQueue")
 
   let address = getIPAddress() ?? "<no address>"
 
   @MainActor @Published var port: NWEndpoint.Port?
+
+  @MainActor @Published var clients: [NWConnection: NWConnection.State] = [:]
 
   init() {
     do {
@@ -68,17 +94,30 @@ class Server: ObservableObject {
         guard let self else { return }
         print("New conn: \(newConnection)")
 
+        Task { @MainActor in
+          self.clients[newConnection] = newConnection.state
+        }
+
         func receive() {
           newConnection.receiveMessage { data, context, isComplete, error in
             if let data, let context {
-              print("Got message: \(data), \(isComplete), \(error)")
-
+              self.handleClientMessage(data, context, isComplete, error)
               receive()
             }
           }
 
           newConnection.stateUpdateHandler = { state in
             print("connection state \(state)")
+
+            Task { @MainActor in
+              if case .failed(_) = newConnection.state {
+                self.clients[newConnection] = nil
+              } else if newConnection.state == .cancelled {
+                self.clients[newConnection] = nil
+              } else {
+                self.clients[newConnection] = newConnection.state
+              }
+            }
           }
         }
         receive()
@@ -91,6 +130,9 @@ class Server: ObservableObject {
     } catch let error {
       print("Error \(error)")
     }
+  }
+
+  func handleClientMessage(_ data: Data, _ context: NWConnection.ContentContext, _ isComplete: Bool, _ error: NWError?) {
   }
 }
 
@@ -106,6 +148,9 @@ struct ContentView: View {
       Text("Hello, world!")
       if let port = server.port {
         Text("Listening on \(server.address):\(port.debugDescription)")
+      }
+      ForEach(server.clients.keys.sorted()) { client in
+        Text("\(client.endpoint.debugDescription): \(String(describing: client.state))")
       }
     }
     .padding()
