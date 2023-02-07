@@ -10,7 +10,8 @@
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF080B2992D8A70082E9A0 /* ContentView.swift */; };
 		16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EF080D2992D8A90082E9A0 /* Assets.xcassets */; };
-		16EF08112992D8A90082E9A0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EF08102992D8A90082E9A0 /* Preview Assets.xcassets */; };
+		16EF08182993021C0082E9A0 /* getIPAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08172993021C0082E9A0 /* getIPAddress.swift */; };
+		16EF081A299302570082E9A0 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0819299302570082E9A0 /* Server.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,7 +19,8 @@
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		16EF080B2992D8A70082E9A0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		16EF080D2992D8A90082E9A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		16EF08102992D8A90082E9A0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		16EF08172993021C0082E9A0 /* getIPAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getIPAddress.swift; sourceTree = "<group>"; };
+		16EF0819299302570082E9A0 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,20 +53,13 @@
 		16EF08082992D8A70082E9A0 /* Foxglove Bridge */ = {
 			isa = PBXGroup;
 			children = (
+				16EF080D2992D8A90082E9A0 /* Assets.xcassets */,
 				16EF08092992D8A70082E9A0 /* App.swift */,
 				16EF080B2992D8A70082E9A0 /* ContentView.swift */,
-				16EF080D2992D8A90082E9A0 /* Assets.xcassets */,
-				16EF080F2992D8A90082E9A0 /* Preview Content */,
+				16EF08172993021C0082E9A0 /* getIPAddress.swift */,
+				16EF0819299302570082E9A0 /* Server.swift */,
 			);
 			path = "Foxglove Bridge";
-			sourceTree = "<group>";
-		};
-		16EF080F2992D8A90082E9A0 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				16EF08102992D8A90082E9A0 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,7 +120,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16EF08112992D8A90082E9A0 /* Preview Assets.xcassets in Resources */,
 				16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,7 +131,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16EF08182993021C0082E9A0 /* getIPAddress.swift in Sources */,
 				16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */,
+				16EF081A299302570082E9A0 /* Server.swift in Sources */,
 				16EF080A2992D8A70082E9A0 /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,7 +262,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Foxglove Bridge/Preview Content\"";
 				DEVELOPMENT_TEAM = 6BXC9YWCQ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -295,7 +290,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Foxglove Bridge/Preview Content\"";
 				DEVELOPMENT_TEAM = 6BXC9YWCQ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
