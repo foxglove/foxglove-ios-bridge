@@ -330,18 +330,28 @@ struct ContentView: View {
   @StateObject var server = Server()
 
   var body: some View {
-    VStack {
-      Image(systemName: "network")
-        .imageScale(.large)
-        .foregroundColor(.accentColor)
-      if let port = server.port {
-        Text("Listening on \(server.address):\(port.debugDescription)")
+    NavigationView {
+      VStack {
+        List {
+          if let port = server.port {
+            Section {
+              Text("Listening on \(server.address):\(port.debugDescription)")
+            } header: {
+              Text("Server")
+            }
+          }
+          Section {
+            ForEach(server.clients.keys.sorted()) { client in
+              Text("\(client.endpoint.debugDescription): \(String(describing: client.state))")
+            }
+          } header: {
+            Text("Clients")
+          }
+        }
+        .listStyle(.insetGrouped)
       }
-      ForEach(server.clients.keys.sorted()) { client in
-        Text("\(client.endpoint.debugDescription): \(String(describing: client.state))")
-      }
+      .navigationTitle(Text("WebSocket demo"))
     }
-    .padding()
   }
 }
 
