@@ -7,6 +7,8 @@ import CoreMotion
 struct ContentView: View {
   @StateObject var server = Server()
 
+  @State var sendPose = true
+
   var body: some View {
     NavigationView {
       VStack {
@@ -14,6 +16,15 @@ struct ContentView: View {
           if let port = server.port {
             Section {
               Text("Listening on \(server.address):\(port.debugDescription)")
+              Toggle(isOn: $sendPose) {
+                Text("Pose")
+              }.onChange(of: sendPose) { newValue in
+                if newValue {
+                  server.startPoseUpdates()
+                } else {
+                  server.stopPoseUpdates()
+                }
+              }
             } header: {
               Text("Server")
             }

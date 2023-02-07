@@ -102,22 +102,30 @@ class Server: ObservableObject {
         receive()
 
         newConnection.start(queue: self.queue)
+
+        self.startPoseUpdates()
       }
       listener.start(queue: queue)
 
 //      self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
 //        self.broadcastData()
 //      }
-      motionManager.deviceMotionUpdateInterval = 0.02
-      motionManager.startDeviceMotionUpdates(to: .main) { motion, error in
-        if let motion {
-          self.broadcastData(motion: motion)
-        }
-      }
 
     } catch let error {
       print("Error \(error)")
     }
+  }
+
+  func startPoseUpdates() {
+    motionManager.deviceMotionUpdateInterval = 0.02
+    motionManager.startDeviceMotionUpdates(to: .main) { motion, error in
+      if let motion {
+        self.broadcastPose(motion: motion)
+      }
+    }
+  }
+  func stopPoseUpdates() {
+    motionManager.stopDeviceMotionUpdates()
   }
 
   static let binaryMessage = NWConnection.ContentContext(identifier: "", metadata: [
@@ -228,7 +236,7 @@ class Server: ObservableObject {
     ], to: connection)
   }
 
-  func broadcastData(motion: CMDeviceMotion) {
+  func broadcastPose(motion: CMDeviceMotion) {
     var data = Data()
     data.append(0x01) // opcode
     var subId = UInt32(0).littleEndian
