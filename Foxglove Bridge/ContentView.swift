@@ -69,6 +69,7 @@ class Server: ObservableObject {
   let queue = DispatchQueue(label: "ServerQueue")
 
   let address = getIPAddress() ?? "<no address>"
+  var timer: Timer?
 
   @MainActor @Published var port: NWEndpoint.Port?
 
@@ -79,9 +80,20 @@ class Server: ObservableObject {
       let params = NWParameters(tls: nil)
 //      params.includePeerToPeer = true
       print(params.defaultProtocolStack.applicationProtocols)
-      params.defaultProtocolStack.applicationProtocols.append(NWProtocolWebSocket.Options())
 
-      let listener = try NWListener(using: params)
+      let opts = NWProtocolWebSocket.Options()
+//      opts.setSubprotocols(["foxglove.websocket.v1"])
+      opts.setClientRequestHandler(queue) { subprotocols, additionalHeaders in
+        let subproto = "foxglove.websocket.v1"
+        if subprotocols.contains(subproto) {
+          return NWProtocolWebSocket.Response(status: .accept, subprotocol: subproto)
+        } else {
+          return NWProtocolWebSocket.Response(status: .reject, subprotocol: nil)
+        }
+      }
+      params.defaultProtocolStack.applicationProtocols.append(opts)
+
+      let listener = try NWListener(using: params, on: 62338)
       listener.stateUpdateHandler = { newState in
         if let port = listener.port {
           print("Listening on \(self.address):\(port)")
@@ -109,6 +121,10 @@ class Server: ObservableObject {
           newConnection.stateUpdateHandler = { state in
             print("connection state \(state)")
 
+            if newConnection.state == .ready {
+              self.sendInfo(newConnection)
+            }
+
             Task { @MainActor in
               if case .failed(_) = newConnection.state {
                 self.clients[newConnection] = nil
@@ -122,17 +138,89 @@ class Server: ObservableObject {
         }
         receive()
 
-
         newConnection.start(queue: self.queue)
       }
       listener.start(queue: queue)
+
+      self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+        self.broadcastData()
+      }
 
     } catch let error {
       print("Error \(error)")
     }
   }
 
+  static let binaryMessage = NWConnection.ContentContext(identifier: "", metadata: [
+    NWProtocolWebSocket.Metadata(opcode: .binary),
+  ])
+  static let jsonMessage = NWConnection.ContentContext(identifier: "", metadata: [
+    NWProtocolWebSocket.Metadata(opcode: .text),
+  ])
+
+  func sendInfo(_ connection: NWConnection) {
+    try! sendJson([
+      "op": "serverInfo",
+      "name": "iOS Foxglove Bridge",
+      "capabilities": [],
+      "metadata": [:],
+    ], to: connection)
+
+    try! sendJson([
+      "op": "advertise",
+      "channels": [
+        [
+          "id": 1,
+          "topic": "demo",
+          "encoding": "json",
+          "schemaName": "ExampleMsg",
+          "schema": #"{"type":"object","properties":{"data":{"type":"number"}}}"#,
+        ],
+      ],
+    ], to: connection)
+  }
+
+  func broadcastData() {
+    var data = Data()
+    data.append(0x01) // opcode
+    var subId = UInt32(0).littleEndian
+    withUnsafeBytes(of: &subId) { data.append(contentsOf: $0) }
+    var timestamp = UInt64(DispatchTime.now().uptimeNanoseconds).littleEndian
+    withUnsafeBytes(of: &timestamp) { data.append(contentsOf: $0) }
+    data.append(try! JSONSerialization.data(withJSONObject: ["data": 42]))
+    let constData = data
+
+    Task { @MainActor in
+      for conn in self.clients.keys {
+        try! sendBinary(constData, to: conn)
+      }
+    }
+  }
+
+  func sendJson(_ obj: Any, to connection: NWConnection) throws {
+    let data = try JSONSerialization.data(withJSONObject: obj)
+
+    connection.send(content: data, contentContext: Self.jsonMessage, completion: .contentProcessed({ error in
+      if let error {
+        print("send error: \(error)")
+      }
+    }))
+  }
+
+  func sendBinary(_ data: Data, to connection: NWConnection) throws {
+    connection.send(content: data, contentContext: Self.binaryMessage, completion: .contentProcessed({ error in
+      if let error {
+        print("send error: \(error)")
+      }
+    }))
+  }
+
   func handleClientMessage(_ data: Data, _ context: NWConnection.ContentContext, _ isComplete: Bool, _ error: NWError?) {
+    if let obj = try? JSONSerialization.jsonObject(with: data) {
+      print("Got client message: \(obj)")
+    } else {
+      print("Got client message: data \(data)")
+    }
   }
 }
 
@@ -142,10 +230,9 @@ struct ContentView: View {
 
   var body: some View {
     VStack {
-      Image(systemName: "globe")
+      Image(systemName: "network")
         .imageScale(.large)
         .foregroundColor(.accentColor)
-      Text("Hello, world!")
       if let port = server.port {
         Text("Listening on \(server.address):\(port.debugDescription)")
       }
