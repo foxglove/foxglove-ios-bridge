@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1640D46C29945B7200C0D669 /* getCPUUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D46B29945B7200C0D669 /* getCPUUsage.swift */; };
 		169393CD2994522B00A78475 /* LocationFix.bin in Resources */ = {isa = PBXBuildFile; fileRef = 169393CC2994522A00A78475 /* LocationFix.bin */; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF080B2992D8A70082E9A0 /* ContentView.swift */; };
@@ -55,6 +56,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1640D46B29945B7200C0D669 /* getCPUUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getCPUUsage.swift; sourceTree = "<group>"; };
 		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
 		16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				16EF08092992D8A70082E9A0 /* App.swift */,
 				16EF080B2992D8A70082E9A0 /* ContentView.swift */,
 				16EF08172993021C0082E9A0 /* getIPAddress.swift */,
+				1640D46B29945B7200C0D669 /* getCPUUsage.swift */,
 				16EF0819299302570082E9A0 /* FoxgloveServer.swift */,
 				16EF081B299363840082E9A0 /* schemas.swift */,
 				16EF081D2993777F0082E9A0 /* Server.swift */,
@@ -300,6 +303,7 @@
 				16EF0851299406BB0082E9A0 /* LinePrimitive.pb.swift in Sources */,
 				16EF0850299406BB0082E9A0 /* LaserScan.pb.swift in Sources */,
 				16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */,
+				1640D46C29945B7200C0D669 /* getCPUUsage.swift in Sources */,
 				16EF0867299406BB0082E9A0 /* Point2.pb.swift in Sources */,
 				16EF084C299406BB0082E9A0 /* Color.pb.swift in Sources */,
 				16EF0864299406BB0082E9A0 /* CylinderPrimitive.pb.swift in Sources */,

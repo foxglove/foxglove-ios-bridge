@@ -67,6 +67,7 @@ struct ContentView: View {
 
                 // TODO: Memory usage
                 Toggle(isOn: $server.sendMemory ) { Text("Memory") }
+                  .disabled(true)
 
                 Picker(
                   selection: $server.activeCamera,

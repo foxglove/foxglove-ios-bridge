@@ -72,6 +72,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   let poseChannel: ChannelID
   let cameraChannel: ChannelID
   let locationChannel: ChannelID
+  let cpuChannel: ChannelID
 
   @Published var droppedVideoFrames = 0
 
@@ -105,6 +106,16 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
 
+  @Published var sendCPU = true {
+    didSet {
+      if sendCPU {
+        startCPUUpdates()
+      } else {
+        stopCPUUpdates()
+      }
+    }
+  }
+
   @Published var activeCamera: Camera = .back {
     didSet {
       print("set active camera \(activeCamera)")
@@ -112,7 +123,6 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
   @Published var sendGPS = false
-  @Published var sendCPU = false
   @Published var sendMemory = false
 
   @Published var port: NWEndpoint.Port?
@@ -120,6 +130,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     print(server.clientEndpointNames)
     return server.clientEndpointNames
   }
+
+  var cpuTimer: Timer?
 
   override init() {
     poseChannel = server.addChannel(
@@ -140,10 +152,51 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       schemaName: Foxglove_LocationFix.protoMessageName,
       schema: try! Data(contentsOf: Bundle.main.url(forResource: "LocationFix", withExtension: "bin")!).base64EncodedString()
     )
+    cpuChannel = server.addChannel(topic: "cpu", encoding: "json", schemaName: "CPU", schema:
+#"""
+{
+  "type":"object",
+  "properties":{
+    "user":{"type":"number"},
+    "system":{"type":"number"},
+    "idle":{"type":"number"},
+    "nice":{"type":"number"}
+  }
+}
+"""#)
     super.init()
     server.$port.assign(to: \.port, on: self).store(in: &subscribers)
     server.objectWillChange.sink { [weak self] in self?.objectWillChange.send() }.store(in: &subscribers)
     startPoseUpdates()
+    startCPUUpdates()
+  }
+
+  func startCPUUpdates() {
+    cpuTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
+      guard let usage = getCPUUsage() else { return }
+
+      let total = usage.cpu_ticks.0 + usage.cpu_ticks.1 + usage.cpu_ticks.2 + usage.cpu_ticks.3
+      let userPct = Double(usage.cpu_ticks.0) / Double(total)
+      let systemPct = Double(usage.cpu_ticks.1) / Double(total)
+      let idlePct = Double(usage.cpu_ticks.2) / Double(total)
+      let nicePct = Double(usage.cpu_ticks.3) / Double(total)
+
+      let data = try! JSONSerialization.data(withJSONObject: [
+        "user": userPct,
+        "system": systemPct,
+        "idle": idlePct,
+        "nice": nicePct,
+      ], options: .sortedKeys)
+
+      Task { @MainActor in
+        self.server.sendMessage(on: self.cpuChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+      }
+    }
+  }
+
+  func stopCPUUpdates() {
+    cpuTimer?.invalidate()
+    cpuTimer = nil
   }
 
 
@@ -176,7 +229,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 
   nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-    print("got location authorization: \(CLLocationManager.authorizationStatus())")
+    print("got location authorization: \(manager.authorizationStatus)")
     manager.startUpdatingLocation()
   }
 
