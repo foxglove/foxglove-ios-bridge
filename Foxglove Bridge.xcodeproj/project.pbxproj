@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		169393CD2994522B00A78475 /* LocationFix.bin in Resources */ = {isa = PBXBuildFile; fileRef = 169393CC2994522A00A78475 /* LocationFix.bin */; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF080B2992D8A70082E9A0 /* ContentView.swift */; };
 		16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EF080D2992D8A90082E9A0 /* Assets.xcassets */; };
@@ -54,6 +55,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
 		16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		16EF080B2992D8A70082E9A0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				16EF087129940C160082E9A0 /* CompressedImage.bin */,
+				169393CC2994522A00A78475 /* LocationFix.bin */,
 			);
 			path = bin;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 			files = (
 				16EF087229940C160082E9A0 /* CompressedImage.bin in Resources */,
 				16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */,
+				169393CD2994522B00A78475 /* LocationFix.bin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,7 +454,10 @@
 				DEVELOPMENT_TEAM = 6BXC9YWCQ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera images can be streamed over the WebSocket.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS location can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -478,7 +485,10 @@
 				DEVELOPMENT_TEAM = 6BXC9YWCQ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera images can be streamed over the WebSocket.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS location can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

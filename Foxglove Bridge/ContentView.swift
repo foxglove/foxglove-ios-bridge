@@ -20,9 +20,7 @@ struct ContentView: View {
 
             Section {
               Toggle(isOn: $server.sendPose) { Text("Pose") }
-
-              // TODO: GPS @jtbandes
-              Toggle(isOn: $server.sendGPS ) { Text("GPS") }
+              Toggle(isOn: $server.sendLocation) { Text("GPS") }
 
               // TODO: CPU usage
               Toggle(isOn: $server.sendCPU ) { Text("CPU") }

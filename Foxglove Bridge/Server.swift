@@ -3,6 +3,7 @@ import CoreMotion
 import AVFoundation
 import Combine
 import Network
+import CoreLocation
 
 enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
   case back
@@ -57,18 +58,20 @@ func configureInputs(in session: AVCaptureSession, for camera: Camera) throws {
 }
 
 @MainActor
-class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDelegate {
+class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDelegate, CLLocationManagerDelegate {
   let videoQueue = DispatchQueue(label: "VideoQueue")
   let address = getIPAddress() ?? "<no address>"
 
   let server = FoxgloveServer()
 
   let motionManager = CMMotionManager()
+  let locationManager = CLLocationManager()
   var captureSession: AVCaptureSession?
   var subscribers: [AnyCancellable] = []
 
   let poseChannel: ChannelID
   let cameraChannel: ChannelID
+  let locationChannel: ChannelID
 
   @Published var droppedVideoFrames = 0
 
@@ -92,6 +95,16 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
 
+  @Published var sendLocation = false {
+    didSet {
+      if sendLocation {
+        startLocationUpdates()
+      } else {
+        stopLocationUpdates()
+      }
+    }
+  }
+
   @Published var activeCamera: Camera = .back {
     didSet {
       print("set active camera \(activeCamera)")
@@ -111,12 +124,46 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   override init() {
     poseChannel = server.addChannel(topic: "pose", encoding: "json", schemaName: "foxglove.PoseInFrame", schema: poseInFrameSchema)
     cameraChannel = server.addChannel(topic: "camera", encoding: "protobuf", schemaName: Foxglove_CompressedImage.protoMessageName, schema: try! Data(contentsOf: Bundle.main.url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString())
+    locationChannel = server.addChannel(topic: "gps", encoding: "protobuf", schemaName: Foxglove_LocationFix.protoMessageName, schema: try! Data(contentsOf: Bundle.main.url(forResource: "LocationFix", withExtension: "bin")!).base64EncodedString())
     super.init()
     server.$port.assign(to: \.port, on: self).store(in: &subscribers)
     server.objectWillChange.sink { [weak self] in self?.objectWillChange.send() }.store(in: &subscribers)
     startPoseUpdates()
   }
 
+
+  func startLocationUpdates() {
+    locationManager.delegate = self
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    locationManager.requestWhenInUseAuthorization()
+    if locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedAlways {
+      locationManager.startUpdatingLocation()
+    }
+  }
+
+  func stopLocationUpdates() {
+    locationManager.stopUpdatingLocation()
+  }
+
+  nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    guard let location: CLLocation = locations.last else { return }
+
+    var msg = Foxglove_LocationFix()
+    msg.latitude = location.coordinate.latitude
+    msg.longitude = location.coordinate.longitude
+    msg.altitude = location.altitude
+
+    let data = try! msg.serializedData()
+
+    Task { @MainActor in
+      server.sendMessage(on: locationChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+    }
+  }
+
+  nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    print("got location authorization: \(CLLocationManager.authorizationStatus())")
+    manager.startUpdatingLocation()
+  }
 
   func startPoseUpdates() {
     motionManager.deviceMotionUpdateInterval = 0.02
