@@ -43,7 +43,8 @@ struct ContentView: View {
                 }
               }
               .pickerStyle(InlinePickerStyle())
-              if server.sendRearCamera {
+
+              if server.sendCamera {
                 Text("Dropped frames: \(server.droppedVideoFrames)")
               }
             } header: { Text("Topics") }
