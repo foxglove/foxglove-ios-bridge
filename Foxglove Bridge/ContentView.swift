@@ -40,10 +40,12 @@ struct ContentView: View {
                   ForEach(Camera.allCases) {
                     Text($0.description)
                   }
-                  Text("Dropped frames: \(server.droppedVideoFrames)")
                 }
               }
               .pickerStyle(InlinePickerStyle())
+              if server.sendRearCamera {
+                Text("Dropped frames: \(server.droppedVideoFrames)")
+              }
             } header: { Text("Topics") }
           }
           Section {
