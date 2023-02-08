@@ -30,12 +30,22 @@ struct ContentView: View {
                   Chart(server.cpuHistory) {
                     LineMark(
                       x: .value("Time", $0.date),
-                      y: .value("Usage", 1 - $0.idle)
+                      y: .value("Usage", $0.usage)
                     )
                   }
                   .frame(height: 60)
-                  .chartXAxis(Visibility.hidden)
+                  .chartXAxis(.hidden)
                   .padding([.bottom, .top], 5)
+                  .chartYAxis {
+                     AxisMarks {
+                         AxisGridLine()
+                         AxisTick()
+                         let value = $0.as(Double.self)!
+                         AxisValueLabel {
+                             Text("\(Int(value * 100))%")
+                         }
+                     }
+                  }
                 }
 
                 // TODO: Memory usage

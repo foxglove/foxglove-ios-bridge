@@ -6,19 +6,12 @@ import Network
 import CoreLocation
 
 struct CPUUsage: Encodable, Identifiable {
-  let user: Double
-  let system: Double
-  let idle: Double
-  let nice: Double
-
-  let date = Date.now
+  let usage: Double
+  let date: Date
   let id = UUID()
 
   enum CodingKeys: String, CodingKey {
-    case user
-    case system
-    case idle
-    case nice
+    case usage
   }
 }
 
@@ -175,10 +168,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 {
   "type":"object",
   "properties":{
-    "user":{"type":"number"},
-    "system":{"type":"number"},
-    "idle":{"type":"number"},
-    "nice":{"type":"number"}
+    "usage":{"type":"number"}
   }
 }
 """#)
@@ -192,14 +182,9 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   func startCPUUpdates() {
     cpuHistory = []
     cpuTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [self] _ in
-      guard let usage = getCPUUsage() else { return }
-
-      let total = usage.cpu_ticks.0 + usage.cpu_ticks.1 + usage.cpu_ticks.2 + usage.cpu_ticks.3
       let cpuUsage = CPUUsage(
-        user: Double(usage.cpu_ticks.0) / Double(total),
-        system: Double(usage.cpu_ticks.1) / Double(total),
-        idle: Double(usage.cpu_ticks.2) / Double(total),
-        nice: Double(usage.cpu_ticks.3) / Double(total)
+        usage: getCPUUsage(),
+        date: .now
       )
       let enc = JSONEncoder()
       enc.outputFormatting = .sortedKeys
