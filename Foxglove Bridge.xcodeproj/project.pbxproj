@@ -13,6 +13,7 @@
 		16EF08182993021C0082E9A0 /* getIPAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08172993021C0082E9A0 /* getIPAddress.swift */; };
 		16EF081A299302570082E9A0 /* FoxgloveServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0819299302570082E9A0 /* FoxgloveServer.swift */; };
 		16EF081C299363840082E9A0 /* schemas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF081B299363840082E9A0 /* schemas.swift */; };
+		16EF081E2993777F0082E9A0 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF081D2993777F0082E9A0 /* Server.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		16EF08172993021C0082E9A0 /* getIPAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getIPAddress.swift; sourceTree = "<group>"; };
 		16EF0819299302570082E9A0 /* FoxgloveServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoxgloveServer.swift; sourceTree = "<group>"; };
 		16EF081B299363840082E9A0 /* schemas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schemas.swift; sourceTree = "<group>"; };
+		16EF081D2993777F0082E9A0 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				16EF08172993021C0082E9A0 /* getIPAddress.swift */,
 				16EF0819299302570082E9A0 /* FoxgloveServer.swift */,
 				16EF081B299363840082E9A0 /* schemas.swift */,
+				16EF081D2993777F0082E9A0 /* Server.swift */,
 			);
 			path = "Foxglove Bridge";
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 				16EF081C299363840082E9A0 /* schemas.swift in Sources */,
 				16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */,
 				16EF081A299302570082E9A0 /* FoxgloveServer.swift in Sources */,
+				16EF081E2993777F0082E9A0 /* Server.swift in Sources */,
 				16EF080A2992D8A70082E9A0 /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,6 +273,7 @@
 				DEVELOPMENT_TEAM = 6BXC9YWCQ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera images can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -296,6 +301,7 @@
 				DEVELOPMENT_TEAM = 6BXC9YWCQ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera images can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
