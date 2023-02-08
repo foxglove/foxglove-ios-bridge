@@ -5,6 +5,23 @@ import Combine
 import Network
 import CoreLocation
 
+struct CPUUsage: Encodable, Identifiable {
+  let user: Double
+  let system: Double
+  let idle: Double
+  let nice: Double
+
+  let date = Date.now
+  let id = UUID()
+
+  enum CodingKeys: String, CodingKey {
+    case user
+    case system
+    case idle
+    case nice
+  }
+}
+
 enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
   case back
   case front
@@ -132,6 +149,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 
   var cpuTimer: Timer?
+  @Published var cpuHistory: [CPUUsage] = []
 
   override init() {
     poseChannel = server.addChannel(
@@ -172,23 +190,26 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 
   func startCPUUpdates() {
-    cpuTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
+    cpuHistory = []
+    cpuTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [self] _ in
       guard let usage = getCPUUsage() else { return }
 
       let total = usage.cpu_ticks.0 + usage.cpu_ticks.1 + usage.cpu_ticks.2 + usage.cpu_ticks.3
-      let userPct = Double(usage.cpu_ticks.0) / Double(total)
-      let systemPct = Double(usage.cpu_ticks.1) / Double(total)
-      let idlePct = Double(usage.cpu_ticks.2) / Double(total)
-      let nicePct = Double(usage.cpu_ticks.3) / Double(total)
-
-      let data = try! JSONSerialization.data(withJSONObject: [
-        "user": userPct,
-        "system": systemPct,
-        "idle": idlePct,
-        "nice": nicePct,
-      ], options: .sortedKeys)
+      let cpuUsage = CPUUsage(
+        user: Double(usage.cpu_ticks.0) / Double(total),
+        system: Double(usage.cpu_ticks.1) / Double(total),
+        idle: Double(usage.cpu_ticks.2) / Double(total),
+        nice: Double(usage.cpu_ticks.3) / Double(total)
+      )
+      let enc = JSONEncoder()
+      enc.outputFormatting = .sortedKeys
+      let data = try! enc.encode(cpuUsage)
 
       Task { @MainActor in
+        self.cpuHistory.append(cpuUsage)
+        if self.cpuHistory.count > 20 {
+          self.cpuHistory.remove(at: 0)
+        }
         self.server.sendMessage(on: self.cpuChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
     }

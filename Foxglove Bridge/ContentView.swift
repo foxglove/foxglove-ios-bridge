@@ -5,33 +5,6 @@ import Charts
 import CoreMotion
 import Combine
 
-struct MonthlyHoursOfSunshine: Identifiable {
-  var id = UUID()
-  var date: Date
-  var hoursOfSunshine: Double
-
-  init(month: Int, hoursOfSunshine: Double) {
-    let calendar = Calendar.autoupdatingCurrent
-    self.date = calendar.date(from: DateComponents(year: 2020, month: month))!
-    self.hoursOfSunshine = hoursOfSunshine
-  }
-}
-
-var data: [MonthlyHoursOfSunshine] = [
-  MonthlyHoursOfSunshine(month: 1, hoursOfSunshine: 0),
-  MonthlyHoursOfSunshine(month: 2, hoursOfSunshine: 10),
-  MonthlyHoursOfSunshine(month: 3, hoursOfSunshine: 20),
-  MonthlyHoursOfSunshine(month: 4, hoursOfSunshine: 30),
-  MonthlyHoursOfSunshine(month: 5, hoursOfSunshine: 40),
-  MonthlyHoursOfSunshine(month: 6, hoursOfSunshine: 30),
-  MonthlyHoursOfSunshine(month: 7, hoursOfSunshine: 50),
-  MonthlyHoursOfSunshine(month: 8, hoursOfSunshine: 60),
-  MonthlyHoursOfSunshine(month: 9, hoursOfSunshine: 30),
-  MonthlyHoursOfSunshine(month: 10, hoursOfSunshine: 20),
-  MonthlyHoursOfSunshine(month: 11, hoursOfSunshine: 10),
-  MonthlyHoursOfSunshine(month: 12, hoursOfSunshine: 40)
-]
-
 struct ContentView: View {
   @StateObject var server = Server()
 
@@ -54,10 +27,10 @@ struct ContentView: View {
                 // TODO: CPU usage
                 Toggle(isOn: $server.sendCPU ) { Text("CPU") }
                 if server.sendCPU {
-                  Chart(data) {
+                  Chart(server.cpuHistory) {
                     LineMark(
-                      x: .value("Month", $0.date),
-                      y: .value("Hours of Sunshine", $0.hoursOfSunshine)
+                      x: .value("Time", $0.date),
+                      y: .value("Usage", 1 - $0.idle)
                     )
                   }
                   .frame(height: 60)
