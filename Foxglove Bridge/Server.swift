@@ -4,6 +4,58 @@ import AVFoundation
 import Combine
 import Network
 
+enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
+  case back
+  case front
+//  case backDepth
+//  case frontDepth
+
+  var description: String {
+    switch self {
+    case .back:
+      return "Back"
+    case .front:
+      return "Front"
+    }
+  }
+
+  var id: Self {
+    return self
+  }
+}
+
+enum ServerError: Error {
+  case noCameraDevice
+}
+
+
+func configureInputs(in session: AVCaptureSession, for camera: Camera) throws {
+  for input in session.inputs {
+    session.removeInput(input)
+  }
+  
+  let device: AVCaptureDevice?
+  switch camera {
+  case .back:
+    device = .default(.builtInWideAngleCamera, for: .video, position: .back)
+  case .front:
+    device = .default(.builtInWideAngleCamera, for: .video, position: .front)
+  }
+
+  guard let device else {
+    throw ServerError.noCameraDevice
+  }
+
+  do {
+    let input = try AVCaptureDeviceInput(device: device)
+    print("ranges: \(input.device.activeFormat.videoSupportedFrameRateRanges)")
+    session.addInput(input)
+//        input.videoMinFrameDurationOverride = CMTime(seconds: 0.1, preferredTimescale: 30)
+  } catch let error {
+    print("failed to create device input: \(error)")
+  }
+}
+
 @MainActor
 class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDelegate {
   let videoQueue = DispatchQueue(label: "VideoQueue")
@@ -30,13 +82,20 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
 
-  @Published var sendRearCamera = false {
+  @Published var sendCamera = false {
     didSet {
-      if sendRearCamera {
+      if sendCamera {
         startCameraUpdates()
       } else {
         stopCameraUpdates()
       }
+    }
+  }
+
+  @Published var activeCamera: Camera = .back {
+    didSet {
+      print("set active camera \(activeCamera)")
+      reconfigureSession()
     }
   }
 
@@ -88,23 +147,17 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   func startCameraUpdates() {
     droppedVideoFrames = 0
+    let activeCamera = self.activeCamera
     
     videoQueue.async {
       let session = AVCaptureSession()
-      guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
-        print("no camera device")
-        return
-      }
       do {
-        let input = try AVCaptureDeviceInput(device: device)
-        print("ranges: \(input.device.activeFormat.videoSupportedFrameRateRanges)")
-        session.addInput(input)
-        session.sessionPreset = .medium
-//        input.videoMinFrameDurationOverride = CMTime(seconds: 0.1, preferredTimescale: 30)
+        try configureInputs(in: session, for: activeCamera)
       } catch let error {
-        print("failed to create device input: \(error)")
-        return
+        print("error starting session: \(error)")
       }
+      session.sessionPreset = .medium
+
       let output = AVCaptureVideoDataOutput()
       output.setSampleBufferDelegate(self, queue: self.videoQueue)
       session.addOutput(output)
@@ -112,6 +165,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       Task { @MainActor in self.captureSession = session }
     }
   }
+
   func stopCameraUpdates() {
     let session = self.captureSession
     DispatchQueue.global(qos: .userInitiated).async {
@@ -119,6 +173,25 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       Task { @MainActor in
         self.captureSession = nil
       }
+    }
+  }
+
+  func reconfigureSession() {
+    guard let session = captureSession else {
+      return
+    }
+    let activeCamera = self.activeCamera
+
+    Task.detached(priority: .userInitiated) {
+      print("changing session")
+
+      session.beginConfiguration()
+      do {
+        try configureInputs(in: session, for: activeCamera)
+      } catch let error {
+        print("error changing session: \(error)")
+      }
+      session.commitConfiguration()
     }
   }
 

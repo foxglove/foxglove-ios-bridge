@@ -8,9 +8,6 @@ struct ContentView: View {
   @StateObject var server = Server()
 
   @State var sendPose = true
-  @State var selectedCamera = 0
-
-  static let cameras = ["Front", "Rear"]
 
   var body: some View {
     NavigationView {
@@ -23,14 +20,16 @@ struct ContentView: View {
 
             Section {
               Toggle(isOn: $server.sendPose) { Text("Pose") }
+
               Picker(
-                selection: $selectedCamera,
-                label: Toggle(isOn: $server.sendRearCamera) {
+                selection: $server.activeCamera,
+                label: Toggle(isOn: $server.sendCamera) {
                   Text("Camera")
-                }) {
-                if server.sendRearCamera {
-                  ForEach(0 ..< Self.cameras.count) {
-                    Text(Self.cameras[$0])
+                }
+              ) {
+                if server.sendCamera {
+                  ForEach(Camera.allCases) {
+                    Text($0.description)
                   }
                   Text("Dropped frames: \(server.droppedVideoFrames)")
                 }

@@ -49,7 +49,7 @@ struct Channel {
   let schema: String
 }
 
-enum ServerError: Error {
+enum FoxgloveServerError: Error {
   case channelDoesNotExist(id: ChannelID)
   case unrecognizedOpcode(_ op: String)
 }
@@ -235,7 +235,7 @@ class FoxgloveServer: ObservableObject {
   @MainActor
   func removeChannel(_ channelID: ChannelID) throws {
     if channels.removeValue(forKey: channelID) == nil {
-      throw ServerError.channelDoesNotExist(id: channelID)
+      throw FoxgloveServerError.channelDoesNotExist(id: channelID)
     }
     for (conn, info) in clients {
       if let subs = info.subscriptionsByChannel[channelID] {
@@ -397,7 +397,7 @@ enum ClientMessage: Decodable {
     case .subscribe: self = .subscribe(try Subscribe(from: decoder))
     case .unsubscribe: self = .unsubscribe(try Unsubscribe(from: decoder))
     case nil:
-      throw ServerError.unrecognizedOpcode(op)
+      throw FoxgloveServerError.unrecognizedOpcode(op)
     }
   }
 }
