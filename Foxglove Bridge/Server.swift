@@ -46,7 +46,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   override init() {
     poseChannel = server.addChannel(topic: "pose", encoding: "json", schemaName: "foxglove.PoseInFrame", schema: poseInFrameSchema)
-    cameraChannel = server.addChannel(topic: "camera", encoding: "json", schemaName: "foxglove.CompressedImage", schema: compressedImageSchema)
+    cameraChannel = server.addChannel(topic: "camera", encoding: "protobuf", schemaName: Foxglove_CompressedImage.protoMessageName, schema: try! Data(contentsOf: Bundle.main.url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString())
     super.init()
     server.$port.assign(to: \.port, on: self).store(in: &subscribers)
     server.objectWillChange.sink { [weak self] in self?.objectWillChange.send() }.store(in: &subscribers)
@@ -95,7 +95,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         let input = try AVCaptureDeviceInput(device: device)
         print("ranges: \(input.device.activeFormat.videoSupportedFrameRateRanges)")
         session.addInput(input)
-        input.videoMinFrameDurationOverride = CMTime(seconds: 0.5, preferredTimescale: 30)
+        input.videoMinFrameDurationOverride = CMTime(seconds: 0.1, preferredTimescale: 30)
       } catch let error {
         print("failed to create device input: \(error)")
         return
@@ -129,15 +129,16 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       return
     }
 
-    let data = try! JSONSerialization.data(withJSONObject: [
-      "timestamp": ["sec":0,"nsec":0],
-      "frame_id": "camera",
-      "format": "jpeg",
-      "data": jpeg.base64EncodedString(),
-    ], options: .sortedKeys)
+    var protoImg = Foxglove_CompressedImage()
+    protoImg.timestamp = .init(date: .now)
+    protoImg.frameID = "camera"
+    protoImg.format = "jpeg"
+    protoImg.data = jpeg
+
+    let serializedProto = try! protoImg.serializedData()
 
     Task { @MainActor in
-      server.sendMessage(on: cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+      server.sendMessage(on: cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: serializedProto)
     }
   }
 }

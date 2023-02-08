@@ -14,6 +14,43 @@
 		16EF081A299302570082E9A0 /* FoxgloveServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0819299302570082E9A0 /* FoxgloveServer.swift */; };
 		16EF081C299363840082E9A0 /* schemas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF081B299363840082E9A0 /* schemas.swift */; };
 		16EF081E2993777F0082E9A0 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF081D2993777F0082E9A0 /* Server.swift */; };
+		16EF0848299406BB0082E9A0 /* PointsAnnotation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0825299406BB0082E9A0 /* PointsAnnotation.pb.swift */; };
+		16EF0849299406BB0082E9A0 /* ImageAnnotations.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0826299406BB0082E9A0 /* ImageAnnotations.pb.swift */; };
+		16EF084A299406BB0082E9A0 /* Vector3.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0827299406BB0082E9A0 /* Vector3.pb.swift */; };
+		16EF084B299406BB0082E9A0 /* Vector2.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0828299406BB0082E9A0 /* Vector2.pb.swift */; };
+		16EF084C299406BB0082E9A0 /* Color.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0829299406BB0082E9A0 /* Color.pb.swift */; };
+		16EF084D299406BB0082E9A0 /* Grid.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF082A299406BB0082E9A0 /* Grid.pb.swift */; };
+		16EF084E299406BB0082E9A0 /* KeyValuePair.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF082B299406BB0082E9A0 /* KeyValuePair.pb.swift */; };
+		16EF084F299406BB0082E9A0 /* PointCloud.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF082C299406BB0082E9A0 /* PointCloud.pb.swift */; };
+		16EF0850299406BB0082E9A0 /* LaserScan.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF082D299406BB0082E9A0 /* LaserScan.pb.swift */; };
+		16EF0851299406BB0082E9A0 /* LinePrimitive.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF082E299406BB0082E9A0 /* LinePrimitive.pb.swift */; };
+		16EF0852299406BB0082E9A0 /* GeoJSON.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF082F299406BB0082E9A0 /* GeoJSON.pb.swift */; };
+		16EF0853299406BB0082E9A0 /* SceneUpdate.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0830299406BB0082E9A0 /* SceneUpdate.pb.swift */; };
+		16EF0854299406BB0082E9A0 /* CompressedImage.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0831299406BB0082E9A0 /* CompressedImage.pb.swift */; };
+		16EF0855299406BB0082E9A0 /* PoseInFrame.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0832299406BB0082E9A0 /* PoseInFrame.pb.swift */; };
+		16EF0856299406BB0082E9A0 /* CameraCalibration.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0833299406BB0082E9A0 /* CameraCalibration.pb.swift */; };
+		16EF0857299406BB0082E9A0 /* SceneEntity.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0834299406BB0082E9A0 /* SceneEntity.pb.swift */; };
+		16EF0858299406BB0082E9A0 /* FrameTransform.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0835299406BB0082E9A0 /* FrameTransform.pb.swift */; };
+		16EF0859299406BB0082E9A0 /* CircleAnnotation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0836299406BB0082E9A0 /* CircleAnnotation.pb.swift */; };
+		16EF085A299406BB0082E9A0 /* TextPrimitive.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0837299406BB0082E9A0 /* TextPrimitive.pb.swift */; };
+		16EF085B299406BB0082E9A0 /* PosesInFrame.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0838299406BB0082E9A0 /* PosesInFrame.pb.swift */; };
+		16EF085C299406BB0082E9A0 /* RawImage.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0839299406BB0082E9A0 /* RawImage.pb.swift */; };
+		16EF085D299406BB0082E9A0 /* SceneEntityDeletion.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF083A299406BB0082E9A0 /* SceneEntityDeletion.pb.swift */; };
+		16EF085E299406BB0082E9A0 /* Quaternion.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF083B299406BB0082E9A0 /* Quaternion.pb.swift */; };
+		16EF085F299406BB0082E9A0 /* Log.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF083C299406BB0082E9A0 /* Log.pb.swift */; };
+		16EF0860299406BB0082E9A0 /* TriangleListPrimitive.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF083D299406BB0082E9A0 /* TriangleListPrimitive.pb.swift */; };
+		16EF0861299406BB0082E9A0 /* CubePrimitive.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF083E299406BB0082E9A0 /* CubePrimitive.pb.swift */; };
+		16EF0862299406BB0082E9A0 /* ModelPrimitive.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF083F299406BB0082E9A0 /* ModelPrimitive.pb.swift */; };
+		16EF0863299406BB0082E9A0 /* PackedElementField.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0840299406BB0082E9A0 /* PackedElementField.pb.swift */; };
+		16EF0864299406BB0082E9A0 /* CylinderPrimitive.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0841299406BB0082E9A0 /* CylinderPrimitive.pb.swift */; };
+		16EF0865299406BB0082E9A0 /* LocationFix.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0842299406BB0082E9A0 /* LocationFix.pb.swift */; };
+		16EF0866299406BB0082E9A0 /* SpherePrimitive.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0843299406BB0082E9A0 /* SpherePrimitive.pb.swift */; };
+		16EF0867299406BB0082E9A0 /* Point2.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0844299406BB0082E9A0 /* Point2.pb.swift */; };
+		16EF0868299406BB0082E9A0 /* Point3.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0845299406BB0082E9A0 /* Point3.pb.swift */; };
+		16EF0869299406BB0082E9A0 /* ArrowPrimitive.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0846299406BB0082E9A0 /* ArrowPrimitive.pb.swift */; };
+		16EF086A299406BB0082E9A0 /* Pose.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0847299406BB0082E9A0 /* Pose.pb.swift */; };
+		16EF086D299408100082E9A0 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 16EF086C299408100082E9A0 /* SwiftProtobuf */; };
+		16EF087229940C160082E9A0 /* CompressedImage.bin in Resources */ = {isa = PBXBuildFile; fileRef = 16EF087129940C160082E9A0 /* CompressedImage.bin */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +62,42 @@
 		16EF0819299302570082E9A0 /* FoxgloveServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoxgloveServer.swift; sourceTree = "<group>"; };
 		16EF081B299363840082E9A0 /* schemas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schemas.swift; sourceTree = "<group>"; };
 		16EF081D2993777F0082E9A0 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		16EF0825299406BB0082E9A0 /* PointsAnnotation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsAnnotation.pb.swift; sourceTree = "<group>"; };
+		16EF0826299406BB0082E9A0 /* ImageAnnotations.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageAnnotations.pb.swift; sourceTree = "<group>"; };
+		16EF0827299406BB0082E9A0 /* Vector3.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.pb.swift; sourceTree = "<group>"; };
+		16EF0828299406BB0082E9A0 /* Vector2.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector2.pb.swift; sourceTree = "<group>"; };
+		16EF0829299406BB0082E9A0 /* Color.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.pb.swift; sourceTree = "<group>"; };
+		16EF082A299406BB0082E9A0 /* Grid.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.pb.swift; sourceTree = "<group>"; };
+		16EF082B299406BB0082E9A0 /* KeyValuePair.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValuePair.pb.swift; sourceTree = "<group>"; };
+		16EF082C299406BB0082E9A0 /* PointCloud.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointCloud.pb.swift; sourceTree = "<group>"; };
+		16EF082D299406BB0082E9A0 /* LaserScan.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaserScan.pb.swift; sourceTree = "<group>"; };
+		16EF082E299406BB0082E9A0 /* LinePrimitive.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinePrimitive.pb.swift; sourceTree = "<group>"; };
+		16EF082F299406BB0082E9A0 /* GeoJSON.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSON.pb.swift; sourceTree = "<group>"; };
+		16EF0830299406BB0082E9A0 /* SceneUpdate.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneUpdate.pb.swift; sourceTree = "<group>"; };
+		16EF0831299406BB0082E9A0 /* CompressedImage.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompressedImage.pb.swift; sourceTree = "<group>"; };
+		16EF0832299406BB0082E9A0 /* PoseInFrame.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoseInFrame.pb.swift; sourceTree = "<group>"; };
+		16EF0833299406BB0082E9A0 /* CameraCalibration.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCalibration.pb.swift; sourceTree = "<group>"; };
+		16EF0834299406BB0082E9A0 /* SceneEntity.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneEntity.pb.swift; sourceTree = "<group>"; };
+		16EF0835299406BB0082E9A0 /* FrameTransform.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameTransform.pb.swift; sourceTree = "<group>"; };
+		16EF0836299406BB0082E9A0 /* CircleAnnotation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleAnnotation.pb.swift; sourceTree = "<group>"; };
+		16EF0837299406BB0082E9A0 /* TextPrimitive.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextPrimitive.pb.swift; sourceTree = "<group>"; };
+		16EF0838299406BB0082E9A0 /* PosesInFrame.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosesInFrame.pb.swift; sourceTree = "<group>"; };
+		16EF0839299406BB0082E9A0 /* RawImage.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawImage.pb.swift; sourceTree = "<group>"; };
+		16EF083A299406BB0082E9A0 /* SceneEntityDeletion.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneEntityDeletion.pb.swift; sourceTree = "<group>"; };
+		16EF083B299406BB0082E9A0 /* Quaternion.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Quaternion.pb.swift; sourceTree = "<group>"; };
+		16EF083C299406BB0082E9A0 /* Log.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.pb.swift; sourceTree = "<group>"; };
+		16EF083D299406BB0082E9A0 /* TriangleListPrimitive.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleListPrimitive.pb.swift; sourceTree = "<group>"; };
+		16EF083E299406BB0082E9A0 /* CubePrimitive.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CubePrimitive.pb.swift; sourceTree = "<group>"; };
+		16EF083F299406BB0082E9A0 /* ModelPrimitive.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelPrimitive.pb.swift; sourceTree = "<group>"; };
+		16EF0840299406BB0082E9A0 /* PackedElementField.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackedElementField.pb.swift; sourceTree = "<group>"; };
+		16EF0841299406BB0082E9A0 /* CylinderPrimitive.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CylinderPrimitive.pb.swift; sourceTree = "<group>"; };
+		16EF0842299406BB0082E9A0 /* LocationFix.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationFix.pb.swift; sourceTree = "<group>"; };
+		16EF0843299406BB0082E9A0 /* SpherePrimitive.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpherePrimitive.pb.swift; sourceTree = "<group>"; };
+		16EF0844299406BB0082E9A0 /* Point2.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point2.pb.swift; sourceTree = "<group>"; };
+		16EF0845299406BB0082E9A0 /* Point3.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point3.pb.swift; sourceTree = "<group>"; };
+		16EF0846299406BB0082E9A0 /* ArrowPrimitive.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowPrimitive.pb.swift; sourceTree = "<group>"; };
+		16EF0847299406BB0082E9A0 /* Pose.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pose.pb.swift; sourceTree = "<group>"; };
+		16EF087129940C160082E9A0 /* CompressedImage.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = CompressedImage.bin; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16EF086D299408100082E9A0 /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,8 +138,68 @@
 				16EF0819299302570082E9A0 /* FoxgloveServer.swift */,
 				16EF081B299363840082E9A0 /* schemas.swift */,
 				16EF081D2993777F0082E9A0 /* Server.swift */,
+				16EF0823299406BB0082E9A0 /* Schemas */,
 			);
 			path = "Foxglove Bridge";
+			sourceTree = "<group>";
+		};
+		16EF0823299406BB0082E9A0 /* Schemas */ = {
+			isa = PBXGroup;
+			children = (
+				16EF087029940C160082E9A0 /* bin */,
+				16EF0824299406BB0082E9A0 /* foxglove */,
+			);
+			path = Schemas;
+			sourceTree = "<group>";
+		};
+		16EF0824299406BB0082E9A0 /* foxglove */ = {
+			isa = PBXGroup;
+			children = (
+				16EF0825299406BB0082E9A0 /* PointsAnnotation.pb.swift */,
+				16EF0826299406BB0082E9A0 /* ImageAnnotations.pb.swift */,
+				16EF0827299406BB0082E9A0 /* Vector3.pb.swift */,
+				16EF0828299406BB0082E9A0 /* Vector2.pb.swift */,
+				16EF0829299406BB0082E9A0 /* Color.pb.swift */,
+				16EF082A299406BB0082E9A0 /* Grid.pb.swift */,
+				16EF082B299406BB0082E9A0 /* KeyValuePair.pb.swift */,
+				16EF082C299406BB0082E9A0 /* PointCloud.pb.swift */,
+				16EF082D299406BB0082E9A0 /* LaserScan.pb.swift */,
+				16EF082E299406BB0082E9A0 /* LinePrimitive.pb.swift */,
+				16EF082F299406BB0082E9A0 /* GeoJSON.pb.swift */,
+				16EF0830299406BB0082E9A0 /* SceneUpdate.pb.swift */,
+				16EF0831299406BB0082E9A0 /* CompressedImage.pb.swift */,
+				16EF0832299406BB0082E9A0 /* PoseInFrame.pb.swift */,
+				16EF0833299406BB0082E9A0 /* CameraCalibration.pb.swift */,
+				16EF0834299406BB0082E9A0 /* SceneEntity.pb.swift */,
+				16EF0835299406BB0082E9A0 /* FrameTransform.pb.swift */,
+				16EF0836299406BB0082E9A0 /* CircleAnnotation.pb.swift */,
+				16EF0837299406BB0082E9A0 /* TextPrimitive.pb.swift */,
+				16EF0838299406BB0082E9A0 /* PosesInFrame.pb.swift */,
+				16EF0839299406BB0082E9A0 /* RawImage.pb.swift */,
+				16EF083A299406BB0082E9A0 /* SceneEntityDeletion.pb.swift */,
+				16EF083B299406BB0082E9A0 /* Quaternion.pb.swift */,
+				16EF083C299406BB0082E9A0 /* Log.pb.swift */,
+				16EF083D299406BB0082E9A0 /* TriangleListPrimitive.pb.swift */,
+				16EF083E299406BB0082E9A0 /* CubePrimitive.pb.swift */,
+				16EF083F299406BB0082E9A0 /* ModelPrimitive.pb.swift */,
+				16EF0840299406BB0082E9A0 /* PackedElementField.pb.swift */,
+				16EF0841299406BB0082E9A0 /* CylinderPrimitive.pb.swift */,
+				16EF0842299406BB0082E9A0 /* LocationFix.pb.swift */,
+				16EF0843299406BB0082E9A0 /* SpherePrimitive.pb.swift */,
+				16EF0844299406BB0082E9A0 /* Point2.pb.swift */,
+				16EF0845299406BB0082E9A0 /* Point3.pb.swift */,
+				16EF0846299406BB0082E9A0 /* ArrowPrimitive.pb.swift */,
+				16EF0847299406BB0082E9A0 /* Pose.pb.swift */,
+			);
+			path = foxglove;
+			sourceTree = "<group>";
+		};
+		16EF087029940C160082E9A0 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				16EF087129940C160082E9A0 /* CompressedImage.bin */,
+			);
+			path = bin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,6 +218,9 @@
 			dependencies = (
 			);
 			name = "Foxglove Bridge";
+			packageProductDependencies = (
+				16EF086C299408100082E9A0 /* SwiftProtobuf */,
+			);
 			productName = "Foxglove Bridge";
 			productReference = 16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */;
 			productType = "com.apple.product-type.application";
@@ -112,6 +249,9 @@
 				Base,
 			);
 			mainGroup = 16EF07FD2992D8A70082E9A0;
+			packageReferences = (
+				16EF086B299408100082E9A0 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+			);
 			productRefGroup = 16EF08072992D8A70082E9A0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -126,6 +266,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16EF087229940C160082E9A0 /* CompressedImage.bin in Resources */,
 				16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,12 +278,47 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16EF0856299406BB0082E9A0 /* CameraCalibration.pb.swift in Sources */,
+				16EF085E299406BB0082E9A0 /* Quaternion.pb.swift in Sources */,
+				16EF0862299406BB0082E9A0 /* ModelPrimitive.pb.swift in Sources */,
 				16EF08182993021C0082E9A0 /* getIPAddress.swift in Sources */,
+				16EF085D299406BB0082E9A0 /* SceneEntityDeletion.pb.swift in Sources */,
+				16EF085C299406BB0082E9A0 /* RawImage.pb.swift in Sources */,
+				16EF0869299406BB0082E9A0 /* ArrowPrimitive.pb.swift in Sources */,
+				16EF085F299406BB0082E9A0 /* Log.pb.swift in Sources */,
+				16EF0857299406BB0082E9A0 /* SceneEntity.pb.swift in Sources */,
 				16EF081C299363840082E9A0 /* schemas.swift in Sources */,
+				16EF085A299406BB0082E9A0 /* TextPrimitive.pb.swift in Sources */,
+				16EF0861299406BB0082E9A0 /* CubePrimitive.pb.swift in Sources */,
+				16EF0865299406BB0082E9A0 /* LocationFix.pb.swift in Sources */,
+				16EF0854299406BB0082E9A0 /* CompressedImage.pb.swift in Sources */,
+				16EF0851299406BB0082E9A0 /* LinePrimitive.pb.swift in Sources */,
+				16EF0850299406BB0082E9A0 /* LaserScan.pb.swift in Sources */,
 				16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */,
+				16EF0867299406BB0082E9A0 /* Point2.pb.swift in Sources */,
+				16EF084C299406BB0082E9A0 /* Color.pb.swift in Sources */,
+				16EF0864299406BB0082E9A0 /* CylinderPrimitive.pb.swift in Sources */,
+				16EF0853299406BB0082E9A0 /* SceneUpdate.pb.swift in Sources */,
+				16EF0858299406BB0082E9A0 /* FrameTransform.pb.swift in Sources */,
+				16EF084A299406BB0082E9A0 /* Vector3.pb.swift in Sources */,
+				16EF084B299406BB0082E9A0 /* Vector2.pb.swift in Sources */,
+				16EF085B299406BB0082E9A0 /* PosesInFrame.pb.swift in Sources */,
+				16EF0848299406BB0082E9A0 /* PointsAnnotation.pb.swift in Sources */,
+				16EF086A299406BB0082E9A0 /* Pose.pb.swift in Sources */,
 				16EF081A299302570082E9A0 /* FoxgloveServer.swift in Sources */,
+				16EF0855299406BB0082E9A0 /* PoseInFrame.pb.swift in Sources */,
+				16EF0852299406BB0082E9A0 /* GeoJSON.pb.swift in Sources */,
+				16EF0859299406BB0082E9A0 /* CircleAnnotation.pb.swift in Sources */,
+				16EF0863299406BB0082E9A0 /* PackedElementField.pb.swift in Sources */,
+				16EF0866299406BB0082E9A0 /* SpherePrimitive.pb.swift in Sources */,
+				16EF0849299406BB0082E9A0 /* ImageAnnotations.pb.swift in Sources */,
 				16EF081E2993777F0082E9A0 /* Server.swift in Sources */,
+				16EF084D299406BB0082E9A0 /* Grid.pb.swift in Sources */,
+				16EF084F299406BB0082E9A0 /* PointCloud.pb.swift in Sources */,
+				16EF084E299406BB0082E9A0 /* KeyValuePair.pb.swift in Sources */,
 				16EF080A2992D8A70082E9A0 /* App.swift in Sources */,
+				16EF0868299406BB0082E9A0 /* Point3.pb.swift in Sources */,
+				16EF0860299406BB0082E9A0 /* TriangleListPrimitive.pb.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +517,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		16EF086B299408100082E9A0 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		16EF086C299408100082E9A0 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 16EF086B299408100082E9A0 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 16EF07FE2992D8A70082E9A0 /* Project object */;
 }
