@@ -38,65 +38,85 @@ struct ContentView: View {
   @State var sendPose = true
 
   var body: some View {
-    NavigationView {
-      VStack {
-        List {
-          if let port = server.port {
-            Section {
-              Text("Listening on \(server.address):\(port.debugDescription)")
-            } header: { Text("Server") }
+    TabView {
+      NavigationView {
+        VStack {
+          List {
+            if let port = server.port {
+              Section {
+                Text("Listening on \(server.address):\(port.debugDescription)")
+              } header: { Text("Server") }
 
-            Section {
-              Toggle(isOn: $server.sendPose) { Text("Pose") }
-              Toggle(isOn: $server.sendLocation) { Text("GPS") }
+              Section {
+                Toggle(isOn: $server.sendPose) { Text("Pose") }
+                Toggle(isOn: $server.sendLocation) { Text("GPS") }
 
-              // TODO: CPU usage
-              Toggle(isOn: $server.sendCPU ) { Text("CPU") }
-              if server.sendCPU {
-                Chart(data) {
-                  LineMark(
-                    x: .value("Month", $0.date),
-                    y: .value("Hours of Sunshine", $0.hoursOfSunshine)
-                  )
+                // TODO: CPU usage
+                Toggle(isOn: $server.sendCPU ) { Text("CPU") }
+                if server.sendCPU {
+                  Chart(data) {
+                    LineMark(
+                      x: .value("Month", $0.date),
+                      y: .value("Hours of Sunshine", $0.hoursOfSunshine)
+                    )
+                  }
+                  .frame(height: 60)
+                  .chartXAxis(Visibility.hidden)
+                  .padding([.bottom, .top], 5)
                 }
-                .frame(height: 60)
-                .chartXAxis(Visibility.hidden)
-                .padding([.bottom, .top], 5)
-              }
 
-              // TODO: Memory usage
-              Toggle(isOn: $server.sendMemory ) { Text("Memory") }
+                // TODO: Memory usage
+                Toggle(isOn: $server.sendMemory ) { Text("Memory") }
 
-              Picker(
-                selection: $server.activeCamera,
-                label: Toggle(isOn: $server.sendCamera) {
-                  Text("Camera")
-                }
-              ) {
-                if server.sendCamera {
-                  ForEach(Camera.allCases) {
-                    Text($0.description)
+                Picker(
+                  selection: $server.activeCamera,
+                  label: Toggle(isOn: $server.sendCamera) {
+                    Text("Camera")
+                  }
+                ) {
+                  if server.sendCamera {
+                    ForEach(Camera.allCases) {
+                      Text($0.description)
+                    }
                   }
                 }
-              }
-              .pickerStyle(InlinePickerStyle())
+                .pickerStyle(InlinePickerStyle())
 
-              if server.sendCamera {
-                Text("Dropped frames: \(server.droppedVideoFrames)")
-              }
-            } header: { Text("Topics") }
-          }
-          Section {
-            ForEach(Array(server.clientEndpointNames.enumerated()), id: \.offset) {
-              Text($0.element)
+                if server.sendCamera {
+                  Text("Dropped frames: \(server.droppedVideoFrames)")
+                }
+              } header: { Text("Topics") }
             }
-          } header: {
-            Text("Clients")
           }
+          .listStyle(.insetGrouped)
         }
-        .listStyle(.insetGrouped)
       }
-      .navigationTitle(Text("WebSocket demo"))
+      .tabItem {
+        Image(systemName: "list.dash")
+        Text("Tab 2")
+      }
+      NavigationView {
+        VStack {
+          List {
+            if let port = server.port {
+              Section {
+                Text("Listening on \(server.address):\(port.debugDescription)")
+              } header: { Text("Server") }
+
+              Section {
+                ForEach(Array(server.clientEndpointNames.enumerated()), id: \.offset) {
+                  Text($0.element)
+                }
+              } header: {
+                Text("Clients")
+              }
+            }
+          }
+          .listStyle(.insetGrouped)
+        }
+      }.tabItem {
+        Image(systemName: "list.dash")
+        Text("Tab 1") }
     }
   }
 }
