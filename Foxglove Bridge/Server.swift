@@ -98,6 +98,9 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       reconfigureSession()
     }
   }
+  @Published var sendGPS = false
+  @Published var sendCPU = false
+  @Published var sendMemory = false
 
   @Published var port: NWEndpoint.Port?
   var clientEndpointNames: [String] {

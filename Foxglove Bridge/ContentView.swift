@@ -21,6 +21,15 @@ struct ContentView: View {
             Section {
               Toggle(isOn: $server.sendPose) { Text("Pose") }
 
+              // TODO: GPS @jtbandes
+              Toggle(isOn: $server.sendGPS ) { Text("GPS") }
+
+              // TODO: CPU usage
+              Toggle(isOn: $server.sendCPU ) { Text("CPU") }
+
+              // TODO: Memory usage
+              Toggle(isOn: $server.sendMemory ) { Text("Memory") }
+
               Picker(
                 selection: $server.activeCamera,
                 label: Toggle(isOn: $server.sendCamera) {
@@ -35,7 +44,6 @@ struct ContentView: View {
                 }
               }
               .pickerStyle(InlinePickerStyle())
-
             } header: { Text("Topics") }
           }
           Section {
