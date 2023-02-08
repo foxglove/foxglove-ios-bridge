@@ -118,6 +118,7 @@
 				16EF08082992D8A70082E9A0 /* Foxglove Bridge */,
 				16EF08072992D8A70082E9A0 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
 		};
 		16EF08072992D8A70082E9A0 /* Products */ = {

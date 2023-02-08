@@ -4,11 +4,13 @@ import Darwin
 import CoreMotion
 import Combine
 
-
 struct ContentView: View {
   @StateObject var server = Server()
 
   @State var sendPose = true
+  @State var selectedCamera = 0
+
+  static let cameras = ["Front", "Rear"]
 
   var body: some View {
     NavigationView {
@@ -17,14 +19,25 @@ struct ContentView: View {
           if let port = server.port {
             Section {
               Text("Listening on \(server.address):\(port.debugDescription)")
+            } header: { Text("Server") }
+
+            Section {
               Toggle(isOn: $server.sendPose) { Text("Pose") }
-              Toggle(isOn: $server.sendRearCamera) { Text("Rear camera") }
-              if server.sendRearCamera {
-                Text("Dropped frames: \(server.droppedVideoFrames)")
+              Picker(
+                selection: $selectedCamera,
+                label: Toggle(isOn: $server.sendRearCamera) {
+                  Text("Camera")
+                }) {
+                if server.sendRearCamera {
+                  ForEach(0 ..< Self.cameras.count) {
+                    Text(Self.cameras[$0])
+                  }
+                  Text("Dropped frames: \(server.droppedVideoFrames)")
+                }
               }
-            } header: {
-              Text("Server")
-            }
+              .pickerStyle(InlinePickerStyle())
+
+            } header: { Text("Topics") }
           }
           Section {
             ForEach(Array(server.clientEndpointNames.enumerated()), id: \.offset) {
