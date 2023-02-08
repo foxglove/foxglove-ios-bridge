@@ -122,9 +122,24 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 
   override init() {
-    poseChannel = server.addChannel(topic: "pose", encoding: "json", schemaName: "foxglove.PoseInFrame", schema: poseInFrameSchema)
-    cameraChannel = server.addChannel(topic: "camera", encoding: "protobuf", schemaName: Foxglove_CompressedImage.protoMessageName, schema: try! Data(contentsOf: Bundle.main.url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString())
-    locationChannel = server.addChannel(topic: "gps", encoding: "protobuf", schemaName: Foxglove_LocationFix.protoMessageName, schema: try! Data(contentsOf: Bundle.main.url(forResource: "LocationFix", withExtension: "bin")!).base64EncodedString())
+    poseChannel = server.addChannel(
+      topic: "pose",
+      encoding: "json",
+      schemaName: "foxglove.PoseInFrame",
+      schema: poseInFrameSchema
+    )
+    cameraChannel = server.addChannel(
+      topic: "camera",
+      encoding: "protobuf",
+      schemaName: Foxglove_CompressedImage.protoMessageName,
+      schema: try! Data(contentsOf: Bundle.main.url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString()
+    )
+    locationChannel = server.addChannel(
+      topic: "gps",
+      encoding: "protobuf",
+      schemaName: Foxglove_LocationFix.protoMessageName,
+      schema: try! Data(contentsOf: Bundle.main.url(forResource: "LocationFix", withExtension: "bin")!).base64EncodedString()
+    )
     super.init()
     server.$port.assign(to: \.port, on: self).store(in: &subscribers)
     server.objectWillChange.sink { [weak self] in self?.objectWillChange.send() }.store(in: &subscribers)
