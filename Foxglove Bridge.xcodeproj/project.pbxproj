@@ -11,7 +11,8 @@
 		16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF080B2992D8A70082E9A0 /* ContentView.swift */; };
 		16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EF080D2992D8A90082E9A0 /* Assets.xcassets */; };
 		16EF08182993021C0082E9A0 /* getIPAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08172993021C0082E9A0 /* getIPAddress.swift */; };
-		16EF081A299302570082E9A0 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0819299302570082E9A0 /* Server.swift */; };
+		16EF081A299302570082E9A0 /* FoxgloveServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0819299302570082E9A0 /* FoxgloveServer.swift */; };
+		16EF081C299363840082E9A0 /* schemas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF081B299363840082E9A0 /* schemas.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,7 +21,8 @@
 		16EF080B2992D8A70082E9A0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		16EF080D2992D8A90082E9A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16EF08172993021C0082E9A0 /* getIPAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getIPAddress.swift; sourceTree = "<group>"; };
-		16EF0819299302570082E9A0 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		16EF0819299302570082E9A0 /* FoxgloveServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoxgloveServer.swift; sourceTree = "<group>"; };
+		16EF081B299363840082E9A0 /* schemas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schemas.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +59,8 @@
 				16EF08092992D8A70082E9A0 /* App.swift */,
 				16EF080B2992D8A70082E9A0 /* ContentView.swift */,
 				16EF08172993021C0082E9A0 /* getIPAddress.swift */,
-				16EF0819299302570082E9A0 /* Server.swift */,
+				16EF0819299302570082E9A0 /* FoxgloveServer.swift */,
+				16EF081B299363840082E9A0 /* schemas.swift */,
 			);
 			path = "Foxglove Bridge";
 			sourceTree = "<group>";
@@ -132,8 +135,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				16EF08182993021C0082E9A0 /* getIPAddress.swift in Sources */,
+				16EF081C299363840082E9A0 /* schemas.swift in Sources */,
 				16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */,
-				16EF081A299302570082E9A0 /* Server.swift in Sources */,
+				16EF081A299302570082E9A0 /* FoxgloveServer.swift in Sources */,
 				16EF080A2992D8A70082E9A0 /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
