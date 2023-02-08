@@ -18,6 +18,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   let poseChannel: ChannelID
   let cameraChannel: ChannelID
 
+  @Published var droppedVideoFrames = 0
+
   @Published var sendPose = true {
     didSet {
       if sendPose {
@@ -85,6 +87,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 
   func startCameraUpdates() {
+    droppedVideoFrames = 0
+    
     videoQueue.async {
       let session = AVCaptureSession()
       guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
@@ -95,7 +99,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         let input = try AVCaptureDeviceInput(device: device)
         print("ranges: \(input.device.activeFormat.videoSupportedFrameRateRanges)")
         session.addInput(input)
-        input.videoMinFrameDurationOverride = CMTime(seconds: 0.1, preferredTimescale: 30)
+        session.sessionPreset = .medium
+//        input.videoMinFrameDurationOverride = CMTime(seconds: 0.1, preferredTimescale: 30)
       } catch let error {
         print("failed to create device input: \(error)")
         return
@@ -109,7 +114,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
   func stopCameraUpdates() {
     let session = self.captureSession
-    videoQueue.async {
+    DispatchQueue.global(qos: .userInitiated).async {
       session?.stopRunning()
       Task { @MainActor in
         self.captureSession = nil
@@ -124,7 +129,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       return
     }
     let img = UIImage(ciImage: CIImage(cvImageBuffer: imageBuffer))
-    guard let jpeg = img.jpegData(compressionQuality: 0.2) else {
+    guard let jpeg = img.jpegData(compressionQuality: 0.8) else {
       print("failed to compress jpeg :(")
       return
     }
@@ -139,6 +144,12 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
     Task { @MainActor in
       server.sendMessage(on: cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: serializedProto)
+    }
+  }
+
+  nonisolated func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    Task { @MainActor in
+      self.droppedVideoFrames += 1
     }
   }
 }

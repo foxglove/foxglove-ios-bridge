@@ -19,6 +19,9 @@ struct ContentView: View {
               Text("Listening on \(server.address):\(port.debugDescription)")
               Toggle(isOn: $server.sendPose) { Text("Pose") }
               Toggle(isOn: $server.sendRearCamera) { Text("Rear camera") }
+              if server.sendRearCamera {
+                Text("Dropped frames: \(server.droppedVideoFrames)")
+              }
             } header: {
               Text("Server")
             }
