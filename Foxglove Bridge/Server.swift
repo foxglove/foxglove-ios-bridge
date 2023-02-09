@@ -4,6 +4,7 @@ import AVFoundation
 import Combine
 import Network
 import CoreLocation
+import HealthKit
 
 struct CPUUsage: Encodable, Identifiable {
   let usage: Double
@@ -23,6 +24,28 @@ struct MemoryUsage: Encodable, Identifiable {
   enum CodingKeys: String, CodingKey {
     case usage
   }
+}
+
+struct Timestamp: Encodable {
+  let sec: UInt32
+  let nsec: UInt32
+}
+extension Timestamp {
+  init(_ date: Date) {
+    let seconds = date.timeIntervalSince1970
+    var intSec = UInt32(seconds)
+    var intNsec = UInt32(seconds.truncatingRemainder(dividingBy: 1) * 1_000_000_000)
+    if intNsec > 999_999_999 {
+      intSec += 1
+      intNsec -= 1_000_000_000
+    }
+    sec = intSec
+    nsec = intNsec
+  }
+}
+struct Health: Encodable {
+  let heart_rate: Double
+  let timestamp: Timestamp
 }
 
 enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
@@ -94,6 +117,10 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   let locationChannel: ChannelID
   let cpuChannel: ChannelID
   let memChannel: ChannelID
+  let healthChannel: ChannelID
+
+  let healthStore = HKHealthStore()
+  var heartRateQuery: HKAnchoredObjectQuery?
 
   @Published var droppedVideoFrames = 0
 
@@ -147,6 +174,16 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
 
+  @Published var sendHeartRate = false {
+    didSet {
+      if sendHeartRate {
+        startHeartRateUpdates()
+      } else {
+        stopHeartRateUpdates()
+      }
+    }
+  }
+
   @Published var activeCamera: Camera = .back {
     didSet {
       print("set active camera \(activeCamera)")
@@ -157,7 +194,6 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   @Published var port: NWEndpoint.Port?
   var clientEndpointNames: [String] {
-    print(server.clientEndpointNames)
     return server.clientEndpointNames
   }
 
@@ -201,6 +237,19 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   "type":"object",
   "properties":{
     "usage":{"type":"number"}
+  }
+}
+"""#)
+    healthChannel = server.addChannel(topic: "health", encoding: "json", schemaName: "Health", schema:
+#"""
+{
+  "type":"object",
+  "properties":{
+    "heart_rate":{"type":"number"},
+    "timestamp":{
+      "type":"object",
+      "properties":{"sec":{"type":"number"},"nsec":{"type":"number"}}
+    }
   }
 }
 """#)
@@ -407,6 +456,47 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   nonisolated func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
     Task { @MainActor in
       self.droppedVideoFrames += 1
+    }
+  }
+}
+
+
+extension Server {
+  func startHeartRateUpdates() {
+    let type = HKQuantityType(.heartRate)
+    let query = HKAnchoredObjectQuery(type: type, predicate: HKQuery.predicateForSamples(withStart: .now, end: nil), anchor: nil, limit: HKObjectQueryNoLimit) { query, samples, deleted, anchor, error in
+      print("results: \(samples), deleted \(deleted), anchor \(anchor), error \(error)")
+    }
+    heartRateQuery = query
+    query.updateHandler = { query, samples, deleted, anchor, error in
+      print("update: \(samples), deleted \(deleted), anchor \(anchor), error \(error)")
+
+      guard let samples else { return }
+      for case let sample as HKQuantitySample in samples {
+        let health = Health(
+          heart_rate: sample.quantity.doubleValue(for: HKUnit(from: "count/min")),
+          timestamp: Timestamp(sample.endDate)
+        )
+        let enc = JSONEncoder()
+        enc.outputFormatting = .sortedKeys
+        let data = try! enc.encode(health)
+
+        Task { @MainActor in
+          self.server.sendMessage(on: self.healthChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+        }
+
+      }
+    }
+
+    healthStore.requestAuthorization(toShare: nil, read: [type]) { success, error in
+      print("health authorization \(success) \(error)")
+      if let error { return }
+      self.healthStore.execute(query)
+    }
+  }
+  func stopHeartRateUpdates() {
+    if let heartRateQuery {
+      healthStore.stop(heartRateQuery)
     }
   }
 }

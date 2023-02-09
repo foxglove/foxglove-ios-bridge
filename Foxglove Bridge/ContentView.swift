@@ -31,13 +31,11 @@ struct ContentView: View {
             Toggle(isOn: $server.sendPose) { Text("Pose") }
             Toggle(isOn: $server.sendLocation) { Text("GPS") }
 
-            // TODO: CPU usage
             Toggle(isOn: $server.sendCPU ) { Text("CPU") }
             if server.sendCPU {
               cpuChart
             }
 
-            // TODO: Memory usage
             Toggle(isOn: $server.sendMemory ) { Text("Memory") }
             if server.sendMemory {
               memoryChart
@@ -60,6 +58,8 @@ struct ContentView: View {
             if server.sendCamera {
               Text("Dropped frames: \(server.droppedVideoFrames)")
             }
+
+            Toggle(isOn: $server.sendHeartRate ) { Text("Heart Rate") }
           } header: { Text("Topics") }
         }
         .listStyle(.insetGrouped)
