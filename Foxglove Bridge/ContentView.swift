@@ -59,7 +59,7 @@ struct ContentView: View {
               Text("Dropped frames: \(server.droppedVideoFrames)")
             }
 
-            Toggle(isOn: $server.sendHeartRate ) { Text("Heart Rate") }
+            Toggle(isOn: $server.sendWatchData ) { Text("Apple Watch") }
           } header: { Text("Topics") }
         }
         .listStyle(.insetGrouped)

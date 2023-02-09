@@ -4,7 +4,7 @@ import AVFoundation
 import Combine
 import Network
 import CoreLocation
-import HealthKit
+import WatchConnectivity
 
 struct CPUUsage: Encodable, Identifiable {
   let usage: Double
@@ -119,8 +119,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   let memChannel: ChannelID
   let healthChannel: ChannelID
 
-  let healthStore = HKHealthStore()
-  var heartRateQuery: HKAnchoredObjectQuery?
+  let watchSession = WCSession.default
 
   @Published var droppedVideoFrames = 0
 
@@ -174,12 +173,12 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
 
-  @Published var sendHeartRate = false {
+  @Published var sendWatchData = false {
     didSet {
-      if sendHeartRate {
-        startHeartRateUpdates()
+      if sendWatchData {
+        startWatchUpdates()
       } else {
-        stopHeartRateUpdates()
+        stopWatchUpdates()
       }
     }
   }
@@ -259,6 +258,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     startPoseUpdates()
     startCPUUpdates()
     startMemoryUpdates()
+    watchSession.delegate = self
   }
 
   func startCPUUpdates() {
@@ -461,42 +461,44 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 }
 
 
-extension Server {
-  func startHeartRateUpdates() {
-    let type = HKQuantityType(.heartRate)
-    let query = HKAnchoredObjectQuery(type: type, predicate: HKQuery.predicateForSamples(withStart: .now, end: nil), anchor: nil, limit: HKObjectQueryNoLimit) { query, samples, deleted, anchor, error in
-      print("results: \(samples), deleted \(deleted), anchor \(anchor), error \(error)")
-    }
-    heartRateQuery = query
-    query.updateHandler = { query, samples, deleted, anchor, error in
-      print("update: \(samples), deleted \(deleted), anchor \(anchor), error \(error)")
-
-      guard let samples else { return }
-      for case let sample as HKQuantitySample in samples {
-        let health = Health(
-          heart_rate: sample.quantity.doubleValue(for: HKUnit(from: "count/min")),
-          timestamp: Timestamp(sample.endDate)
-        )
-        let enc = JSONEncoder()
-        enc.outputFormatting = .sortedKeys
-        let data = try! enc.encode(health)
-
-        Task { @MainActor in
-          self.server.sendMessage(on: self.healthChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
-        }
-
-      }
-    }
-
-    healthStore.requestAuthorization(toShare: nil, read: [type]) { success, error in
-      print("health authorization \(success) \(error)")
-      if let error { return }
-      self.healthStore.execute(query)
-    }
+extension Server: WCSessionDelegate {
+  func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    print("watch activation completed: \(activationState), error: \(error)")
   }
-  func stopHeartRateUpdates() {
-    if let heartRateQuery {
-      healthStore.stop(heartRateQuery)
+
+  func sessionDidBecomeInactive(_ session: WCSession) {
+    print("watch became inactive")
+  }
+
+  func sessionDidDeactivate(_ session: WCSession) {
+    print("watch deactivated")
+  }
+
+  func startWatchUpdates() {
+    watchSession.activate()
+  }
+  func stopWatchUpdates() {
+    print("stop watch updates?")
+  }
+
+  func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+    print("message from watch: \(message)")
+    guard sendWatchData else {
+      return
+    }
+
+    if let bpm = message["heart_rate"] as? Double {
+      let health = Health(
+        heart_rate: bpm,
+        timestamp: Timestamp(.now)
+      )
+      let enc = JSONEncoder()
+      enc.outputFormatting = .sortedKeys
+      let data = try! enc.encode(health)
+
+      Task { @MainActor in
+        self.server.sendMessage(on: self.healthChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+      }
     }
   }
 }
