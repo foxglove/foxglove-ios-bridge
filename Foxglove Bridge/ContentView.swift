@@ -25,44 +25,36 @@ struct ContentView: View {
 
   var topicsTab: some View {
     NavigationView {
-      VStack {
-        List {
-          Section {
-            Toggle(isOn: $server.sendPose) { Text("Pose") }
-            Toggle(isOn: $server.sendLocation) { Text("GPS") }
-
-            Toggle(isOn: $server.sendCPU ) { Text("CPU") }
+      ScrollView {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120), spacing: 20)], spacing: 20) {
+          CardToggle(isOn: $server.sendPose) {
+            Text("Pose")
+          }
+          CardToggle(isOn: $server.sendLocation) {
+            Text("GPS")
+          }
+          CardToggle(isOn: $server.sendCPU) {
+            Text("CPU")
             if server.sendCPU {
               cpuChart
             }
-
-            Toggle(isOn: $server.sendMemory ) { Text("Memory") }
+          }
+          CardToggle(isOn: $server.sendMemory) {
+            Text("Memory")
             if server.sendMemory {
               memoryChart
             }
-
-            Picker(
-              selection: $server.activeCamera,
-              label: Toggle(isOn: $server.sendCamera) {
-                Text("Camera")
-              }
-            ) {
-              if server.sendCamera {
-                ForEach(Camera.allCases) {
-                  Text($0.description)
-                }
-              }
-            }
-            .pickerStyle(InlinePickerStyle())
-
+          }
+          CardToggle(isOn: $server.sendCamera) {
+            Text("Camera")
             if server.sendCamera {
               Text("Dropped frames: \(server.droppedVideoFrames)")
             }
-
-            Toggle(isOn: $server.sendWatchData ) { Text("Apple Watch") }
-          } header: { Text("Topics") }
-        }
-        .listStyle(.insetGrouped)
+          }
+          CardToggle(isOn: $server.sendWatchData) {
+            Text("Apple Watch")
+          }
+        }.padding()
       }
     }
   }

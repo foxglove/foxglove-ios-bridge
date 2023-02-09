@@ -13,6 +13,7 @@
 		1640D49F29954ABD00C0D669 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49E29954ABD00C0D669 /* ContentView.swift */; };
 		1640D4A129954ABD00C0D669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1640D4A029954ABD00C0D669 /* Assets.xcassets */; };
 		164DE46D29955C7C002B3560 /* Foxglove Bridge Companion Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1640D49A29954ABD00C0D669 /* Foxglove Bridge Companion Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		164DE4742995BCEC002B3560 /* CardToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DE4732995BCEC002B3560 /* CardToggle.swift */; };
 		169393CD2994522B00A78475 /* LocationFix.bin in Resources */ = {isa = PBXBuildFile; fileRef = 169393CC2994522A00A78475 /* LocationFix.bin */; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF080B2992D8A70082E9A0 /* ContentView.swift */; };
@@ -93,6 +94,7 @@
 		1640D49E29954ABD00C0D669 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1640D4A029954ABD00C0D669 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		164DE46A299559EA002B3560 /* Foxglove Bridge Companion Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Foxglove Bridge Companion Watch App.entitlements"; sourceTree = "<group>"; };
+		164DE4732995BCEC002B3560 /* CardToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardToggle.swift; sourceTree = "<group>"; };
 		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
 		16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				16EF080D2992D8A90082E9A0 /* Assets.xcassets */,
 				16EF08092992D8A70082E9A0 /* App.swift */,
 				16EF080B2992D8A70082E9A0 /* ContentView.swift */,
+				164DE4732995BCEC002B3560 /* CardToggle.swift */,
 				16EF08172993021C0082E9A0 /* getIPAddress.swift */,
 				1640D46B29945B7200C0D669 /* getCPUUsage.swift */,
 				1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */,
@@ -399,6 +402,7 @@
 				16EF085D299406BB0082E9A0 /* SceneEntityDeletion.pb.swift in Sources */,
 				16EF085C299406BB0082E9A0 /* RawImage.pb.swift in Sources */,
 				16EF0869299406BB0082E9A0 /* ArrowPrimitive.pb.swift in Sources */,
+				164DE4742995BCEC002B3560 /* CardToggle.swift in Sources */,
 				16EF085F299406BB0082E9A0 /* Log.pb.swift in Sources */,
 				16EF0857299406BB0082E9A0 /* SceneEntity.pb.swift in Sources */,
 				16EF081C299363840082E9A0 /* schemas.swift in Sources */,
