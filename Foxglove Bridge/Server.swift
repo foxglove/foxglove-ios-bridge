@@ -15,6 +15,16 @@ struct CPUUsage: Encodable, Identifiable {
   }
 }
 
+struct MemoryUsage: Encodable, Identifiable {
+  let usage: Double
+  let date: Date
+  let id = UUID()
+
+  enum CodingKeys: String, CodingKey {
+    case usage
+  }
+}
+
 enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
   case back
   case front
@@ -83,6 +93,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   let cameraChannel: ChannelID
   let locationChannel: ChannelID
   let cpuChannel: ChannelID
+  let memChannel: ChannelID
 
   @Published var droppedVideoFrames = 0
 
@@ -126,6 +137,16 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
 
+  @Published var sendMemory = true {
+    didSet {
+      if sendMemory {
+        startMemoryUpdates()
+      } else {
+        stopMemoryUpdates()
+      }
+    }
+  }
+
   @Published var activeCamera: Camera = .back {
     didSet {
       print("set active camera \(activeCamera)")
@@ -133,7 +154,6 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
   @Published var sendGPS = false
-  @Published var sendMemory = false
 
   @Published var port: NWEndpoint.Port?
   var clientEndpointNames: [String] {
@@ -143,6 +163,9 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   var cpuTimer: Timer?
   @Published var cpuHistory: [CPUUsage] = []
+
+  var memTimer: Timer?
+  @Published var memHistory: [MemoryUsage] = []
 
   override init() {
     poseChannel = server.addChannel(
@@ -172,11 +195,21 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 }
 """#)
+    memChannel = server.addChannel(topic: "memory", encoding: "json", schemaName: "Memory", schema:
+#"""
+{
+  "type":"object",
+  "properties":{
+    "usage":{"type":"number"}
+  }
+}
+"""#)
     super.init()
     server.$port.assign(to: \.port, on: self).store(in: &subscribers)
     server.objectWillChange.sink { [weak self] in self?.objectWillChange.send() }.store(in: &subscribers)
     startPoseUpdates()
     startCPUUpdates()
+    startMemoryUpdates()
   }
 
   func startCPUUpdates() {
@@ -203,6 +236,33 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   func stopCPUUpdates() {
     cpuTimer?.invalidate()
     cpuTimer = nil
+  }
+
+  func startMemoryUpdates() {
+    memHistory = []
+    memTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [self] _ in
+      let usage = getMemoryUsage()
+      let memUsage = MemoryUsage(
+        usage: Double(usage.used) / Double(usage.total),
+        date: .now
+      )
+      let enc = JSONEncoder()
+      enc.outputFormatting = .sortedKeys
+      let data = try! enc.encode(memUsage)
+
+      Task { @MainActor in
+        self.memHistory.append(memUsage)
+        if self.memHistory.count > 20 {
+          self.memHistory.remove(at: 0)
+        }
+        self.server.sendMessage(on: self.memChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+      }
+    }
+  }
+
+  func stopMemoryUpdates() {
+    memTimer?.invalidate()
+    memTimer = nil
   }
 
 

@@ -12,95 +12,125 @@ struct ContentView: View {
 
   var body: some View {
     TabView {
-      NavigationView {
-        VStack {
-          List {
-            if let port = server.port {
-              Section {
-                Text("Listening on \(server.address):\(port.debugDescription)")
-              } header: { Text("Server") }
+      topicsTab.tabItem {
+        Image(systemName: "fibrechannel")
+        Text("Topics")
+      }
+      serverTab.tabItem {
+        Image(systemName: "network")
+        Text("Server")
+      }
+    }
+  }
 
-              Section {
-                Toggle(isOn: $server.sendPose) { Text("Pose") }
-                Toggle(isOn: $server.sendLocation) { Text("GPS") }
+  var topicsTab: some View {
+    NavigationView {
+      VStack {
+        List {
+          Section {
+            Toggle(isOn: $server.sendPose) { Text("Pose") }
+            Toggle(isOn: $server.sendLocation) { Text("GPS") }
 
-                // TODO: CPU usage
-                Toggle(isOn: $server.sendCPU ) { Text("CPU") }
-                if server.sendCPU {
-                  Chart(server.cpuHistory) {
-                    LineMark(
-                      x: .value("Time", $0.date),
-                      y: .value("Usage", $0.usage)
-                    )
-                  }
-                  .frame(height: 60)
-                  .chartXAxis(.hidden)
-                  .padding([.bottom, .top], 5)
-                  .chartYAxis {
-                     AxisMarks {
-                         AxisGridLine()
-                         AxisTick()
-                         let value = $0.as(Double.self)!
-                         AxisValueLabel {
-                             Text("\(Int(value * 100))%")
-                         }
-                     }
-                  }
-                }
-
-                // TODO: Memory usage
-                Toggle(isOn: $server.sendMemory ) { Text("Memory") }
-                  .disabled(true)
-
-                Picker(
-                  selection: $server.activeCamera,
-                  label: Toggle(isOn: $server.sendCamera) {
-                    Text("Camera")
-                  }
-                ) {
-                  if server.sendCamera {
-                    ForEach(Camera.allCases) {
-                      Text($0.description)
-                    }
-                  }
-                }
-                .pickerStyle(InlinePickerStyle())
-
-                if server.sendCamera {
-                  Text("Dropped frames: \(server.droppedVideoFrames)")
-                }
-              } header: { Text("Topics") }
+            // TODO: CPU usage
+            Toggle(isOn: $server.sendCPU ) { Text("CPU") }
+            if server.sendCPU {
+              cpuChart
             }
-          }
-          .listStyle(.insetGrouped)
-        }
-      }
-      .tabItem {
-        Image(systemName: "list.dash")
-        Text("Tab 2")
-      }
-      NavigationView {
-        VStack {
-          List {
-            if let port = server.port {
-              Section {
-                Text("Listening on \(server.address):\(port.debugDescription)")
-              } header: { Text("Server") }
 
-              Section {
-                ForEach(Array(server.clientEndpointNames.enumerated()), id: \.offset) {
-                  Text($0.element)
+            // TODO: Memory usage
+            Toggle(isOn: $server.sendMemory ) { Text("Memory") }
+            if server.sendMemory {
+              memoryChart
+            }
+
+            Picker(
+              selection: $server.activeCamera,
+              label: Toggle(isOn: $server.sendCamera) {
+                Text("Camera")
+              }
+            ) {
+              if server.sendCamera {
+                ForEach(Camera.allCases) {
+                  Text($0.description)
                 }
-              } header: {
-                Text("Clients")
               }
             }
-          }
-          .listStyle(.insetGrouped)
+            .pickerStyle(InlinePickerStyle())
+
+            if server.sendCamera {
+              Text("Dropped frames: \(server.droppedVideoFrames)")
+            }
+          } header: { Text("Topics") }
         }
-      }.tabItem {
-        Image(systemName: "list.dash")
-        Text("Tab 1") }
+        .listStyle(.insetGrouped)
+      }
+    }
+  }
+
+  var serverTab: some View {
+    NavigationView {
+      VStack {
+        List {
+          if let port = server.port {
+            Section {
+              Text("Listening on \(server.address):\(port.debugDescription)")
+            } header: { Text("Server") }
+
+            Section {
+              ForEach(Array(server.clientEndpointNames.enumerated()), id: \.offset) {
+                Text($0.element)
+              }
+            } header: {
+              Text("Clients")
+            }
+          }
+        }
+        .listStyle(.insetGrouped)
+      }
+    }
+  }
+
+  var cpuChart: some View {
+    Chart(server.cpuHistory) {
+      LineMark(
+        x: .value("Time", $0.date),
+        y: .value("Usage", $0.usage)
+      )
+    }
+    .frame(height: 60)
+    .chartXAxis(.hidden)
+    .padding([.bottom, .top], 5)
+    .chartYAxis {
+      AxisMarks {
+        AxisGridLine()
+        AxisTick()
+        let value = $0.as(Double.self)!
+        AxisValueLabel {
+          Text("\(value, format: .percent)")
+        }
+      }
+    }
+  }
+
+  var memoryChart: some View {
+    Chart(server.memHistory) {
+      LineMark(
+        x: .value("Time", $0.date),
+        y: .value("Usage", $0.usage)
+      )
+    }
+    .frame(height: 60)
+    .chartXAxis(.hidden)
+    .padding([.bottom, .top], 5)
+    .chartYAxis {
+      AxisMarks {
+        AxisGridLine()
+        AxisTick()
+        let value = $0.as(Double.self)!
+        AxisValueLabel {
+          Text("\(value, format: .percent)")
+        }
+      }
     }
   }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1640D46C29945B7200C0D669 /* getCPUUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D46B29945B7200C0D669 /* getCPUUsage.swift */; };
+		1640D46E2994AB7400C0D669 /* getMemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */; };
 		169393CD2994522B00A78475 /* LocationFix.bin in Resources */ = {isa = PBXBuildFile; fileRef = 169393CC2994522A00A78475 /* LocationFix.bin */; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080C2992D8A70082E9A0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF080B2992D8A70082E9A0 /* ContentView.swift */; };
@@ -57,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		1640D46B29945B7200C0D669 /* getCPUUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getCPUUsage.swift; sourceTree = "<group>"; };
+		1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getMemoryUsage.swift; sourceTree = "<group>"; };
 		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
 		16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				16EF080B2992D8A70082E9A0 /* ContentView.swift */,
 				16EF08172993021C0082E9A0 /* getIPAddress.swift */,
 				1640D46B29945B7200C0D669 /* getCPUUsage.swift */,
+				1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */,
 				16EF0819299302570082E9A0 /* FoxgloveServer.swift */,
 				16EF081B299363840082E9A0 /* schemas.swift */,
 				16EF081D2993777F0082E9A0 /* Server.swift */,
@@ -315,6 +318,7 @@
 				16EF0848299406BB0082E9A0 /* PointsAnnotation.pb.swift in Sources */,
 				16EF086A299406BB0082E9A0 /* Pose.pb.swift in Sources */,
 				16EF081A299302570082E9A0 /* FoxgloveServer.swift in Sources */,
+				1640D46E2994AB7400C0D669 /* getMemoryUsage.swift in Sources */,
 				16EF0855299406BB0082E9A0 /* PoseInFrame.pb.swift in Sources */,
 				16EF0852299406BB0082E9A0 /* GeoJSON.pb.swift in Sources */,
 				16EF0859299406BB0082E9A0 /* CircleAnnotation.pb.swift in Sources */,
