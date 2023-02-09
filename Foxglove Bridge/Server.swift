@@ -262,7 +262,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   func startCPUUpdates() {
     cpuHistory = []
-    cpuTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [self] _ in
+    let timer = Timer(timeInterval: 0.25, repeats: true) { [self] _ in
       let cpuUsage = CPUUsage(
         usage: getCPUUsage(),
         date: .now
@@ -279,6 +279,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         self.server.sendMessage(on: self.cpuChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
     }
+    cpuTimer = timer
+    RunLoop.main.add(timer, forMode: .common) // https://stackoverflow.com/a/60999226
   }
 
   func stopCPUUpdates() {
@@ -288,7 +290,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   func startMemoryUpdates() {
     memHistory = []
-    memTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [self] _ in
+    let timer = Timer(timeInterval: 0.25, repeats: true) { [self] _ in
       let usage = getMemoryUsage()
       let memUsage = MemoryUsage(
         usage: Double(usage.used) / Double(usage.total),
@@ -306,6 +308,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         self.server.sendMessage(on: self.memChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
     }
+    memTimer = timer
+    RunLoop.main.add(timer, forMode: .common) // https://stackoverflow.com/a/60999226
   }
 
   func stopMemoryUpdates() {
