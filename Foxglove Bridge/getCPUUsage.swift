@@ -21,6 +21,7 @@ import Darwin.Mach.host_info
 //}
 
 // From https://github.com/dani-gavrilov/GDPerformanceView-Swift/blob/171a656040135d667f4228c3ec82f2384770d87d/GDPerformanceView-Swift/GDPerformanceMonitoring/PerformanceСalculator.swift#L94
+// See also: https://developer.apple.com/forums/thread/655349
 func getCPUUsage() -> Double {
   var totalUsageOfCPU: Double = 0.0
   var threadsList: thread_act_array_t?
