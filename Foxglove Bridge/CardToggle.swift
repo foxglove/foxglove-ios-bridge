@@ -29,3 +29,31 @@ struct CardToggle<Content: View>: View {
     }
   }
 }
+
+struct CardToggle_Previews: PreviewProvider {
+  static var previews: some View {
+    Preview()
+  }
+
+  struct Preview: View {
+    @State var test = false
+    @State var test2 = 1
+
+    var body: some View {
+      CardToggle(isOn: $test) {
+        Text("Hi")
+      }.frame(width: 200)
+        .overlay(alignment: .bottom) {
+            Picker(selection: $test2) {
+              Text("one").tag(1)
+              Text("two").tag(2)
+              Text("three").tag(3)
+            } label: {
+              Text("hi")
+            }
+            .pickerStyle(.segmented)
+            .padding()
+        }
+    }
+  }
+}

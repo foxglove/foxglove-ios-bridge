@@ -50,6 +50,21 @@ struct ContentView: View {
             if server.sendCamera {
               Text("Dropped frames: \(server.droppedVideoFrames)")
             }
+          }.overlay(alignment: .bottom) {
+            Picker(
+              selection: $server.activeCamera,
+              label: Toggle(isOn: $server.sendCamera) {
+                Text("Camera")
+              }
+            ) {
+              if server.sendCamera {
+                ForEach(Camera.allCases) {
+                  Text($0.description)
+                }
+              }
+            }
+            .pickerStyle(.segmented)
+            .padding()
           }
           CardToggle(isOn: $server.sendWatchData) {
             Text("Apple Watch")
