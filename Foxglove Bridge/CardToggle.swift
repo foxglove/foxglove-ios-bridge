@@ -1,5 +1,7 @@
 import SwiftUI
 
+let feedbackGenerator = UISelectionFeedbackGenerator()
+
 struct CardToggle<Content: View>: View {
   @Binding var isOn: Bool
   @ViewBuilder let content: () -> Content
@@ -26,6 +28,7 @@ struct CardToggle<Content: View>: View {
     .aspectRatio(1, contentMode: .fit)
     .onTapGesture {
       isOn.toggle()
+      feedbackGenerator.selectionChanged()
     }
   }
 }
