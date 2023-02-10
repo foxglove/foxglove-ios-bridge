@@ -5,10 +5,26 @@ import Charts
 import CoreMotion
 import Combine
 
+@MainActor
+class AsyncInitialized<T>: ObservableObject {
+  @Published var value: T?
+  init(_ block: @escaping () -> T?) {
+    Task.detached {
+      let result = block()
+      Task { @MainActor in
+        self.value = result
+      }
+    }
+  }
+}
+
 struct ContentView: View {
   @StateObject var server = Server()
-
   @State var sendPose = true
+
+  @ObservedObject var qrCode = AsyncInitialized {
+    createQRCode("https://foxglove.dev/")
+  }
 
   var body: some View {
     TabView {
@@ -24,77 +40,88 @@ struct ContentView: View {
   }
 
   var topicsTab: some View {
-    NavigationView {
-      ScrollView {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120), spacing: 20)], spacing: 20) {
-          CardToggle(isOn: $server.sendPose) {
-            Text("Pose")
+    ScrollView {
+      LazyVGrid(columns: [GridItem(.adaptive(minimum: 120), spacing: 20)], spacing: 20) {
+        CardToggle(isOn: $server.sendPose) {
+          Text("Pose")
+        }
+        CardToggle(isOn: $server.sendLocation) {
+          Text("GPS")
+        }
+        CardToggle(isOn: $server.sendCPU) {
+          Text("CPU")
+          if server.sendCPU {
+            cpuChart
           }
-          CardToggle(isOn: $server.sendLocation) {
-            Text("GPS")
+        }
+        CardToggle(isOn: $server.sendMemory) {
+          Text("Memory")
+          if server.sendMemory {
+            memoryChart
           }
-          CardToggle(isOn: $server.sendCPU) {
-            Text("CPU")
-            if server.sendCPU {
-              cpuChart
+        }
+        CardToggle(isOn: $server.sendCamera) {
+          Text("Camera")
+          if server.sendCamera {
+            Text("Dropped frames: \(server.droppedVideoFrames)")
+          }
+        }.overlay(alignment: .bottom) {
+          Picker(
+            selection: $server.activeCamera,
+            label: Toggle(isOn: $server.sendCamera) {
+              Text("Camera")
             }
-          }
-          CardToggle(isOn: $server.sendMemory) {
-            Text("Memory")
-            if server.sendMemory {
-              memoryChart
-            }
-          }
-          CardToggle(isOn: $server.sendCamera) {
-            Text("Camera")
+          ) {
             if server.sendCamera {
-              Text("Dropped frames: \(server.droppedVideoFrames)")
-            }
-          }.overlay(alignment: .bottom) {
-            Picker(
-              selection: $server.activeCamera,
-              label: Toggle(isOn: $server.sendCamera) {
-                Text("Camera")
-              }
-            ) {
-              if server.sendCamera {
-                ForEach(Camera.allCases) {
-                  Text($0.description)
-                }
+              ForEach(Camera.allCases) {
+                Text($0.description)
               }
             }
-            .pickerStyle(.segmented)
-            .padding()
           }
-          CardToggle(isOn: $server.sendWatchData) {
-            Text("Apple Watch")
-          }
-        }.padding()
-      }
+          .pickerStyle(.segmented)
+          .padding()
+        }
+        CardToggle(isOn: $server.sendWatchData) {
+          Text("Apple Watch")
+        }
+      }.padding()
     }
   }
 
   var serverTab: some View {
-    NavigationView {
-      VStack {
-        List {
-          if let port = server.port {
-            Section {
-              Text("Listening on \(server.address):\(port.debugDescription)")
-            } header: { Text("Server") }
+    List {
+      if let port = server.port {
+        Section {
+          Text("Listening on \(server.address):\(port.debugDescription)")
+        } header: { Text("Server") }
 
-            Section {
-              ForEach(Array(server.clientEndpointNames.enumerated()), id: \.offset) {
-                Text($0.element)
-              }
-            } header: {
-              Text("Clients")
-            }
+        Section {
+          ForEach(Array(server.clientEndpointNames.enumerated()), id: \.offset) {
+            Text($0.element)
           }
+          if server.clientEndpointNames.isEmpty {
+            Text("No clients connected")
+              .foregroundColor(.gray)
+          }
+        } header: {
+          Text("Clients")
         }
-        .listStyle(.insetGrouped)
+
+        Section { } footer: {
+          HStack {
+            if let qrCode = qrCode.value {
+              Image(uiImage: qrCode)
+                .interpolation(.none)
+                .resizable()
+                .colorMultiply(.secondary)
+                .aspectRatio(1, contentMode: .fit)
+                .frame(width: 5 * qrCode.size.width)
+            }
+          }.frame(maxWidth: .infinity)
+        }
       }
     }
+    .listStyle(.insetGrouped)
   }
 
   var cpuChart: some View {
