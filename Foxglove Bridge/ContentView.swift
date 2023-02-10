@@ -1,9 +1,5 @@
 import SwiftUI
-import Network
-import Darwin
 import Charts
-import CoreMotion
-import Combine
 
 @MainActor
 class AsyncInitialized<T>: ObservableObject {
