@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "16EF08052992D8A70082E9A0"
-               BuildableName = "Foxglove Bridge.app"
-               BlueprintName = "Foxglove Bridge"
-               ReferencedContainer = "container:Foxglove Bridge.xcodeproj">
+               BuildableName = "Foxglove Demo.app"
+               BlueprintName = "Foxglove Demo"
+               ReferencedContainer = "container:WebSocketDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "16EF08052992D8A70082E9A0"
-            BuildableName = "Foxglove Bridge.app"
-            BlueprintName = "Foxglove Bridge"
-            ReferencedContainer = "container:Foxglove Bridge.xcodeproj">
+            BuildableName = "Foxglove Demo.app"
+            BlueprintName = "Foxglove Demo"
+            ReferencedContainer = "container:WebSocketDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "16EF08052992D8A70082E9A0"
-            BuildableName = "Foxglove Bridge.app"
-            BlueprintName = "Foxglove Bridge"
-            ReferencedContainer = "container:Foxglove Bridge.xcodeproj">
+            BuildableName = "Foxglove Demo.app"
+            BlueprintName = "Foxglove Demo"
+            ReferencedContainer = "container:WebSocketDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

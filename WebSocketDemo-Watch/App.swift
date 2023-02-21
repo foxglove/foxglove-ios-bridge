@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct Foxglove_BridgeApp: App {
+struct WebSocketDemoWatchApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()

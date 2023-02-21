@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		1640D46C29945B7200C0D669 /* getCPUUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D46B29945B7200C0D669 /* getCPUUsage.swift */; };
 		1640D46E2994AB7400C0D669 /* getMemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */; };
-		1640D49D29954ABD00C0D669 /* Foxglove_Bridge_CompanionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49C29954ABD00C0D669 /* Foxglove_Bridge_CompanionApp.swift */; };
+		1640D49D29954ABD00C0D669 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49C29954ABD00C0D669 /* App.swift */; };
 		1640D49F29954ABD00C0D669 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49E29954ABD00C0D669 /* ContentView.swift */; };
 		1640D4A129954ABD00C0D669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1640D4A029954ABD00C0D669 /* Assets.xcassets */; };
-		164DE46D29955C7C002B3560 /* Foxglove Bridge Companion Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1640D49A29954ABD00C0D669 /* Foxglove Bridge Companion Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		164DE46D29955C7C002B3560 /* Foxglove Demo Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1640D49A29954ABD00C0D669 /* Foxglove Demo Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		164DE4742995BCEC002B3560 /* CardToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DE4732995BCEC002B3560 /* CardToggle.swift */; };
 		169393CD2994522B00A78475 /* LocationFix.bin in Resources */ = {isa = PBXBuildFile; fileRef = 169393CC2994522A00A78475 /* LocationFix.bin */; };
 		16B2ED28299628DF00042516 /* createQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B2ED27299628DF00042516 /* createQRCode.swift */; };
@@ -79,7 +79,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				164DE46D29955C7C002B3560 /* Foxglove Bridge Companion Watch App.app in Embed Watch Content */,
+				164DE46D29955C7C002B3560 /* Foxglove Demo Watch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,16 +89,16 @@
 /* Begin PBXFileReference section */
 		1640D46B29945B7200C0D669 /* getCPUUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getCPUUsage.swift; sourceTree = "<group>"; };
 		1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getMemoryUsage.swift; sourceTree = "<group>"; };
-		1640D46F2994B5A400C0D669 /* Foxglove Bridge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Foxglove Bridge.entitlements"; sourceTree = "<group>"; };
-		1640D49A29954ABD00C0D669 /* Foxglove Bridge Companion Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge Companion Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1640D49C29954ABD00C0D669 /* Foxglove_Bridge_CompanionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foxglove_Bridge_CompanionApp.swift; sourceTree = "<group>"; };
+		1640D46F2994B5A400C0D669 /* WebSocketDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebSocketDemo.entitlements; sourceTree = "<group>"; };
+		1640D49A29954ABD00C0D669 /* Foxglove Demo Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Demo Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1640D49C29954ABD00C0D669 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		1640D49E29954ABD00C0D669 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1640D4A029954ABD00C0D669 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		164DE46A299559EA002B3560 /* Foxglove Bridge Companion Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Foxglove Bridge Companion Watch App.entitlements"; sourceTree = "<group>"; };
+		164DE46A299559EA002B3560 /* WebSocketDemo-Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WebSocketDemo-Watch.entitlements"; sourceTree = "<group>"; };
 		164DE4732995BCEC002B3560 /* CardToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardToggle.swift; sourceTree = "<group>"; };
 		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
 		16B2ED27299628DF00042516 /* createQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createQRCode.swift; sourceTree = "<group>"; };
-		16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		16EF08062992D8A70082E9A0 /* Foxglove Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		16EF080B2992D8A70082E9A0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		16EF080D2992D8A90082E9A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -163,15 +163,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1640D49B29954ABD00C0D669 /* Foxglove Bridge Companion Watch App */ = {
+		1640D49B29954ABD00C0D669 /* WebSocketDemo-Watch */ = {
 			isa = PBXGroup;
 			children = (
-				164DE46A299559EA002B3560 /* Foxglove Bridge Companion Watch App.entitlements */,
-				1640D49C29954ABD00C0D669 /* Foxglove_Bridge_CompanionApp.swift */,
+				164DE46A299559EA002B3560 /* WebSocketDemo-Watch.entitlements */,
+				1640D49C29954ABD00C0D669 /* App.swift */,
 				1640D49E29954ABD00C0D669 /* ContentView.swift */,
 				1640D4A029954ABD00C0D669 /* Assets.xcassets */,
 			);
-			path = "Foxglove Bridge Companion Watch App";
+			path = "WebSocketDemo-Watch";
 			sourceTree = "<group>";
 		};
 		164DE46C29955C7C002B3560 /* Frameworks */ = {
@@ -184,8 +184,8 @@
 		16EF07FD2992D8A70082E9A0 = {
 			isa = PBXGroup;
 			children = (
-				16EF08082992D8A70082E9A0 /* Foxglove Bridge */,
-				1640D49B29954ABD00C0D669 /* Foxglove Bridge Companion Watch App */,
+				16EF08082992D8A70082E9A0 /* WebSocketDemo */,
+				1640D49B29954ABD00C0D669 /* WebSocketDemo-Watch */,
 				16EF08072992D8A70082E9A0 /* Products */,
 				164DE46C29955C7C002B3560 /* Frameworks */,
 			);
@@ -195,16 +195,16 @@
 		16EF08072992D8A70082E9A0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */,
-				1640D49A29954ABD00C0D669 /* Foxglove Bridge Companion Watch App.app */,
+				16EF08062992D8A70082E9A0 /* Foxglove Demo.app */,
+				1640D49A29954ABD00C0D669 /* Foxglove Demo Watch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		16EF08082992D8A70082E9A0 /* Foxglove Bridge */ = {
+		16EF08082992D8A70082E9A0 /* WebSocketDemo */ = {
 			isa = PBXGroup;
 			children = (
-				1640D46F2994B5A400C0D669 /* Foxglove Bridge.entitlements */,
+				1640D46F2994B5A400C0D669 /* WebSocketDemo.entitlements */,
 				16EF080D2992D8A90082E9A0 /* Assets.xcassets */,
 				16EF08092992D8A70082E9A0 /* App.swift */,
 				16EF080B2992D8A70082E9A0 /* ContentView.swift */,
@@ -218,7 +218,7 @@
 				16EF081D2993777F0082E9A0 /* Server.swift */,
 				16EF0823299406BB0082E9A0 /* Schemas */,
 			);
-			path = "Foxglove Bridge";
+			path = WebSocketDemo;
 			sourceTree = "<group>";
 		};
 		16EF0823299406BB0082E9A0 /* Schemas */ = {
@@ -284,9 +284,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1640D49929954ABD00C0D669 /* Foxglove Bridge Companion Watch App */ = {
+		1640D49929954ABD00C0D669 /* Foxglove Demo Watch */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1640D4A729954ABE00C0D669 /* Build configuration list for PBXNativeTarget "Foxglove Bridge Companion Watch App" */;
+			buildConfigurationList = 1640D4A729954ABE00C0D669 /* Build configuration list for PBXNativeTarget "Foxglove Demo Watch" */;
 			buildPhases = (
 				1640D49629954ABD00C0D669 /* Sources */,
 				1640D49729954ABD00C0D669 /* Frameworks */,
@@ -296,14 +296,14 @@
 			);
 			dependencies = (
 			);
-			name = "Foxglove Bridge Companion Watch App";
+			name = "Foxglove Demo Watch";
 			productName = "Foxglove Bridge Companion Watch App";
-			productReference = 1640D49A29954ABD00C0D669 /* Foxglove Bridge Companion Watch App.app */;
+			productReference = 1640D49A29954ABD00C0D669 /* Foxglove Demo Watch.app */;
 			productType = "com.apple.product-type.application";
 		};
-		16EF08052992D8A70082E9A0 /* Foxglove Bridge */ = {
+		16EF08052992D8A70082E9A0 /* Foxglove Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 16EF08142992D8A90082E9A0 /* Build configuration list for PBXNativeTarget "Foxglove Bridge" */;
+			buildConfigurationList = 16EF08142992D8A90082E9A0 /* Build configuration list for PBXNativeTarget "Foxglove Demo" */;
 			buildPhases = (
 				16EF08022992D8A70082E9A0 /* Sources */,
 				16EF08032992D8A70082E9A0 /* Frameworks */,
@@ -315,12 +315,12 @@
 			dependencies = (
 				164DE47229956493002B3560 /* PBXTargetDependency */,
 			);
-			name = "Foxglove Bridge";
+			name = "Foxglove Demo";
 			packageProductDependencies = (
 				16EF086C299408100082E9A0 /* SwiftProtobuf */,
 			);
 			productName = "Foxglove Bridge";
-			productReference = 16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */;
+			productReference = 16EF08062992D8A70082E9A0 /* Foxglove Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -341,7 +341,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 16EF08012992D8A70082E9A0 /* Build configuration list for PBXProject "Foxglove Bridge" */;
+			buildConfigurationList = 16EF08012992D8A70082E9A0 /* Build configuration list for PBXProject "WebSocketDemo" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -357,8 +357,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				16EF08052992D8A70082E9A0 /* Foxglove Bridge */,
-				1640D49929954ABD00C0D669 /* Foxglove Bridge Companion Watch App */,
+				16EF08052992D8A70082E9A0 /* Foxglove Demo */,
+				1640D49929954ABD00C0D669 /* Foxglove Demo Watch */,
 			);
 		};
 /* End PBXProject section */
@@ -390,7 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1640D49F29954ABD00C0D669 /* ContentView.swift in Sources */,
-				1640D49D29954ABD00C0D669 /* Foxglove_Bridge_CompanionApp.swift in Sources */,
+				1640D49D29954ABD00C0D669 /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,7 +451,7 @@
 /* Begin PBXTargetDependency section */
 		164DE47229956493002B3560 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1640D49929954ABD00C0D669 /* Foxglove Bridge Companion Watch App */;
+			target = 1640D49929954ABD00C0D669 /* Foxglove Demo Watch */;
 			targetProxy = 164DE47129956493002B3560 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -462,29 +462,29 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Foxglove Bridge Companion Watch App/Foxglove Bridge Companion Watch App.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WebSocketDemo-Watch/WebSocketDemo-Watch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6BXC9YWCQ7;
+				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge Companion";
+				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Demo";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "dev.foxglove.Foxglove-Bridge-test";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "dev.foxglove.websocket-bridge-demo";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.Foxglove-Bridge-test.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -493,29 +493,29 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Foxglove Bridge Companion Watch App/Foxglove Bridge Companion Watch App.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WebSocketDemo-Watch/WebSocketDemo-Watch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6BXC9YWCQ7;
+				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge Companion";
+				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Demo";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "dev.foxglove.Foxglove-Bridge-test";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "dev.foxglove.websocket-bridge-demo";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.Foxglove-Bridge-test.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -638,14 +638,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Foxglove Bridge/Foxglove Bridge.entitlements";
+				CODE_SIGN_ENTITLEMENTS = WebSocketDemo/WebSocketDemo.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6BXC9YWCQ7;
+				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera images can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS location can be streamed over the WebSocket.";
@@ -653,13 +654,15 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.Foxglove-Bridge-test";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -671,14 +674,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Foxglove Bridge/Foxglove Bridge.entitlements";
+				CODE_SIGN_ENTITLEMENTS = WebSocketDemo/WebSocketDemo.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6BXC9YWCQ7;
+				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera images can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS location can be streamed over the WebSocket.";
@@ -686,13 +690,15 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.Foxglove-Bridge-test";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -702,7 +708,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1640D4A729954ABE00C0D669 /* Build configuration list for PBXNativeTarget "Foxglove Bridge Companion Watch App" */ = {
+		1640D4A729954ABE00C0D669 /* Build configuration list for PBXNativeTarget "Foxglove Demo Watch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1640D4A529954ABE00C0D669 /* Debug */,
@@ -711,7 +717,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		16EF08012992D8A70082E9A0 /* Build configuration list for PBXProject "Foxglove Bridge" */ = {
+		16EF08012992D8A70082E9A0 /* Build configuration list for PBXProject "WebSocketDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				16EF08122992D8A90082E9A0 /* Debug */,
@@ -720,7 +726,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		16EF08142992D8A90082E9A0 /* Build configuration list for PBXNativeTarget "Foxglove Bridge" */ = {
+		16EF08142992D8A90082E9A0 /* Build configuration list for PBXNativeTarget "Foxglove Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				16EF08152992D8A90082E9A0 /* Debug */,
