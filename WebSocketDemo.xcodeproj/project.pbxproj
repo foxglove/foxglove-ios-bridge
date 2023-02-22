@@ -470,6 +470,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Demo";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "dev.foxglove.websocket-bridge-demo";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -501,6 +502,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Demo";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "dev.foxglove.websocket-bridge-demo";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -649,11 +651,13 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera images can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS location can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -685,11 +689,13 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera images can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS location can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
