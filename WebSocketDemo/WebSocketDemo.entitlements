@@ -6,5 +6,9 @@
 	<true/>
 	<key>com.apple.developer.healthkit.access</key>
 	<array/>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>appclips:foxglove.dev</string>
+	</array>
 </dict>
 </plist>
