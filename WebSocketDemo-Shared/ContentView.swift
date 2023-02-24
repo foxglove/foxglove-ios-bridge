@@ -1,5 +1,6 @@
 import SwiftUI
 import Charts
+import StoreKit
 
 @MainActor
 class AsyncInitialized<T>: ObservableObject {
@@ -14,9 +15,13 @@ class AsyncInitialized<T>: ObservableObject {
   }
 }
 
+private let isAppClip = Bundle.main.bundleIdentifier?.hasSuffix("appclip") ?? false
+private let feedbackGenerator = UINotificationFeedbackGenerator()
+
 public struct ContentView: View {
   @StateObject var server = Server()
   @State var sendPose = true
+  @State var appStoreOverlayShown = false
 
   @ObservedObject var qrCode = AsyncInitialized {
     createQRCode("https://foxglove.dev/")
@@ -79,9 +84,23 @@ public struct ContentView: View {
           .pickerStyle(.segmented)
           .padding()
         }
-        CardToggle(isOn: $server.sendWatchData) {
+        CardToggle(isOn: $server.sendWatchData, dashed: isAppClip) {
           Text("Apple Watch")
-        }
+          if isAppClip {
+            Text("Requires full app")
+              .font(.caption)
+              .foregroundColor(.secondary)
+          }
+        }.disabled(isAppClip)
+          .onTapGesture {
+            if isAppClip && !appStoreOverlayShown {
+              appStoreOverlayShown = true
+              feedbackGenerator.notificationOccurred(.warning)
+            }
+          }
+          .appStoreOverlay(isPresented: $appStoreOverlayShown) {
+            SKOverlay.AppClipConfiguration(position: .bottom)
+          }
       }.padding()
     }
   }
