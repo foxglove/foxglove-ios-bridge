@@ -2,7 +2,7 @@ import SwiftUI
 import WebSocketDemo_Shared
 
 @main
-struct WebSocketDemoApp: App {
+struct WebSocketDemoAppClip: App {
   var body: some Scene {
     WindowGroup {
       ContentView()

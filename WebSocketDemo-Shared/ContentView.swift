@@ -14,7 +14,7 @@ class AsyncInitialized<T>: ObservableObject {
   }
 }
 
-struct ContentView: View {
+public struct ContentView: View {
   @StateObject var server = Server()
   @State var sendPose = true
 
@@ -22,7 +22,9 @@ struct ContentView: View {
     createQRCode("https://foxglove.dev/")
   }
 
-  var body: some View {
+  public init() {}
+
+  public var body: some View {
     TabView {
       topicsTab.tabItem {
         Image(systemName: "fibrechannel")

@@ -212,13 +212,13 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       topic: "camera",
       encoding: "protobuf",
       schemaName: Foxglove_CompressedImage.protoMessageName,
-      schema: try! Data(contentsOf: Bundle.main.url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString()
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString()
     )
     locationChannel = server.addChannel(
       topic: "gps",
       encoding: "protobuf",
       schemaName: Foxglove_LocationFix.protoMessageName,
-      schema: try! Data(contentsOf: Bundle.main.url(forResource: "LocationFix", withExtension: "bin")!).base64EncodedString()
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "LocationFix", withExtension: "bin")!).base64EncodedString()
     )
     cpuChannel = server.addChannel(topic: "cpu", encoding: "json", schemaName: "CPU", schema:
 #"""
