@@ -124,18 +124,18 @@ public struct ContentView: View {
           Text("Clients")
         }
 
-        Section { } footer: {
-          HStack {
-            if let qrCode = qrCode.value {
-              Image(uiImage: qrCode)
-                .interpolation(.none)
-                .resizable()
-                .colorMultiply(.secondary)
-                .aspectRatio(1, contentMode: .fit)
-                .frame(width: 5 * qrCode.size.width)
-            }
-          }.frame(maxWidth: .infinity)
-        }
+//        Section { } footer: {
+//          HStack {
+//            if let qrCode = qrCode.value {
+//              Image(uiImage: qrCode)
+//                .interpolation(.none)
+//                .resizable()
+//                .colorMultiply(.secondary)
+//                .aspectRatio(1, contentMode: .fit)
+//                .frame(width: 5 * qrCode.size.width)
+//            }
+//          }.frame(maxWidth: .infinity)
+//        }
       }
     }
     .listStyle(.insetGrouped)
