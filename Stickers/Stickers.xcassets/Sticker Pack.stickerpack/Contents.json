@@ -1,0 +1,29 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "grid-size" : "regular"
+  },
+  "stickers" : [
+    {
+      "filename" : "logo.sticker"
+    },
+    {
+      "filename" : "logo-icon-round.sticker"
+    },
+    {
+      "filename" : "websockets.sticker"
+    },
+    {
+      "filename" : "ros1.sticker"
+    },
+    {
+      "filename" : "ros2.sticker"
+    },
+    {
+      "filename" : "ros-dots.sticker"
+    }
+  ]
+}

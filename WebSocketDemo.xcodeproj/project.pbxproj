@@ -10,6 +10,8 @@
 		1601568829A70C8F00ECBCC3 /* WebSocketDemo_Shared.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 16F34CE729A6FF3200ACC882 /* WebSocketDemo_Shared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1601568A29A70F0800ECBCC3 /* WebSocketDemo_Shared.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 16F34CE729A6FF3200ACC882 /* WebSocketDemo_Shared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1601568C29A86EDF00ECBCC3 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 1601568B29A86EDF00ECBCC3 /* SwiftProtobuf */; };
+		1601569229AE669B00ECBCC3 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1601569129AE669B00ECBCC3 /* Stickers.xcassets */; };
+		1601569629AE669B00ECBCC3 /* Foxglove Stickers.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1601568F29AE669900ECBCC3 /* Foxglove Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1640D49D29954ABD00C0D669 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49C29954ABD00C0D669 /* App.swift */; };
 		1640D49F29954ABD00C0D669 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49E29954ABD00C0D669 /* ContentView.swift */; };
 		1640D4A129954ABD00C0D669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1640D4A029954ABD00C0D669 /* Assets.xcassets */; };
@@ -72,6 +74,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1601569429AE669B00ECBCC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 16EF07FE2992D8A70082E9A0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1601568E29AE669900ECBCC3;
+			remoteInfo = "Foxglove Stickers";
+		};
 		164DE47129956493002B3560 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 16EF07FE2992D8A70082E9A0 /* Project object */;
@@ -113,6 +122,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1601569729AE669B00ECBCC3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1601569629AE669B00ECBCC3 /* Foxglove Stickers.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		164DE47029955C7C002B3560 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -148,6 +168,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1601568F29AE669900ECBCC3 /* Foxglove Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Foxglove Stickers.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1601569129AE669B00ECBCC3 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
+		1601569C29AE7B5800ECBCC3 /* Foxglove-Stickers-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Foxglove-Stickers-Info.plist"; sourceTree = "<group>"; };
 		1640D46B29945B7200C0D669 /* getCPUUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getCPUUsage.swift; sourceTree = "<group>"; };
 		1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getMemoryUsage.swift; sourceTree = "<group>"; };
 		1640D46F2994B5A400C0D669 /* WebSocketDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebSocketDemo.entitlements; sourceTree = "<group>"; };
@@ -247,6 +270,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1601569029AE669900ECBCC3 /* Stickers */ = {
+			isa = PBXGroup;
+			children = (
+				1601569129AE669B00ECBCC3 /* Stickers.xcassets */,
+				1601569C29AE7B5800ECBCC3 /* Foxglove-Stickers-Info.plist */,
+			);
+			path = Stickers;
+			sourceTree = "<group>";
+		};
 		1640D49B29954ABD00C0D669 /* WebSocketDemo-Watch */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +304,7 @@
 				1640D49B29954ABD00C0D669 /* WebSocketDemo-Watch */,
 				16F34CCF29A6FE1500ACC882 /* WebSocketDemo-AppClip */,
 				16F34CE829A6FF3200ACC882 /* WebSocketDemo-Shared */,
+				1601569029AE669900ECBCC3 /* Stickers */,
 				16EF08072992D8A70082E9A0 /* Products */,
 				164DE46C29955C7C002B3560 /* Frameworks */,
 			);
@@ -285,6 +318,7 @@
 				1640D49A29954ABD00C0D669 /* Foxglove Bridge Watch.app */,
 				16F34CCE29A6FE1500ACC882 /* Foxglove Bridge Clip.app */,
 				16F34CE729A6FF3200ACC882 /* WebSocketDemo_Shared.framework */,
+				1601568F29AE669900ECBCC3 /* Foxglove Stickers.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -399,6 +433,21 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		1601568E29AE669900ECBCC3 /* Foxglove Stickers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1601569A29AE669B00ECBCC3 /* Build configuration list for PBXNativeTarget "Foxglove Stickers" */;
+			buildPhases = (
+				1601568D29AE669900ECBCC3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Foxglove Stickers";
+			productName = "Foxglove Stickers";
+			productReference = 1601568F29AE669900ECBCC3 /* Foxglove Stickers.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
+		};
 		1640D49929954ABD00C0D669 /* Foxglove Bridge Watch */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1640D4A729954ABE00C0D669 /* Build configuration list for PBXNativeTarget "Foxglove Bridge Watch" */;
@@ -426,6 +475,7 @@
 				164DE47029955C7C002B3560 /* Embed Watch Content */,
 				16F34CE129A6FE1600ACC882 /* Embed App Clips */,
 				1601568929A70F0000ECBCC3 /* CopyFiles */,
+				1601569729AE669B00ECBCC3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -433,6 +483,7 @@
 				16F34D2129A7095C00ACC882 /* PBXTargetDependency */,
 				164DE47229956493002B3560 /* PBXTargetDependency */,
 				16F34CDC29A6FE1600ACC882 /* PBXTargetDependency */,
+				1601569529AE669B00ECBCC3 /* PBXTargetDependency */,
 			);
 			name = "Foxglove Bridge";
 			packageProductDependencies = (
@@ -496,6 +547,9 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					1601568E29AE669900ECBCC3 = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					1640D49929954ABD00C0D669 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -530,11 +584,20 @@
 				1640D49929954ABD00C0D669 /* Foxglove Bridge Watch */,
 				16F34CCD29A6FE1500ACC882 /* Foxglove Bridge Clip */,
 				16F34CE629A6FF3200ACC882 /* WebSocketDemo-Shared */,
+				1601568E29AE669900ECBCC3 /* Foxglove Stickers */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1601568D29AE669900ECBCC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1601569229AE669B00ECBCC3 /* Stickers.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1640D49829954ABD00C0D669 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -650,6 +713,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1601569529AE669B00ECBCC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1601568E29AE669900ECBCC3 /* Foxglove Stickers */;
+			targetProxy = 1601569429AE669B00ECBCC3 /* PBXContainerItemProxy */;
+		};
 		164DE47229956493002B3560 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1640D49929954ABD00C0D669 /* Foxglove Bridge Watch */;
@@ -677,6 +745,48 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1601569829AE669B00ECBCC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = 63ZWV795BK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Stickers/Foxglove-Stickers-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Foxglove;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo.stickers";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1601569929AE669B00ECBCC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = 63ZWV795BK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Stickers/Foxglove-Stickers-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Foxglove;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo.stickers";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		1640D4A529954ABE00C0D669 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -684,7 +794,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "WebSocketDemo-Watch/WebSocketDemo-Watch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -697,7 +807,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -716,7 +826,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "WebSocketDemo-Watch/WebSocketDemo-Watch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -729,7 +839,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -864,7 +974,7 @@
 				CODE_SIGN_ENTITLEMENTS = WebSocketDemo/WebSocketDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -884,7 +994,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -903,7 +1013,7 @@
 				CODE_SIGN_ENTITLEMENTS = WebSocketDemo/WebSocketDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -923,7 +1033,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -941,7 +1051,7 @@
 				CODE_SIGN_ENTITLEMENTS = "WebSocketDemo-AppClip/WebSocketDemo-AppClip.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -960,7 +1070,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo.appclip";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -977,7 +1087,7 @@
 				CODE_SIGN_ENTITLEMENTS = "WebSocketDemo-AppClip/WebSocketDemo-AppClip.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -996,7 +1106,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.websocket-bridge-demo.appclip";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1009,7 +1119,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1027,7 +1137,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.WebSocketDemo-Shared";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
@@ -1047,7 +1157,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1065,7 +1175,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.foxglove.WebSocketDemo-Shared";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
@@ -1084,6 +1194,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1601569A29AE669B00ECBCC3 /* Build configuration list for PBXNativeTarget "Foxglove Stickers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1601569829AE669B00ECBCC3 /* Debug */,
+				1601569929AE669B00ECBCC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1640D4A729954ABE00C0D669 /* Build configuration list for PBXNativeTarget "Foxglove Bridge Watch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
