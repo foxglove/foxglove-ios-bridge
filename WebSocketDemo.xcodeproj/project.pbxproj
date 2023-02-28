@@ -13,13 +13,13 @@
 		1640D49D29954ABD00C0D669 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49C29954ABD00C0D669 /* App.swift */; };
 		1640D49F29954ABD00C0D669 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49E29954ABD00C0D669 /* ContentView.swift */; };
 		1640D4A129954ABD00C0D669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1640D4A029954ABD00C0D669 /* Assets.xcassets */; };
-		164DE46D29955C7C002B3560 /* Foxglove Demo Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1640D49A29954ABD00C0D669 /* Foxglove Demo Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		164DE46D29955C7C002B3560 /* Foxglove Bridge Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1640D49A29954ABD00C0D669 /* Foxglove Bridge Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EF080D2992D8A90082E9A0 /* Assets.xcassets */; };
 		16EF086D299408100082E9A0 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 16EF086C299408100082E9A0 /* SwiftProtobuf */; };
 		16F34CD129A6FE1500ACC882 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F34CD029A6FE1500ACC882 /* App.swift */; };
 		16F34CD529A6FE1600ACC882 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16F34CD429A6FE1600ACC882 /* Assets.xcassets */; };
-		16F34CDD29A6FE1600ACC882 /* Foxglove Demo Clip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 16F34CCE29A6FE1500ACC882 /* Foxglove Demo Clip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		16F34CDD29A6FE1600ACC882 /* Foxglove Bridge Clip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 16F34CCE29A6FE1500ACC882 /* Foxglove Bridge Clip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		16F34CEE29A6FF9C00ACC882 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF081D2993777F0082E9A0 /* Server.swift */; };
 		16F34CEF29A6FF9C00ACC882 /* CardToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DE4732995BCEC002B3560 /* CardToggle.swift */; };
 		16F34CF029A6FF9C00ACC882 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF080B2992D8A70082E9A0 /* ContentView.swift */; };
@@ -84,7 +84,7 @@
 			containerPortal = 16EF07FE2992D8A70082E9A0 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 16F34CCD29A6FE1500ACC882;
-			remoteInfo = "Foxglove Demo Clip";
+			remoteInfo = "Foxglove Bridge Clip";
 		};
 		16F34D2029A7095C00ACC882 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -119,7 +119,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				164DE46D29955C7C002B3560 /* Foxglove Demo Watch.app in Embed Watch Content */,
+				164DE46D29955C7C002B3560 /* Foxglove Bridge Watch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,7 +130,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/AppClips";
 			dstSubfolderSpec = 16;
 			files = (
-				16F34CDD29A6FE1600ACC882 /* Foxglove Demo Clip.app in Embed App Clips */,
+				16F34CDD29A6FE1600ACC882 /* Foxglove Bridge Clip.app in Embed App Clips */,
 			);
 			name = "Embed App Clips";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,7 +151,7 @@
 		1640D46B29945B7200C0D669 /* getCPUUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getCPUUsage.swift; sourceTree = "<group>"; };
 		1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getMemoryUsage.swift; sourceTree = "<group>"; };
 		1640D46F2994B5A400C0D669 /* WebSocketDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebSocketDemo.entitlements; sourceTree = "<group>"; };
-		1640D49A29954ABD00C0D669 /* Foxglove Demo Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Demo Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1640D49A29954ABD00C0D669 /* Foxglove Bridge Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1640D49C29954ABD00C0D669 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		1640D49E29954ABD00C0D669 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1640D4A029954ABD00C0D669 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -159,7 +159,7 @@
 		164DE4732995BCEC002B3560 /* CardToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardToggle.swift; sourceTree = "<group>"; };
 		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
 		16B2ED27299628DF00042516 /* createQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createQRCode.swift; sourceTree = "<group>"; };
-		16EF08062992D8A70082E9A0 /* Foxglove Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		16EF080B2992D8A70082E9A0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		16EF080D2992D8A90082E9A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -203,7 +203,7 @@
 		16EF0846299406BB0082E9A0 /* ArrowPrimitive.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowPrimitive.pb.swift; sourceTree = "<group>"; };
 		16EF0847299406BB0082E9A0 /* Pose.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pose.pb.swift; sourceTree = "<group>"; };
 		16EF087129940C160082E9A0 /* CompressedImage.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = CompressedImage.bin; sourceTree = "<group>"; };
-		16F34CCE29A6FE1500ACC882 /* Foxglove Demo Clip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Demo Clip.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		16F34CCE29A6FE1500ACC882 /* Foxglove Bridge Clip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge Clip.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16F34CD029A6FE1500ACC882 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		16F34CD429A6FE1600ACC882 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16F34CDA29A6FE1600ACC882 /* WebSocketDemo-AppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WebSocketDemo-AppClip.entitlements"; sourceTree = "<group>"; };
@@ -281,9 +281,9 @@
 		16EF08072992D8A70082E9A0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				16EF08062992D8A70082E9A0 /* Foxglove Demo.app */,
-				1640D49A29954ABD00C0D669 /* Foxglove Demo Watch.app */,
-				16F34CCE29A6FE1500ACC882 /* Foxglove Demo Clip.app */,
+				16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */,
+				1640D49A29954ABD00C0D669 /* Foxglove Bridge Watch.app */,
+				16F34CCE29A6FE1500ACC882 /* Foxglove Bridge Clip.app */,
 				16F34CE729A6FF3200ACC882 /* WebSocketDemo_Shared.framework */,
 			);
 			name = Products;
@@ -399,9 +399,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1640D49929954ABD00C0D669 /* Foxglove Demo Watch */ = {
+		1640D49929954ABD00C0D669 /* Foxglove Bridge Watch */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1640D4A729954ABE00C0D669 /* Build configuration list for PBXNativeTarget "Foxglove Demo Watch" */;
+			buildConfigurationList = 1640D4A729954ABE00C0D669 /* Build configuration list for PBXNativeTarget "Foxglove Bridge Watch" */;
 			buildPhases = (
 				1640D49629954ABD00C0D669 /* Sources */,
 				1640D49729954ABD00C0D669 /* Frameworks */,
@@ -411,14 +411,14 @@
 			);
 			dependencies = (
 			);
-			name = "Foxglove Demo Watch";
+			name = "Foxglove Bridge Watch";
 			productName = "Foxglove Bridge Companion Watch App";
-			productReference = 1640D49A29954ABD00C0D669 /* Foxglove Demo Watch.app */;
+			productReference = 1640D49A29954ABD00C0D669 /* Foxglove Bridge Watch.app */;
 			productType = "com.apple.product-type.application";
 		};
-		16EF08052992D8A70082E9A0 /* Foxglove Demo */ = {
+		16EF08052992D8A70082E9A0 /* Foxglove Bridge */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 16EF08142992D8A90082E9A0 /* Build configuration list for PBXNativeTarget "Foxglove Demo" */;
+			buildConfigurationList = 16EF08142992D8A90082E9A0 /* Build configuration list for PBXNativeTarget "Foxglove Bridge" */;
 			buildPhases = (
 				16EF08022992D8A70082E9A0 /* Sources */,
 				16EF08032992D8A70082E9A0 /* Frameworks */,
@@ -434,17 +434,17 @@
 				164DE47229956493002B3560 /* PBXTargetDependency */,
 				16F34CDC29A6FE1600ACC882 /* PBXTargetDependency */,
 			);
-			name = "Foxglove Demo";
+			name = "Foxglove Bridge";
 			packageProductDependencies = (
 				16EF086C299408100082E9A0 /* SwiftProtobuf */,
 			);
 			productName = "Foxglove Bridge";
-			productReference = 16EF08062992D8A70082E9A0 /* Foxglove Demo.app */;
+			productReference = 16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */;
 			productType = "com.apple.product-type.application";
 		};
-		16F34CCD29A6FE1500ACC882 /* Foxglove Demo Clip */ = {
+		16F34CCD29A6FE1500ACC882 /* Foxglove Bridge Clip */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 16F34CDE29A6FE1600ACC882 /* Build configuration list for PBXNativeTarget "Foxglove Demo Clip" */;
+			buildConfigurationList = 16F34CDE29A6FE1600ACC882 /* Build configuration list for PBXNativeTarget "Foxglove Bridge Clip" */;
 			buildPhases = (
 				16F34CCA29A6FE1500ACC882 /* Sources */,
 				16F34CCB29A6FE1500ACC882 /* Frameworks */,
@@ -456,12 +456,12 @@
 			dependencies = (
 				16F34D2429A7096F00ACC882 /* PBXTargetDependency */,
 			);
-			name = "Foxglove Demo Clip";
+			name = "Foxglove Bridge Clip";
 			packageProductDependencies = (
 				1601568B29A86EDF00ECBCC3 /* SwiftProtobuf */,
 			);
-			productName = "Foxglove Demo Clip";
-			productReference = 16F34CCE29A6FE1500ACC882 /* Foxglove Demo Clip.app */;
+			productName = "Foxglove Bridge Clip";
+			productReference = 16F34CCE29A6FE1500ACC882 /* Foxglove Bridge Clip.app */;
 			productType = "com.apple.product-type.application.on-demand-install-capable";
 		};
 		16F34CE629A6FF3200ACC882 /* WebSocketDemo-Shared */ = {
@@ -526,9 +526,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				16EF08052992D8A70082E9A0 /* Foxglove Demo */,
-				1640D49929954ABD00C0D669 /* Foxglove Demo Watch */,
-				16F34CCD29A6FE1500ACC882 /* Foxglove Demo Clip */,
+				16EF08052992D8A70082E9A0 /* Foxglove Bridge */,
+				1640D49929954ABD00C0D669 /* Foxglove Bridge Watch */,
+				16F34CCD29A6FE1500ACC882 /* Foxglove Bridge Clip */,
 				16F34CE629A6FF3200ACC882 /* WebSocketDemo-Shared */,
 			);
 		};
@@ -652,12 +652,12 @@
 /* Begin PBXTargetDependency section */
 		164DE47229956493002B3560 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1640D49929954ABD00C0D669 /* Foxglove Demo Watch */;
+			target = 1640D49929954ABD00C0D669 /* Foxglove Bridge Watch */;
 			targetProxy = 164DE47129956493002B3560 /* PBXContainerItemProxy */;
 		};
 		16F34CDC29A6FE1600ACC882 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 16F34CCD29A6FE1500ACC882 /* Foxglove Demo Clip */;
+			target = 16F34CCD29A6FE1500ACC882 /* Foxglove Bridge Clip */;
 			targetProxy = 16F34CDB29A6FE1600ACC882 /* PBXContainerItemProxy */;
 		};
 		16F34D1D29A6FFD200ACC882 /* PBXTargetDependency */ = {
@@ -688,7 +688,7 @@
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Demo";
+				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -720,7 +720,7 @@
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Demo";
+				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -945,7 +945,7 @@
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Demo";
+				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera images can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Health data can be streamed over the WebSocket.";
@@ -981,7 +981,7 @@
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Demo";
+				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera images can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Health data can be streamed over the WebSocket.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Health data can be streamed over the WebSocket.";
@@ -1084,7 +1084,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1640D4A729954ABE00C0D669 /* Build configuration list for PBXNativeTarget "Foxglove Demo Watch" */ = {
+		1640D4A729954ABE00C0D669 /* Build configuration list for PBXNativeTarget "Foxglove Bridge Watch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1640D4A529954ABE00C0D669 /* Debug */,
@@ -1102,7 +1102,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		16EF08142992D8A90082E9A0 /* Build configuration list for PBXNativeTarget "Foxglove Demo" */ = {
+		16EF08142992D8A90082E9A0 /* Build configuration list for PBXNativeTarget "Foxglove Bridge" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				16EF08152992D8A90082E9A0 /* Debug */,
@@ -1111,7 +1111,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		16F34CDE29A6FE1600ACC882 /* Build configuration list for PBXNativeTarget "Foxglove Demo Clip" */ = {
+		16F34CDE29A6FE1600ACC882 /* Build configuration list for PBXNativeTarget "Foxglove Bridge Clip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				16F34CDF29A6FE1600ACC882 /* Debug */,

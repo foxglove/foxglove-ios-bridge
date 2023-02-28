@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1640D49929954ABD00C0D669"
+               BuildableName = "Foxglove Bridge Watch.app"
+               BlueprintName = "Foxglove Bridge Watch"
+               ReferencedContainer = "container:WebSocketDemo.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "16EF08052992D8A70082E9A0"
-               BuildableName = "Foxglove Demo.app"
-               BlueprintName = "Foxglove Demo"
+               BuildableName = "Foxglove Bridge.app"
+               BlueprintName = "Foxglove Bridge"
                ReferencedContainer = "container:WebSocketDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,9 +58,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "16EF08052992D8A70082E9A0"
-            BuildableName = "Foxglove Demo.app"
-            BlueprintName = "Foxglove Demo"
+            BlueprintIdentifier = "1640D49929954ABD00C0D669"
+            BuildableName = "Foxglove Bridge Watch.app"
+            BlueprintName = "Foxglove Bridge Watch"
             ReferencedContainer = "container:WebSocketDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,9 +75,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "16EF08052992D8A70082E9A0"
-            BuildableName = "Foxglove Demo.app"
-            BlueprintName = "Foxglove Demo"
+            BlueprintIdentifier = "1640D49929954ABD00C0D669"
+            BuildableName = "Foxglove Bridge Watch.app"
+            BlueprintName = "Foxglove Bridge Watch"
             ReferencedContainer = "container:WebSocketDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
