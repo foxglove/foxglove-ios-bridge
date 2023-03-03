@@ -85,7 +85,8 @@ public struct ContentView: View {
           .padding()
         }
         CardToggle(isOn: $server.sendWatchData, dashed: isAppClip) {
-          Text("Apple Watch")
+          Text("Heart Rate (Apple Watch)")
+            .multilineTextAlignment(.center)
           if isAppClip {
             Text("Requires full app")
               .font(.caption)
