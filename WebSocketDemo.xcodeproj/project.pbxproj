@@ -15,7 +15,6 @@
 		1640D49D29954ABD00C0D669 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49C29954ABD00C0D669 /* App.swift */; };
 		1640D49F29954ABD00C0D669 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49E29954ABD00C0D669 /* ContentView.swift */; };
 		1640D4A129954ABD00C0D669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1640D4A029954ABD00C0D669 /* Assets.xcassets */; };
-		164DE46D29955C7C002B3560 /* Foxglove Bridge Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1640D49A29954ABD00C0D669 /* Foxglove Bridge Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EF080D2992D8A90082E9A0 /* Assets.xcassets */; };
 		16EF086D299408100082E9A0 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 16EF086C299408100082E9A0 /* SwiftProtobuf */; };
@@ -81,13 +80,6 @@
 			remoteGlobalIDString = 1601568E29AE669900ECBCC3;
 			remoteInfo = "Foxglove Stickers";
 		};
-		164DE47129956493002B3560 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 16EF07FE2992D8A70082E9A0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1640D49929954ABD00C0D669;
-			remoteInfo = "Foxglove Bridge Companion Watch App";
-		};
 		16F34CDB29A6FE1600ACC882 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 16EF07FE2992D8A70082E9A0 /* Project object */;
@@ -139,7 +131,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				164DE46D29955C7C002B3560 /* Foxglove Bridge Watch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,7 +472,6 @@
 			);
 			dependencies = (
 				16F34D2129A7095C00ACC882 /* PBXTargetDependency */,
-				164DE47229956493002B3560 /* PBXTargetDependency */,
 				16F34CDC29A6FE1600ACC882 /* PBXTargetDependency */,
 				1601569529AE669B00ECBCC3 /* PBXTargetDependency */,
 			);
@@ -718,11 +708,6 @@
 			target = 1601568E29AE669900ECBCC3 /* Foxglove Stickers */;
 			targetProxy = 1601569429AE669B00ECBCC3 /* PBXContainerItemProxy */;
 		};
-		164DE47229956493002B3560 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1640D49929954ABD00C0D669 /* Foxglove Bridge Watch */;
-			targetProxy = 164DE47129956493002B3560 /* PBXContainerItemProxy */;
-		};
 		16F34CDC29A6FE1600ACC882 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 16F34CCD29A6FE1500ACC882 /* Foxglove Bridge Clip */;
@@ -751,7 +736,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Stickers/Foxglove-Stickers-Info.plist";
@@ -772,7 +757,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Stickers/Foxglove-Stickers-Info.plist";
@@ -794,7 +779,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "WebSocketDemo-Watch/WebSocketDemo-Watch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -826,7 +811,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "WebSocketDemo-Watch/WebSocketDemo-Watch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -974,7 +959,7 @@
 				CODE_SIGN_ENTITLEMENTS = WebSocketDemo/WebSocketDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1011,7 +996,7 @@
 				CODE_SIGN_ENTITLEMENTS = WebSocketDemo/WebSocketDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1047,7 +1032,7 @@
 				CODE_SIGN_ENTITLEMENTS = "WebSocketDemo-AppClip/WebSocketDemo-AppClip.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1081,7 +1066,7 @@
 				CODE_SIGN_ENTITLEMENTS = "WebSocketDemo-AppClip/WebSocketDemo-AppClip.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1111,7 +1096,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1149,7 +1134,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

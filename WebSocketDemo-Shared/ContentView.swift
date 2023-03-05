@@ -84,6 +84,7 @@ public struct ContentView: View {
           .pickerStyle(.segmented)
           .padding()
         }
+        /*
         CardToggle(isOn: $server.sendWatchData, dashed: isAppClip) {
           Text("Heart Rate (Apple Watch)")
             .multilineTextAlignment(.center)
@@ -102,6 +103,7 @@ public struct ContentView: View {
           .appStoreOverlay(isPresented: $appStoreOverlayShown) {
             SKOverlay.AppClipConfiguration(position: .bottom)
           }
+         */
       }.padding()
     }
   }
