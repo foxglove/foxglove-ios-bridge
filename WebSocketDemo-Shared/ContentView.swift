@@ -44,7 +44,7 @@ public struct ContentView: View {
 
   var topicsTab: some View {
     ScrollView {
-      LazyVGrid(columns: [GridItem(.adaptive(minimum: 120), spacing: 20)], spacing: 20) {
+      LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 20)], spacing: 20) {
         CardToggle(isOn: $server.sendPose) {
           Text("Pose")
         }
