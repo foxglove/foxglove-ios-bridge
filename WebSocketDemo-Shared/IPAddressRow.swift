@@ -18,30 +18,46 @@ struct IPAddressRow: View {
   let address: IPAddress
   let port: NWEndpoint.Port
 
-  var icons: Text {
-    let text: Text
+  @State
+  var showInterfaceName = false
+
+  var icon: Text {
     switch address.interface?.type {
     case .wifi?:
-      text = Text(Image(systemName: "wifi"))
+      return Text(Image(systemName: "wifi"))
     case .wiredEthernet?:
-      text = Text(Image(systemName: "cable.connector.horizontal"))
+      return Text(Image(systemName: "cable.connector.horizontal"))
     case .cellular?:
-      text = Text(Image(systemName: "antenna.radiowaves.left.and.right"))
+      return Text(Image(systemName: "antenna.radiowaves.left.and.right"))
     case .loopback?:
-      text = Text(Image(systemName: "arrow.counterclockwise"))
+      return Text(Image(systemName: "arrow.counterclockwise"))
     case .other?:
-      text = Text(Image(systemName: "questionmark"))
+      return Text(Image(systemName: "questionmark"))
     default:
-      text = Text("")
+      return Text("")
     }
-    return text.foregroundColor(.secondary)
   }
 
   var body: some View {
-    HStack {
-      icons
-        .frame(minWidth: 30) // hack to make icons look more aligned
+    HStack(alignment: .firstTextBaseline) {
+      Group {
+        if showInterfaceName, let name = address.interface?.name {
+          Text("\(name)").font(.footnote)
+        } else {
+          icon
+        }
+      }
+      .foregroundColor(.secondary)
+      .frame(minWidth: 30) // hack to make icons look more aligned
+      .onTapGesture {
+        showInterfaceName.toggle()
+      }
+
       Text("\(address.withoutInterface.urlString):\(String(port.rawValue))")
+        .lineLimit(1)
+        .minimumScaleFactor(0.6)
+        .monospaced()
+        .tracking(-0.5)
       Spacer()
       let shareURL: URL = {
         var url = URL(string: "https://studio.foxglove.dev/")!
@@ -56,10 +72,6 @@ struct IPAddressRow: View {
       }
       .buttonStyle(.borderless) // https://stackoverflow.com/a/59402642/23649
     }
-    .lineLimit(1)
-    .minimumScaleFactor(0.6)
-    .monospaced()
-    .tracking(-0.5)
   }
 }
 
@@ -67,13 +79,10 @@ struct IPAddressRow_Previews: PreviewProvider {
   static var previews: some View {
     List {
       IPAddressRow(address: IPv4Address("255.255.255.255%en0")!, port: 13245)
-        .previewLayout(.sizeThatFits)
       IPAddressRow(address: IPv4Address("0.0.0.0%lo0")!, port: 13245)
-        .previewLayout(.sizeThatFits)
       IPAddressRow(address: IPv6Address("::%lo0")!, port: 13245)
-        .previewLayout(.sizeThatFits)
       IPAddressRow(address: IPv6Address("ffff:ffff::ffff:ffff:ffff")!, port: 13245)
-        .previewLayout(.sizeThatFits)
+      IPAddressRow(address: IPv6Address("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff")!, port: 13245)
     }
   }
 }

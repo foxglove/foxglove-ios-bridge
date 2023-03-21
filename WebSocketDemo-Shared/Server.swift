@@ -274,7 +274,11 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   func updateAddresses() {
     self.addresses = getIPAddresses()
       .filter {
-        $0.interface?.type == .wifi || $0.interface?.type == .wiredEthernet
+        // Filter out some AirDrop interfaces that are not useful https://apple.stackexchange.com/q/394047/8318
+        if $0.interface?.name.hasPrefix("llw") == true || $0.interface?.name.hasPrefix("awdl") == true {
+          return false
+        }
+        return $0.interface?.type == .wifi || $0.interface?.type == .wiredEthernet
       }
       .sorted(by: compareIPAddresses)
   }
