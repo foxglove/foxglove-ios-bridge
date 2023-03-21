@@ -108,6 +108,11 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   var addresses: [IPAddress] = []
   private var addressUpdateTimer: Timer?
 
+  @AppStorage("foxglove.preferred-port")
+  var preferredPort: Int?
+
+  @Published var actualPort: NWEndpoint.Port?
+
   let server = FoxgloveServer()
 
   let motionManager = CMMotionManager()
@@ -193,7 +198,6 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
 
-  @Published var port: NWEndpoint.Port?
   var clientEndpointNames: [String] {
     return server.clientEndpointNames
   }
@@ -255,7 +259,13 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 }
 """#)
     super.init()
-    server.$port.assign(to: \.port, on: self).store(in: &subscribers)
+    server.start(preferredPort: preferredPort.flatMap { UInt16(exactly: $0) })
+    server.$port
+      .sink { [weak self] in
+        self?.actualPort = $0
+        self?.preferredPort = $0.flatMap { Int(exactly: $0.rawValue) }
+      }
+      .store(in: &subscribers)
     server.objectWillChange.sink { [weak self] in self?.objectWillChange.send() }.store(in: &subscribers)
     startPoseUpdates()
     startCPUUpdates()

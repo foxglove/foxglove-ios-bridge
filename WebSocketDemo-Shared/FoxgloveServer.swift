@@ -67,7 +67,8 @@ class FoxgloveServer: ObservableObject {
 
   @MainActor var channels: [ChannelID: Channel] = [:]
 
-  init() {
+  func start(preferredPort: UInt16?) {
+    print("starting with preferred port \(preferredPort.debugDescription)")
     do {
       let params = NWParameters(tls: nil)
       print(params.defaultProtocolStack.applicationProtocols)
@@ -83,13 +84,19 @@ class FoxgloveServer: ObservableObject {
       }
       params.defaultProtocolStack.applicationProtocols.append(opts)
 
-      let listener = try NWListener(using: params, on: 62338)
-      listener.stateUpdateHandler = { newState in
-        if let port = listener.port {
-          print("Listening on port \(port)")
+      let listener = try NWListener(using: params, on: preferredPort.map(NWEndpoint.Port.init) ?? .any)
+      listener.stateUpdateHandler = { [weak self, weak listener] newState in
+        guard let listener else {
+          return
         }
-        Task { @MainActor in
-          self.port = listener.port
+        // If we tried to use a specific port but it was in use, try again with any port
+        if preferredPort != nil, case .failed(.posix(.EADDRINUSE)) = newState {
+          listener.cancel()
+          self?.start(preferredPort: nil)
+        }
+        let port = newState == .ready ? listener.port : nil
+        Task { @MainActor [self] in
+          self?.port = port
         }
       }
       listener.newConnectionHandler = { [weak self] newConnection in

@@ -123,7 +123,7 @@ public struct ContentView: View {
 
   var serverTab: some View {
     List {
-      if let port = server.port {
+      if let port = server.actualPort {
         Section {
           let addrs = Array(server.addresses.enumerated())
           ForEach(addrs, id: \.offset) { (_, addr) in
