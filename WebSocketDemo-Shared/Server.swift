@@ -103,7 +103,10 @@ func configureInputs(in session: AVCaptureSession, for camera: Camera) throws {
 @MainActor
 class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDelegate, CLLocationManagerDelegate {
   let videoQueue = DispatchQueue(label: "VideoQueue")
-  let address = getIPAddress() ?? "<no address>"
+
+  @Published
+  var addresses: [IPAddress] = []
+  private var addressUpdateTimer: Timer?
 
   let server = FoxgloveServer()
 
@@ -258,6 +261,26 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     startCPUUpdates()
     startMemoryUpdates()
     watchSession.delegate = self
+
+    updateAddresses()
+    addressUpdateTimer = .scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
+      guard let self else { return }
+      Task { @MainActor in
+        self.updateAddresses()
+      }
+    }
+  }
+
+  func updateAddresses() {
+    self.addresses = getIPAddresses()
+      .filter {
+        $0.interface?.type == .wifi || $0.interface?.type == .wiredEthernet
+      }
+      .sorted(by: compareIPAddresses)
+  }
+
+  deinit {
+    addressUpdateTimer?.invalidate()
   }
 
   func startCPUUpdates() {

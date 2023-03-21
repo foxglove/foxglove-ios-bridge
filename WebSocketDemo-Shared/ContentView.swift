@@ -125,8 +125,13 @@ public struct ContentView: View {
     List {
       if let port = server.port {
         Section {
-          Text("Listening on \(server.address):\(port.debugDescription)")
-        } header: { Text("Server") }
+          let addrs = Array(server.addresses.enumerated())
+          ForEach(addrs, id: \.offset) { (_, addr) in
+            IPAddressRow(address: addr, port: port)
+          }
+        } header: {
+          Text(server.addresses.count == 1 ? "Server address" : "Server addresses")
+        }
 
         Section {
           ForEach(Array(server.clientEndpointNames.enumerated()), id: \.offset) {

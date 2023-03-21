@@ -12,6 +12,8 @@
 		1601568C29A86EDF00ECBCC3 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 1601568B29A86EDF00ECBCC3 /* SwiftProtobuf */; };
 		1601569229AE669B00ECBCC3 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1601569129AE669B00ECBCC3 /* Stickers.xcassets */; };
 		1601569629AE669B00ECBCC3 /* Foxglove Stickers.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1601568F29AE669900ECBCC3 /* Foxglove Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1627FE0129CA3A050063EF43 /* compareIPAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627FE0029CA3A050063EF43 /* compareIPAddresses.swift */; };
+		1627FE0329CA4FD20063EF43 /* IPAddressRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627FE0229CA4FD20063EF43 /* IPAddressRow.swift */; };
 		1640D49D29954ABD00C0D669 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49C29954ABD00C0D669 /* App.swift */; };
 		1640D49F29954ABD00C0D669 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49E29954ABD00C0D669 /* ContentView.swift */; };
 		1640D4A129954ABD00C0D669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1640D4A029954ABD00C0D669 /* Assets.xcassets */; };
@@ -24,7 +26,7 @@
 		16F34CEE29A6FF9C00ACC882 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF081D2993777F0082E9A0 /* Server.swift */; };
 		16F34CEF29A6FF9C00ACC882 /* CardToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DE4732995BCEC002B3560 /* CardToggle.swift */; };
 		16F34CF029A6FF9C00ACC882 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF080B2992D8A70082E9A0 /* ContentView.swift */; };
-		16F34CF129A6FF9C00ACC882 /* getIPAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08172993021C0082E9A0 /* getIPAddress.swift */; };
+		16F34CF129A6FF9C00ACC882 /* getIPAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08172993021C0082E9A0 /* getIPAddresses.swift */; };
 		16F34CF229A6FF9C00ACC882 /* getCPUUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D46B29945B7200C0D669 /* getCPUUsage.swift */; };
 		16F34CF329A6FF9C00ACC882 /* FoxgloveServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0819299302570082E9A0 /* FoxgloveServer.swift */; };
 		16F34CF429A6FF9C00ACC882 /* createQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B2ED27299628DF00042516 /* createQRCode.swift */; };
@@ -162,6 +164,8 @@
 		1601568F29AE669900ECBCC3 /* Foxglove Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Foxglove Stickers.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1601569129AE669B00ECBCC3 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
 		1601569C29AE7B5800ECBCC3 /* Foxglove-Stickers-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Foxglove-Stickers-Info.plist"; sourceTree = "<group>"; };
+		1627FE0029CA3A050063EF43 /* compareIPAddresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compareIPAddresses.swift; sourceTree = "<group>"; };
+		1627FE0229CA4FD20063EF43 /* IPAddressRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressRow.swift; sourceTree = "<group>"; };
 		1640D46B29945B7200C0D669 /* getCPUUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getCPUUsage.swift; sourceTree = "<group>"; };
 		1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getMemoryUsage.swift; sourceTree = "<group>"; };
 		1640D46F2994B5A400C0D669 /* WebSocketDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebSocketDemo.entitlements; sourceTree = "<group>"; };
@@ -177,7 +181,7 @@
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		16EF080B2992D8A70082E9A0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		16EF080D2992D8A90082E9A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		16EF08172993021C0082E9A0 /* getIPAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getIPAddress.swift; sourceTree = "<group>"; };
+		16EF08172993021C0082E9A0 /* getIPAddresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getIPAddresses.swift; sourceTree = "<group>"; };
 		16EF0819299302570082E9A0 /* FoxgloveServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoxgloveServer.swift; sourceTree = "<group>"; };
 		16EF081B299363840082E9A0 /* schemas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schemas.swift; sourceTree = "<group>"; };
 		16EF081D2993777F0082E9A0 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
@@ -400,7 +404,9 @@
 				16EF080B2992D8A70082E9A0 /* ContentView.swift */,
 				164DE4732995BCEC002B3560 /* CardToggle.swift */,
 				16B2ED27299628DF00042516 /* createQRCode.swift */,
-				16EF08172993021C0082E9A0 /* getIPAddress.swift */,
+				1627FE0029CA3A050063EF43 /* compareIPAddresses.swift */,
+				16EF08172993021C0082E9A0 /* getIPAddresses.swift */,
+				1627FE0229CA4FD20063EF43 /* IPAddressRow.swift */,
 				1640D46B29945B7200C0D669 /* getCPUUsage.swift */,
 				1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */,
 				16EF0819299302570082E9A0 /* FoxgloveServer.swift */,
@@ -654,6 +660,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16F34D1029A6FFAB00ACC882 /* CompressedImage.pb.swift in Sources */,
+				1627FE0129CA3A050063EF43 /* compareIPAddresses.swift in Sources */,
 				16F34D0829A6FFAB00ACC882 /* LocationFix.pb.swift in Sources */,
 				16F34D1B29A6FFAB00ACC882 /* SceneEntity.pb.swift in Sources */,
 				16F34D1529A6FFAB00ACC882 /* ModelPrimitive.pb.swift in Sources */,
@@ -663,7 +670,7 @@
 				16F34D1429A6FFAB00ACC882 /* PosesInFrame.pb.swift in Sources */,
 				16F34D1729A6FFAB00ACC882 /* Pose.pb.swift in Sources */,
 				16F34CF929A6FFAB00ACC882 /* CubePrimitive.pb.swift in Sources */,
-				16F34CF129A6FF9C00ACC882 /* getIPAddress.swift in Sources */,
+				16F34CF129A6FF9C00ACC882 /* getIPAddresses.swift in Sources */,
 				16F34D0629A6FFAB00ACC882 /* PointsAnnotation.pb.swift in Sources */,
 				16F34CF429A6FF9C00ACC882 /* createQRCode.swift in Sources */,
 				16F34D0F29A6FFAB00ACC882 /* CylinderPrimitive.pb.swift in Sources */,
@@ -696,6 +703,7 @@
 				16F34D0529A6FFAB00ACC882 /* SpherePrimitive.pb.swift in Sources */,
 				16F34D0029A6FFAB00ACC882 /* ImageAnnotations.pb.swift in Sources */,
 				16F34CF029A6FF9C00ACC882 /* ContentView.swift in Sources */,
+				1627FE0329CA4FD20063EF43 /* IPAddressRow.swift in Sources */,
 				16F34D0929A6FFAB00ACC882 /* PointCloud.pb.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
