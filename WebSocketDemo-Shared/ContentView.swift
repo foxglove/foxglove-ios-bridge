@@ -18,10 +18,18 @@ class AsyncInitialized<T>: ObservableObject {
 private let isAppClip = Bundle.main.bundleIdentifier?.hasSuffix("appclip") ?? false
 private let feedbackGenerator = UINotificationFeedbackGenerator()
 
+enum Tab: String {
+  case topics
+  case server
+}
+
 public struct ContentView: View {
   @StateObject var server = Server()
   @State var sendPose = true
   @State var appStoreOverlayShown = false
+
+  @AppStorage("foxglove.selected-tab")
+  var selectedTab = Tab.topics
 
   @ObservedObject var qrCode = AsyncInitialized {
     createQRCode("https://foxglove.dev/")
@@ -30,15 +38,20 @@ public struct ContentView: View {
   public init() {}
 
   public var body: some View {
-    TabView {
-      topicsTab.tabItem {
-        Image(systemName: "fibrechannel")
-        Text("Topics")
-      }
-      serverTab.tabItem {
-        Image(systemName: "network")
-        Text("Server")
-      }
+    TabView(selection: $selectedTab) {
+      topicsTab
+        .tabItem {
+          Image(systemName: "fibrechannel")
+          Text("Topics")
+        }
+        .tag(Tab.topics)
+
+      serverTab
+        .tabItem {
+          Image(systemName: "network")
+          Text("Server")
+        }
+        .tag(Tab.server)
     }
   }
 
