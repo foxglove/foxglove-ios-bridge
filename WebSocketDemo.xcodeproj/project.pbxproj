@@ -14,9 +14,11 @@
 		1601569629AE669B00ECBCC3 /* Foxglove Stickers.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1601568F29AE669900ECBCC3 /* Foxglove Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1627FE0129CA3A050063EF43 /* compareIPAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627FE0029CA3A050063EF43 /* compareIPAddresses.swift */; };
 		1627FE0329CA4FD20063EF43 /* IPAddressRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627FE0229CA4FD20063EF43 /* IPAddressRow.swift */; };
+		1627FE0529CA96420063EF43 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627FE0429CA96420063EF43 /* OnboardingView.swift */; };
 		1640D49D29954ABD00C0D669 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49C29954ABD00C0D669 /* App.swift */; };
 		1640D49F29954ABD00C0D669 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49E29954ABD00C0D669 /* ContentView.swift */; };
 		1640D4A129954ABD00C0D669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1640D4A029954ABD00C0D669 /* Assets.xcassets */; };
+		165440CB29CA9B8D000E8A33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 165440CA29CA9B8D000E8A33 /* Assets.xcassets */; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EF080D2992D8A90082E9A0 /* Assets.xcassets */; };
 		16EF086D299408100082E9A0 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 16EF086C299408100082E9A0 /* SwiftProtobuf */; };
@@ -166,6 +168,7 @@
 		1601569C29AE7B5800ECBCC3 /* Foxglove-Stickers-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Foxglove-Stickers-Info.plist"; sourceTree = "<group>"; };
 		1627FE0029CA3A050063EF43 /* compareIPAddresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compareIPAddresses.swift; sourceTree = "<group>"; };
 		1627FE0229CA4FD20063EF43 /* IPAddressRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressRow.swift; sourceTree = "<group>"; };
+		1627FE0429CA96420063EF43 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1640D46B29945B7200C0D669 /* getCPUUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getCPUUsage.swift; sourceTree = "<group>"; };
 		1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getMemoryUsage.swift; sourceTree = "<group>"; };
 		1640D46F2994B5A400C0D669 /* WebSocketDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebSocketDemo.entitlements; sourceTree = "<group>"; };
@@ -175,6 +178,7 @@
 		1640D4A029954ABD00C0D669 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		164DE46A299559EA002B3560 /* WebSocketDemo-Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WebSocketDemo-Watch.entitlements"; sourceTree = "<group>"; };
 		164DE4732995BCEC002B3560 /* CardToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardToggle.swift; sourceTree = "<group>"; };
+		165440CA29CA9B8D000E8A33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
 		16B2ED27299628DF00042516 /* createQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createQRCode.swift; sourceTree = "<group>"; };
 		16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -402,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				16EF080B2992D8A70082E9A0 /* ContentView.swift */,
+				1627FE0429CA96420063EF43 /* OnboardingView.swift */,
 				164DE4732995BCEC002B3560 /* CardToggle.swift */,
 				16B2ED27299628DF00042516 /* createQRCode.swift */,
 				1627FE0029CA3A050063EF43 /* compareIPAddresses.swift */,
@@ -413,6 +418,7 @@
 				16EF081B299363840082E9A0 /* schemas.swift */,
 				16EF081D2993777F0082E9A0 /* Server.swift */,
 				16EF0823299406BB0082E9A0 /* Schemas */,
+				165440CA29CA9B8D000E8A33 /* Assets.xcassets */,
 			);
 			path = "WebSocketDemo-Shared";
 			sourceTree = "<group>";
@@ -623,6 +629,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16F34CF829A6FFA300ACC882 /* LocationFix.bin in Resources */,
+				165440CB29CA9B8D000E8A33 /* Assets.xcassets in Resources */,
 				16F34CF729A6FFA300ACC882 /* CompressedImage.bin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -696,6 +703,7 @@
 				16F34CEF29A6FF9C00ACC882 /* CardToggle.swift in Sources */,
 				16F34CFA29A6FFAB00ACC882 /* GeoJSON.pb.swift in Sources */,
 				16F34D1229A6FFAB00ACC882 /* RawImage.pb.swift in Sources */,
+				1627FE0529CA96420063EF43 /* OnboardingView.swift in Sources */,
 				16F34D1929A6FFAB00ACC882 /* KeyValuePair.pb.swift in Sources */,
 				16F34CFC29A6FFAB00ACC882 /* Point3.pb.swift in Sources */,
 				16F34D0E29A6FFAB00ACC882 /* PackedElementField.pb.swift in Sources */,
@@ -1050,8 +1058,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1084,8 +1092,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1106,6 +1114,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_ASSET_PATHS = "WebSocketDemo-Shared/Assets.xcassets";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1144,6 +1153,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_ASSET_PATHS = "WebSocketDemo-Shared/Assets.xcassets";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

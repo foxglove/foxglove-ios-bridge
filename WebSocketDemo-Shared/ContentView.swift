@@ -27,6 +27,7 @@ public struct ContentView: View {
   @StateObject var server = Server()
   @State var sendPose = true
   @State var appStoreOverlayShown = false
+  @State var onboardingShown = true
 
   @AppStorage("foxglove.selected-tab")
   var selectedTab = Tab.topics
@@ -52,6 +53,9 @@ public struct ContentView: View {
           Text("Server")
         }
         .tag(Tab.server)
+    }
+    .sheet(isPresented: $onboardingShown) {
+      OnboardingView()
     }
   }
 
