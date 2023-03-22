@@ -2,19 +2,6 @@ import SwiftUI
 import Charts
 import StoreKit
 
-@MainActor
-class AsyncInitialized<T>: ObservableObject {
-  @Published var value: T?
-  init(_ block: @escaping () -> T?) {
-    Task.detached {
-      let result = block()
-      Task { @MainActor in
-        self.value = result
-      }
-    }
-  }
-}
-
 private let isAppClip = Bundle.main.bundleIdentifier?.hasSuffix("appclip") ?? false
 private let feedbackGenerator = UINotificationFeedbackGenerator()
 
@@ -31,10 +18,6 @@ public struct ContentView: View {
 
   @AppStorage("foxglove.selected-tab")
   var selectedTab = Tab.topics
-
-  @ObservedObject var qrCode = AsyncInitialized {
-    createQRCode("https://foxglove.dev/")
-  }
 
   public init() {}
 
@@ -55,7 +38,15 @@ public struct ContentView: View {
         .tag(Tab.server)
     }
     .sheet(isPresented: $onboardingShown) {
-      OnboardingView()
+      OnboardingView(
+        isConnected: !server.clientEndpointNames.isEmpty,
+        serverURL: server.addresses.first.flatMap {
+          guard let port = server.actualPort else {
+            return nil
+          }
+          return "ws://\($0.withoutInterface.urlString):\(port)"
+        } ?? "No interfaces :("
+      )
     }
   }
 
@@ -148,19 +139,6 @@ public struct ContentView: View {
         } header: {
           Text("Clients")
         }
-
-//        Section { } footer: {
-//          HStack {
-//            if let qrCode = qrCode.value {
-//              Image(uiImage: qrCode)
-//                .interpolation(.none)
-//                .resizable()
-//                .colorMultiply(.secondary)
-//                .aspectRatio(1, contentMode: .fit)
-//                .frame(width: 5 * qrCode.size.width)
-//            }
-//          }.frame(maxWidth: .infinity)
-//        }
       }
     }
     .listStyle(.insetGrouped)

@@ -96,7 +96,7 @@ class FoxgloveServer: ObservableObject {
         }
         let port = newState == .ready ? listener.port : nil
         Task { @MainActor [self] in
-          self?.port = port
+          self?.port = port == 0 ? nil : port
         }
       }
       listener.newConnectionHandler = { [weak self] newConnection in

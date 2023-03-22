@@ -19,6 +19,9 @@
 		1640D49F29954ABD00C0D669 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D49E29954ABD00C0D669 /* ContentView.swift */; };
 		1640D4A129954ABD00C0D669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1640D4A029954ABD00C0D669 /* Assets.xcassets */; };
 		165440CB29CA9B8D000E8A33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 165440CA29CA9B8D000E8A33 /* Assets.xcassets */; };
+		165440CE29CB9147000E8A33 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440CD29CB9147000E8A33 /* IntroView.swift */; };
+		165440D029CB91D3000E8A33 /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440CF29CB91D3000E8A33 /* ConnectionView.swift */; };
+		165440D229CB921E000E8A33 /* ContinueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440D129CB921E000E8A33 /* ContinueButton.swift */; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EF080D2992D8A90082E9A0 /* Assets.xcassets */; };
 		16EF086D299408100082E9A0 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 16EF086C299408100082E9A0 /* SwiftProtobuf */; };
@@ -31,7 +34,6 @@
 		16F34CF129A6FF9C00ACC882 /* getIPAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08172993021C0082E9A0 /* getIPAddresses.swift */; };
 		16F34CF229A6FF9C00ACC882 /* getCPUUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D46B29945B7200C0D669 /* getCPUUsage.swift */; };
 		16F34CF329A6FF9C00ACC882 /* FoxgloveServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF0819299302570082E9A0 /* FoxgloveServer.swift */; };
-		16F34CF429A6FF9C00ACC882 /* createQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B2ED27299628DF00042516 /* createQRCode.swift */; };
 		16F34CF529A6FF9C00ACC882 /* schemas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF081B299363840082E9A0 /* schemas.swift */; };
 		16F34CF629A6FF9C00ACC882 /* getMemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640D46D2994AB7400C0D669 /* getMemoryUsage.swift */; };
 		16F34CF729A6FFA300ACC882 /* CompressedImage.bin in Resources */ = {isa = PBXBuildFile; fileRef = 16EF087129940C160082E9A0 /* CompressedImage.bin */; };
@@ -179,8 +181,10 @@
 		164DE46A299559EA002B3560 /* WebSocketDemo-Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WebSocketDemo-Watch.entitlements"; sourceTree = "<group>"; };
 		164DE4732995BCEC002B3560 /* CardToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardToggle.swift; sourceTree = "<group>"; };
 		165440CA29CA9B8D000E8A33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		165440CD29CB9147000E8A33 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
+		165440CF29CB91D3000E8A33 /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
+		165440D129CB921E000E8A33 /* ContinueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueButton.swift; sourceTree = "<group>"; };
 		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
-		16B2ED27299628DF00042516 /* createQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createQRCode.swift; sourceTree = "<group>"; };
 		16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		16EF080B2992D8A70082E9A0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -296,6 +300,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		165440CC29CB9129000E8A33 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				1627FE0429CA96420063EF43 /* OnboardingView.swift */,
+				165440D129CB921E000E8A33 /* ContinueButton.swift */,
+				165440CD29CB9147000E8A33 /* IntroView.swift */,
+				165440CF29CB91D3000E8A33 /* ConnectionView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		16EF07FD2992D8A70082E9A0 = {
 			isa = PBXGroup;
 			children = (
@@ -405,10 +420,9 @@
 		16F34CE829A6FF3200ACC882 /* WebSocketDemo-Shared */ = {
 			isa = PBXGroup;
 			children = (
+				165440CC29CB9129000E8A33 /* Onboarding */,
 				16EF080B2992D8A70082E9A0 /* ContentView.swift */,
-				1627FE0429CA96420063EF43 /* OnboardingView.swift */,
 				164DE4732995BCEC002B3560 /* CardToggle.swift */,
-				16B2ED27299628DF00042516 /* createQRCode.swift */,
 				1627FE0029CA3A050063EF43 /* compareIPAddresses.swift */,
 				16EF08172993021C0082E9A0 /* getIPAddresses.swift */,
 				1627FE0229CA4FD20063EF43 /* IPAddressRow.swift */,
@@ -679,10 +693,11 @@
 				16F34CF929A6FFAB00ACC882 /* CubePrimitive.pb.swift in Sources */,
 				16F34CF129A6FF9C00ACC882 /* getIPAddresses.swift in Sources */,
 				16F34D0629A6FFAB00ACC882 /* PointsAnnotation.pb.swift in Sources */,
-				16F34CF429A6FF9C00ACC882 /* createQRCode.swift in Sources */,
 				16F34D0F29A6FFAB00ACC882 /* CylinderPrimitive.pb.swift in Sources */,
 				16F34CEE29A6FF9C00ACC882 /* Server.swift in Sources */,
 				16F34D0D29A6FFAB00ACC882 /* TextPrimitive.pb.swift in Sources */,
+				165440D029CB91D3000E8A33 /* ConnectionView.swift in Sources */,
+				165440CE29CB9147000E8A33 /* IntroView.swift in Sources */,
 				16F34D0129A6FFAB00ACC882 /* SceneUpdate.pb.swift in Sources */,
 				16F34D0729A6FFAB00ACC882 /* Color.pb.swift in Sources */,
 				16F34CF629A6FF9C00ACC882 /* getMemoryUsage.swift in Sources */,
@@ -706,6 +721,7 @@
 				1627FE0529CA96420063EF43 /* OnboardingView.swift in Sources */,
 				16F34D1929A6FFAB00ACC882 /* KeyValuePair.pb.swift in Sources */,
 				16F34CFC29A6FFAB00ACC882 /* Point3.pb.swift in Sources */,
+				165440D229CB921E000E8A33 /* ContinueButton.swift in Sources */,
 				16F34D0E29A6FFAB00ACC882 /* PackedElementField.pb.swift in Sources */,
 				16F34D1129A6FFAB00ACC882 /* Log.pb.swift in Sources */,
 				16F34D0529A6FFAB00ACC882 /* SpherePrimitive.pb.swift in Sources */,
