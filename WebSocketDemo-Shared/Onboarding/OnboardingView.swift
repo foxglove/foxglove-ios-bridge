@@ -2,6 +2,7 @@ import SwiftUI
 
 enum OnboardingStep {
   case connection
+  case studioUsage
 }
 
 struct OnboardingView: View {
@@ -22,6 +23,11 @@ struct OnboardingView: View {
           switch $0 {
           case .connection:
             ConnectionView(isConnected: isConnected, serverURL: serverURL)
+              .onContinue {
+                path.append(.studioUsage)
+              }
+          case .studioUsage:
+            StudioUsageView()
               .onContinue {
                 dismiss()
               }
@@ -58,7 +64,9 @@ struct OnboardingStepWrapper<Content: View>: View {
 struct OnboardingView_Previews: PreviewProvider {
   static var previews: some View {
     OnboardingView(isConnected: true, serverURL: "ws://192.168.1.2:12346")
-      .previewDevice("iPhone 8 Plus")
+      .previewDevice("iPhone 13 mini")
+    OnboardingView(isConnected: true, serverURL: "ws://192.168.1.2:12346")
+      .previewDevice("iPhone 14 Plus")
     OnboardingView(isConnected: true, serverURL: "ws://192.168.1.2:12346")
       .previewDevice("iPad Pro (12.9-inch) (6th generation)")
   }

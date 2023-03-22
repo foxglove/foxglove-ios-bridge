@@ -22,6 +22,7 @@
 		165440CE29CB9147000E8A33 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440CD29CB9147000E8A33 /* IntroView.swift */; };
 		165440D029CB91D3000E8A33 /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440CF29CB91D3000E8A33 /* ConnectionView.swift */; };
 		165440D229CB921E000E8A33 /* ContinueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440D129CB921E000E8A33 /* ContinueButton.swift */; };
+		1678C13B29CBB32A00D83167 /* StudioUsageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1678C13A29CBB32A00D83167 /* StudioUsageView.swift */; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EF080D2992D8A90082E9A0 /* Assets.xcassets */; };
 		16EF086D299408100082E9A0 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 16EF086C299408100082E9A0 /* SwiftProtobuf */; };
@@ -184,6 +185,7 @@
 		165440CD29CB9147000E8A33 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		165440CF29CB91D3000E8A33 /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
 		165440D129CB921E000E8A33 /* ContinueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueButton.swift; sourceTree = "<group>"; };
+		1678C13A29CBB32A00D83167 /* StudioUsageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioUsageView.swift; sourceTree = "<group>"; };
 		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
 		16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				165440D129CB921E000E8A33 /* ContinueButton.swift */,
 				165440CD29CB9147000E8A33 /* IntroView.swift */,
 				165440CF29CB91D3000E8A33 /* ConnectionView.swift */,
+				1678C13A29CBB32A00D83167 /* StudioUsageView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -690,6 +693,7 @@
 				16F34CF329A6FF9C00ACC882 /* FoxgloveServer.swift in Sources */,
 				16F34D1429A6FFAB00ACC882 /* PosesInFrame.pb.swift in Sources */,
 				16F34D1729A6FFAB00ACC882 /* Pose.pb.swift in Sources */,
+				1678C13B29CBB32A00D83167 /* StudioUsageView.swift in Sources */,
 				16F34CF929A6FFAB00ACC882 /* CubePrimitive.pb.swift in Sources */,
 				16F34CF129A6FF9C00ACC882 /* getIPAddresses.swift in Sources */,
 				16F34D0629A6FFAB00ACC882 /* PointsAnnotation.pb.swift in Sources */,

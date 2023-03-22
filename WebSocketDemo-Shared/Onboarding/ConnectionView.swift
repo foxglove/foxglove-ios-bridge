@@ -34,7 +34,7 @@ struct ConnectionView: View {
     }
     ContinueButton {
       if isConnected {
-        Text("Done")
+        Text("Next")
       } else {
         HStack(spacing: 10) {
           ProgressView()
