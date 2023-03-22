@@ -46,7 +46,8 @@ struct OnboardingStepWrapper<Content: View>: View {
         content()
           .frame(maxWidth: maxWidth, alignment: .center)
           .multilineTextAlignment(.center)
-          .padding(32)
+          .padding(.horizontal, 32)
+          .padding(.bottom, 32)
         // Ensure the content takes up at least one full page in the scroll view
           .frame(maxWidth: .infinity, minHeight: proxy.size.height)
       }

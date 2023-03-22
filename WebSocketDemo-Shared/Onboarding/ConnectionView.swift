@@ -53,7 +53,7 @@ struct ConnectionView: View {
           icon
             .symbolRenderingMode(.hierarchical)
             .foregroundColor(.accentColor)
-            .font(.system(size: 80))
+            .font(.system(size: 60))
         }
 
         Spacer(minLength: 20).fixedSize()

@@ -42,7 +42,7 @@ struct ContinueButton<Label: View>: View {
     } label: {
       label()
         .fontWeight(.medium)
-        .padding(.vertical, 12)
+        .padding(.vertical, 10)
         .frame(maxWidth: bordered ? .infinity : nil)
     }
   }

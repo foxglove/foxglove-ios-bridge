@@ -23,7 +23,7 @@ struct FeatureRow: View {
         .symbolRenderingMode(.hierarchical)
         .font(.system(size: imageSize))
         .foregroundColor(imageColor)
-      VStack(alignment: .leading, spacing: 6) {
+      VStack(alignment: .leading, spacing: 4) {
         Text(title)
           .font(.headline)
         Text(subtitle)
@@ -40,20 +40,20 @@ struct IntroView: View {
 
   var body: some View {
     OnboardingStepWrapper {
-      VStack(alignment: .center) {
+      VStack(alignment: .center, spacing: 0) {
         Spacer(minLength: 0)
         HStack(alignment: .center) {
           Text("🤖")
-            .font(.system(size: 80))
+            .font(.system(size: 60))
             .padding(.bottom, 5)
           Image(systemName: "dot.radiowaves.right")
-            .font(.system(size: 40))
+            .font(.system(size: 30))
             .opacity(0.3)
             .padding(.leading, 10)
             .padding(.trailing, 18)
           Image("studio-logo", bundle: Bundle(for: Dummy.self))
             .resizable()
-            .frame(width: 60, height: 60)
+            .frame(width: 50, height: 50)
         }
 
         Text("Get started with Foxglove Studio")
@@ -91,7 +91,7 @@ This app streams sensor data to Foxglove Studio via a WebSocket connection. Your
           )
         }
 
-        Spacer()
+        Spacer(minLength: 32)
 
         ContinueButton("Get Started")
       }
@@ -102,5 +102,6 @@ This app streams sensor data to Foxglove Studio via a WebSocket connection. Your
 struct IntroView_Previews: PreviewProvider {
   static var previews: some View {
     IntroView()
+      .previewDevice("iPhone 13 mini")
   }
 }
