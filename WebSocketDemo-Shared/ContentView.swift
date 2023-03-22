@@ -14,7 +14,11 @@ public struct ContentView: View {
   @StateObject var server = Server()
   @State var sendPose = true
   @State var appStoreOverlayShown = false
-  @State var onboardingShown = true
+
+  @AppStorage("foxglove.onboarding-completed")
+  var onboardingCompleted = false
+
+  @State var onboardingShown = false
 
   @AppStorage("foxglove.selected-tab")
   var selectedTab = Tab.topics
@@ -37,7 +41,12 @@ public struct ContentView: View {
         }
         .tag(Tab.server)
     }
-    .sheet(isPresented: $onboardingShown) {
+    .onAppear {
+      onboardingShown = !onboardingCompleted
+    }
+    .sheet(isPresented: $onboardingShown, onDismiss: {
+      onboardingCompleted = true
+    }) {
       OnboardingView(
         isConnected: !server.clientEndpointNames.isEmpty,
         serverURL: server.addresses.first.flatMap {
@@ -47,6 +56,7 @@ public struct ContentView: View {
           return "ws://\($0.withoutInterface.urlString):\(port)"
         } ?? "No interfaces :("
       )
+      .interactiveDismissDisabled()
     }
   }
 
@@ -138,6 +148,21 @@ public struct ContentView: View {
           }
         } header: {
           Text("Clients")
+        }
+
+        Section {
+          Button("Show Tutorial") {
+            onboardingShown = true
+          }
+        } header: {
+          Text("Help")
+        } footer: {
+          let info = Bundle.main.infoDictionary
+          if let version = info?["CFBundleShortVersionString"] as? String,
+             let build = info?["CFBundleVersion"] as? String {
+            Text("Version \(version) (\(build))")
+              .frame(maxWidth: .infinity)
+          }
         }
       }
     }
