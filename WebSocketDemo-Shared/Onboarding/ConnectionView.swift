@@ -60,7 +60,7 @@ struct ConnectionView: View {
 
         Text("Connect \(deviceModel) to Foxglove Studio")
           .fixedHeight()
-          .font(.largeTitle)
+          .font(.title)
           .fontWeight(.heavy)
 
         Spacer(minLength: 32).fixedSize()
@@ -70,19 +70,13 @@ struct ConnectionView: View {
             Image(systemName: "1.circle")
               .foregroundColor(.secondary)
               .font(.system(size: bulletSize))
-            Text("On your computer, visit https://studio.foxglove.dev. Google Chrome is recommended.")
+            Text("Navigate to https://studio.foxglove.dev on your computer (Google Chrome recommended)")
           }
           HStack(alignment: .center) {
             Image(systemName: "2.circle")
               .foregroundColor(.secondary)
               .font(.system(size: bulletSize))
-            Text("Click “Open connection”, then choose “Foxglove WebSocket”.")
-          }
-          HStack(alignment: .center) {
-            Image(systemName: "3.circle")
-              .foregroundColor(.secondary)
-              .font(.system(size: bulletSize))
-            Text("Enter the following WebSocket URL:")
+            Text("Click “Open connection”, then input the following Foxglove WebSocket URL:")
           }
 
           Text(serverURL)
@@ -96,12 +90,12 @@ struct ConnectionView: View {
             .frame(maxWidth: .infinity)
 
           HStack(alignment: .top) {
-            Image(systemName: "4.circle")
+            Image(systemName: "3.circle")
               .foregroundColor(.secondary)
               .font(.system(size: bulletSize))
             VStack(alignment: .leading, spacing: 6) {
-              Text("Click the \(Image(systemName: "shield.lefthalf.filled")) icon in the address bar, then click “Load Unsafe Scripts”.")
-              Text("This setting allows a “`https://`” page to connect to a “`ws://`” URL.")
+              Text("Click the \(Image(systemName: "shield.lefthalf.filled")) icon in the address bar, then click “Load Unsafe Scripts”")
+              Text("This setting allows a “`https://`” page to connect to a “`ws://`” URL")
                 .font(.caption)
                 .foregroundColor(.secondary)
             }

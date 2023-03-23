@@ -56,14 +56,14 @@ struct IntroView: View {
             .frame(width: 50, height: 50)
         }
 
-        Text("Get started with Foxglove Studio")
+        Text("Explore \(deviceModel) data in Foxglove Studio")
           .fixedHeight()
-          .font(.largeTitle)
+          .font(.title)
           .fontWeight(.heavy)
 
         Spacer(minLength: 16).fixedSize()
         Text("""
-This app streams sensor data to Foxglove Studio via a WebSocket connection. Your \(deviceModel) acts like a “robot” by capturing data from its built-in sensors and internal state.
+Stream data from your \(deviceModel)’s built-in sensors to Foxglove Studio for instant visualization.
 """)
         .fixedHeight()
         .lineSpacing(4)

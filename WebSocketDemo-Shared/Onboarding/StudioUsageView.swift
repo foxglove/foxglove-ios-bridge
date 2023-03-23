@@ -1,4 +1,21 @@
 import SwiftUI
+import SafariServices
+
+struct SafariView: UIViewControllerRepresentable {
+  let url: URL
+
+  func makeUIViewController(context: Context) -> SFSafariViewController {
+    let config = SFSafariViewController.Configuration()
+    // Bar collapsing looks buggy when presented in a sheet.
+    config.barCollapsingEnabled = false
+
+    return SFSafariViewController(url: url, configuration: config)
+  }
+
+  func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {
+    print("Warning: unable to update SFSafariViewController")
+  }
+}
 
 struct OrbitingViews: View {
   let views: [AnyView]
@@ -49,6 +66,7 @@ func resizableImage(systemName: String, color: Color, renderingMode: SymbolRende
 
 struct StudioUsageView: View {
   @ScaledMetric var bulletSize = 30
+  @State var showDocs = false
 
   let deviceModel = UIDevice.current.model
 
@@ -66,22 +84,27 @@ struct StudioUsageView: View {
 
         Spacer(minLength: 20).fixedSize()
 
-        Text("Enjoy your visualizations!")
+        Text("Start visualizing your data!")
           .fixedHeight()
-          .font(.largeTitle)
+          .font(.title)
           .fontWeight(.heavy)
 
         Spacer(minLength: 32).fixedSize()
 
         Text("""
-Try out Foxglove Studio’s **3D**, **Image**, and **Map** panels to visualize the sensor data from your \(deviceModel).
-
-For more information, visit https://foxglove.dev/docs/studio.
+Try adding the **3D**, **Image**, **Map**, and **Plot** panels to your layout to start exploring your \(deviceModel)’s sensor data.
 """)
+        Spacer(minLength: 32).fixedSize()
+        Button("View Docs") {
+          showDocs = true
+        }
 
         Spacer(minLength: 30)
         ContinueButton("Done")
       }
+    }.sheet(isPresented: $showDocs) {
+      SafariView(url: URL(string: "https://foxglove.dev/docs/studio/panels/introduction")!)
+        .edgesIgnoringSafeArea(.all)
     }
   }
 }
