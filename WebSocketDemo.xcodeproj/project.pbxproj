@@ -169,6 +169,9 @@
 		1601568F29AE669900ECBCC3 /* Foxglove Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Foxglove Stickers.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1601569129AE669B00ECBCC3 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
 		1601569C29AE7B5800ECBCC3 /* Foxglove-Stickers-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Foxglove-Stickers-Info.plist"; sourceTree = "<group>"; };
+		1614A8E529E9D26300342206 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1614A8E629E9D29800342206 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1614A8E729E9D2A000342206 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1627FE0029CA3A050063EF43 /* compareIPAddresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compareIPAddresses.swift; sourceTree = "<group>"; };
 		1627FE0229CA4FD20063EF43 /* IPAddressRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressRow.swift; sourceTree = "<group>"; };
 		1627FE0429CA96420063EF43 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -287,6 +290,7 @@
 		1640D49B29954ABD00C0D669 /* WebSocketDemo-Watch */ = {
 			isa = PBXGroup;
 			children = (
+				1614A8E729E9D2A000342206 /* Info.plist */,
 				164DE46A299559EA002B3560 /* WebSocketDemo-Watch.entitlements */,
 				1640D49C29954ABD00C0D669 /* App.swift */,
 				1640D49E29954ABD00C0D669 /* ContentView.swift */,
@@ -343,6 +347,7 @@
 		16EF08082992D8A70082E9A0 /* WebSocketDemo */ = {
 			isa = PBXGroup;
 			children = (
+				1614A8E529E9D26300342206 /* Info.plist */,
 				1640D46F2994B5A400C0D669 /* WebSocketDemo.entitlements */,
 				16EF080D2992D8A90082E9A0 /* Assets.xcassets */,
 				16EF08092992D8A70082E9A0 /* App.swift */,
@@ -413,6 +418,7 @@
 		16F34CCF29A6FE1500ACC882 /* WebSocketDemo-AppClip */ = {
 			isa = PBXGroup;
 			children = (
+				1614A8E629E9D29800342206 /* Info.plist */,
 				16F34CD029A6FE1500ACC882 /* App.swift */,
 				16F34CD429A6FE1600ACC882 /* Assets.xcassets */,
 				16F34CDA29A6FE1600ACC882 /* WebSocketDemo-AppClip.entitlements */,
@@ -819,6 +825,7 @@
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "WebSocketDemo-Watch/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove Studio.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove Studio.";
@@ -851,6 +858,7 @@
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "WebSocketDemo-Watch/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove Studio.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove Studio.";
@@ -999,6 +1007,7 @@
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WebSocketDemo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove Studio.";
@@ -1036,6 +1045,7 @@
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WebSocketDemo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove Studio.";
@@ -1072,6 +1082,7 @@
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "WebSocketDemo-AppClip/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
 				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove Studio.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When enabled, your raw location data points will be streamed over the WebSocket connection. The data will be encoded in foxglove.LocationFix messages. Visualize your location using the Map panel in Foxglove Studio.";
@@ -1106,6 +1117,7 @@
 				DEVELOPMENT_TEAM = 63ZWV795BK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "WebSocketDemo-AppClip/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
 				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove Studio.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When enabled, your raw location data points will be streamed over the WebSocket connection. The data will be encoded in foxglove.LocationFix messages. Visualize your location using the Map panel in Foxglove Studio.";
