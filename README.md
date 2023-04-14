@@ -4,9 +4,7 @@ Stream sensor data from your iOS device and visualize it in [Foxglove Studio](ht
 
 [<img src="https://user-images.githubusercontent.com/14237/232120565-88d0d9b1-2b0f-40b8-9547-a4a4c4c48156.png" height="40">](https://apps.apple.com/us/app/foxglove-websocket-bridge/id1673592198)
 
-<img src="./screenshots/graphic/iphone14plus-6.5in.png" width="150"/>
-<img src="./screenshots/iphone14plus-6.5in.png" width="150"/>
-<img src="https://user-images.githubusercontent.com/14237/232129368-bd163e05-b93c-4974-830a-d80bbcabaa25.png" width="256">
+<img src="./screenshots/graphic/iphone14plus-6.5in.png" width="150"/> <img src="./screenshots/iphone14plus-6.5in.png" width="150"/> <img src="https://user-images.githubusercontent.com/14237/232129368-bd163e05-b93c-4974-830a-d80bbcabaa25.png" width="256">
 
 
 ## About
