@@ -25,11 +25,12 @@ Note: All contributors must agree to our [Contributor License Agreement](https:/
 
 To make a release of the app, perform the following steps:
 
-1. Update every instance of `CURRENT_PROJECT_VERSION` and `MARKETING_VERSION` in [project.pbxproj](WebSocketDemo.xcodeproj/project.pbxproj) as needed. (Updating the `MARKETING_VERSION` is not required, but `CURRENT_PROJECT_VERSION` must be unique for each build uploaded to App Store Connect.)
-2. In Xcode, follow [these steps](https://help.apple.com/xcode/mac/current/#/devf37a1db04) to create an archive.
-3. Once the archive is completed, click the Distribute App button and choose to upload the build to App Store Connect.
+1. Follow [these steps](https://developer.apple.com/help/app-store-connect/update-your-app/create-a-new-version/) to create a new version of the app on App Store Connect.
+1. Update every instance of `CURRENT_PROJECT_VERSION` and `MARKETING_VERSION` in [project.pbxproj](WebSocketDemo.xcodeproj/project.pbxproj) as needed. The `MARKETING_VERSION` must match the new draft version in App Store Connect, and `CURRENT_PROJECT_VERSION` must be unique for each build you plan to upload.
+1. In Xcode, follow [these steps](https://help.apple.com/xcode/mac/current/#/devf37a1db04) to create an archive.
+1. Once the archive is completed, click the Distribute App button and choose to upload the build to App Store Connect.
    - Visit the [TestFlight tab](https://appstoreconnect.apple.com/apps/1673592198/testflight/ios) of App Store Connect to see the status of the newly uploaded build.
-4. Follow [these steps](https://developer.apple.com/help/app-store-connect/update-your-app/create-a-new-version/) to create a new version of the app matching the `MARKETING_VERSION` in the build. Select the new build, update other assets and metadata as needed, and submit the the app for review.
+1. Attach the new build to the new app version, update other assets and metadata as needed, and submit the the app for review.
 
 ## Stay in touch
 
