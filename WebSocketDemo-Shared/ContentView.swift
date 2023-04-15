@@ -68,6 +68,11 @@ public struct ContentView: View {
         }
         CardToggle(isOn: $server.sendLocation) {
           Text("GPS")
+          if !server.hasLocationPermission {
+            Text("Permission required")
+              .font(.footnote)
+              .foregroundColor(.secondary)
+          }
         }
         CardToggle(isOn: $server.sendCPU) {
           Text("CPU")
@@ -83,6 +88,11 @@ public struct ContentView: View {
         }
         CardToggle(isOn: $server.sendCamera) {
           Text("Camera")
+          if !server.hasCameraPermission {
+            Text("Permission required")
+              .font(.footnote)
+              .foregroundColor(.secondary)
+          }
           if server.sendCamera {
             Text("Dropped frames: \(server.droppedVideoFrames)")
           }

@@ -150,6 +150,9 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       }
     }
   }
+  var hasCameraPermission: Bool {
+    AVCaptureDevice.authorizationStatus(for: .video) == .authorized
+  }
 
   @Published var sendLocation = false {
     didSet {
@@ -159,6 +162,9 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         stopLocationUpdates()
       }
     }
+  }
+  var hasLocationPermission: Bool {
+    locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedAlways
   }
 
   @Published var sendCPU = true {
@@ -359,7 +365,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     locationManager.delegate = self
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
     locationManager.requestWhenInUseAuthorization()
-    if locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedAlways {
+    if hasLocationPermission {
       locationManager.startUpdatingLocation()
     }
   }
