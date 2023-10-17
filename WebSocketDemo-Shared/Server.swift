@@ -5,6 +5,7 @@ import Combine
 import Network
 import CoreLocation
 import WatchConnectivity
+import VideoToolbox
 
 struct CPUUsage: Encodable, Identifiable {
   let usage: Double
@@ -118,6 +119,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   let motionManager = CMMotionManager()
   let locationManager = CLLocationManager()
   var captureSession: AVCaptureSession?
+  var compressionSessionOut: VTCompressionSession?
+
   var subscribers: [AnyCancellable] = []
 
   let poseChannel: ChannelID
@@ -224,8 +227,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     cameraChannel = server.addChannel(
       topic: "camera",
       encoding: "protobuf",
-      schemaName: Foxglove_CompressedImage.protoMessageName,
-      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString()
+      schemaName: Foxglove_CompressedVideo.protoMessageName,
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedVideo", withExtension: "bin")!).base64EncodedString()
     )
     locationChannel = server.addChannel(
       topic: "gps",
@@ -441,6 +444,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       output.setSampleBufferDelegate(self, queue: self.videoQueue)
       session.addOutput(output)
       session.startRunning()
+     
       Task { @MainActor in self.captureSession = session }
     }
   }
@@ -480,22 +484,75 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       print("no image buffer :(")
       return
     }
-    let img = UIImage(ciImage: CIImage(cvImageBuffer: imageBuffer))
-    guard let jpeg = img.jpegData(compressionQuality: 0.8) else {
-      print("failed to compress jpeg :(")
-      return
-    }
-
-    var protoImg = Foxglove_CompressedImage()
-    protoImg.timestamp = .init(date: .now)
-    protoImg.frameID = "camera"
-    protoImg.format = "jpeg"
-    protoImg.data = jpeg
-
-    let serializedProto = try! protoImg.serializedData()
-
     Task { @MainActor in
-      server.sendMessage(on: cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: serializedProto)
+      if compressionSessionOut == nil {
+        var err: OSStatus = noErr
+        err = VTCompressionSessionCreate(allocator: kCFAllocatorDefault,
+                                             width: 720,
+                                             height: 1280,
+                                             codecType: kCMVideoCodecType_H264,
+                                             encoderSpecification: nil,
+                                             imageBufferAttributes: nil,
+                                             compressedDataAllocator: nil,
+                                             outputCallback: nil,
+                                             refcon: nil,
+                                             compressionSessionOut: &compressionSessionOut)
+        guard err == noErr, let compressionSession = compressionSessionOut else {
+          fatalError("VTCompressionSession creation failed (\(err))!")
+        }
+        err = VTSessionSetProperty(compressionSession, key: kVTCompressionPropertyKey_ProfileLevel, value: kVTProfileLevel_H264_Main_AutoLevel)
+        if noErr != err {
+               print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_ProfileLevel) failed (\(err))")
+           }
+        
+        // Indicate that the compression session is in real time, which streaming
+        // requires.
+        err = VTSessionSetProperty(compressionSession, key: kVTCompressionPropertyKey_RealTime, value: kCFBooleanTrue)
+        if noErr != err {
+            print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_RealTime) failed (\(err))")
+        }
+        // Enables temporal compression.
+        err = VTSessionSetProperty(compressionSession, key: kVTCompressionPropertyKey_AllowTemporalCompression, value: kCFBooleanTrue)
+        if noErr != err {
+            print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_AllowTemporalCompression) failed (\(err))")
+        }
+
+        
+        
+      }
+   
+      
+      VTCompressionSessionEncodeFrame(compressionSessionOut!, imageBuffer: sampleBuffer.imageBuffer!, presentationTimeStamp: sampleBuffer.presentationTimeStamp, duration: .invalid, frameProperties: nil, infoFlagsOut: nil) { status, infoFlags, sampleBuffer  in
+        if infoFlags.contains(.frameDropped) {
+            print("Encoder dropped the frame with status \(status)")
+            return
+        }
+        // If frame encoding fails in a live streaming use case, drop any
+        // pending frames that the encoder may emit and force a key frame.
+        // See `kVTEncodeFrameOptionKey_ForceKeyFrame` for information about
+        // forcing a key frame. This sample app doesn't include this
+        // implementation.
+        guard noErr == status else {
+            print("Encoder returned an error for frame with \(status)")
+            return
+        }
+        guard let sampleBuffer else {
+            print("Encoder returned an unexpected NULL sampleBuffer for frame")
+            return
+        }
+        var protoVideo = Foxglove_CompressedVideo()
+        protoVideo.timestamp = .init(date: .now)
+        protoVideo.frameID = "camera"
+        protoVideo.format = "h264"
+        try! sampleBuffer.dataBuffer?.withContiguousStorage({ rawBufferPtr in
+           protoVideo.data = Data(rawBufferPtr)
+        });
+        
+        let serializedProto = try! protoVideo.serializedData()
+        Task { @MainActor in
+          self.server.sendMessage(on: self.cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: serializedProto)
+        }
+      }
     }
   }
 

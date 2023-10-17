@@ -77,6 +77,10 @@
 		16F34D1F29A6FFDC00ACC882 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 16F34D1E29A6FFDC00ACC882 /* SwiftProtobuf */; };
 		16F34D2229A7096200ACC882 /* WebSocketDemo_Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16F34CE729A6FF3200ACC882 /* WebSocketDemo_Shared.framework */; };
 		16F34D2529A7097300ACC882 /* WebSocketDemo_Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16F34CE729A6FF3200ACC882 /* WebSocketDemo_Shared.framework */; };
+		D1D6CF142ADEF53300D062D5 /* CompressedVideo.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D6CF132ADEF53300D062D5 /* CompressedVideo.pb.swift */; };
+		D1D6CF162ADEF54100D062D5 /* CompressedVideo.bin in Resources */ = {isa = PBXBuildFile; fileRef = D1D6CF152ADEF54100D062D5 /* CompressedVideo.bin */; };
+		D1D6CF192ADEF93100D062D5 /* FrameTransforms.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D6CF172ADEF93100D062D5 /* FrameTransforms.pb.swift */; };
+		D1D6CF1A2ADEF93100D062D5 /* TextAnnotation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D6CF182ADEF93100D062D5 /* TextAnnotation.pb.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -239,6 +243,10 @@
 		16F34CD429A6FE1600ACC882 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16F34CDA29A6FE1600ACC882 /* WebSocketDemo-AppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WebSocketDemo-AppClip.entitlements"; sourceTree = "<group>"; };
 		16F34CE729A6FF3200ACC882 /* WebSocketDemo_Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WebSocketDemo_Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1D6CF132ADEF53300D062D5 /* CompressedVideo.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompressedVideo.pb.swift; sourceTree = "<group>"; };
+		D1D6CF152ADEF54100D062D5 /* CompressedVideo.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = CompressedVideo.bin; sourceTree = "<group>"; };
+		D1D6CF172ADEF93100D062D5 /* FrameTransforms.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameTransforms.pb.swift; sourceTree = "<group>"; };
+		D1D6CF182ADEF93100D062D5 /* TextAnnotation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextAnnotation.pb.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +375,9 @@
 		16EF0824299406BB0082E9A0 /* foxglove */ = {
 			isa = PBXGroup;
 			children = (
+				D1D6CF172ADEF93100D062D5 /* FrameTransforms.pb.swift */,
+				D1D6CF182ADEF93100D062D5 /* TextAnnotation.pb.swift */,
+				D1D6CF132ADEF53300D062D5 /* CompressedVideo.pb.swift */,
 				16EF0825299406BB0082E9A0 /* PointsAnnotation.pb.swift */,
 				16EF0826299406BB0082E9A0 /* ImageAnnotations.pb.swift */,
 				16EF0827299406BB0082E9A0 /* Vector3.pb.swift */,
@@ -409,6 +420,7 @@
 		16EF087029940C160082E9A0 /* bin */ = {
 			isa = PBXGroup;
 			children = (
+				D1D6CF152ADEF54100D062D5 /* CompressedVideo.bin */,
 				16EF087129940C160082E9A0 /* CompressedImage.bin */,
 				169393CC2994522A00A78475 /* LocationFix.bin */,
 			);
@@ -653,6 +665,7 @@
 			files = (
 				16F34CF829A6FFA300ACC882 /* LocationFix.bin in Resources */,
 				165440CB29CA9B8D000E8A33 /* Assets.xcassets in Resources */,
+				D1D6CF162ADEF54100D062D5 /* CompressedVideo.bin in Resources */,
 				16F34CF729A6FFA300ACC882 /* CompressedImage.bin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -710,6 +723,7 @@
 				165440CE29CB9147000E8A33 /* IntroView.swift in Sources */,
 				16F34D0129A6FFAB00ACC882 /* SceneUpdate.pb.swift in Sources */,
 				16F34D0729A6FFAB00ACC882 /* Color.pb.swift in Sources */,
+				D1D6CF192ADEF93100D062D5 /* FrameTransforms.pb.swift in Sources */,
 				16F34CF629A6FF9C00ACC882 /* getMemoryUsage.swift in Sources */,
 				16F34CFD29A6FFAB00ACC882 /* ArrowPrimitive.pb.swift in Sources */,
 				16F34D0429A6FFAB00ACC882 /* SceneEntityDeletion.pb.swift in Sources */,
@@ -725,6 +739,7 @@
 				16F34D1A29A6FFAB00ACC882 /* LinePrimitive.pb.swift in Sources */,
 				16F34D1629A6FFAB00ACC882 /* PoseInFrame.pb.swift in Sources */,
 				16F34CF229A6FF9C00ACC882 /* getCPUUsage.swift in Sources */,
+				D1D6CF142ADEF53300D062D5 /* CompressedVideo.pb.swift in Sources */,
 				16F34CEF29A6FF9C00ACC882 /* CardToggle.swift in Sources */,
 				16F34CFA29A6FFAB00ACC882 /* GeoJSON.pb.swift in Sources */,
 				16F34D1229A6FFAB00ACC882 /* RawImage.pb.swift in Sources */,
@@ -736,6 +751,7 @@
 				16F34D1129A6FFAB00ACC882 /* Log.pb.swift in Sources */,
 				16F34D0529A6FFAB00ACC882 /* SpherePrimitive.pb.swift in Sources */,
 				16F34D0029A6FFAB00ACC882 /* ImageAnnotations.pb.swift in Sources */,
+				D1D6CF1A2ADEF93100D062D5 /* TextAnnotation.pb.swift in Sources */,
 				16F34CF029A6FF9C00ACC882 /* ContentView.swift in Sources */,
 				1627FE0329CA4FD20063EF43 /* IPAddressRow.swift in Sources */,
 				16F34D0929A6FFAB00ACC882 /* PointCloud.pb.swift in Sources */,
