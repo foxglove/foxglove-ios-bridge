@@ -41,7 +41,7 @@ struct Foxglove_PointsAnnotation {
   /// Type of points annotation to draw
   var type: Foxglove_PointsAnnotation.TypeEnum = .unknown
 
-  /// Points in 2D image coordinates
+  /// Points in 2D image coordinates (pixels)
   var points: [Foxglove_Point2] = []
 
   /// Outline color
@@ -67,7 +67,7 @@ struct Foxglove_PointsAnnotation {
   /// Clears the value of `fillColor`. Subsequent reads from it will return its default value.
   mutating func clearFillColor() {self._fillColor = nil}
 
-  /// Stroke thickness
+  /// Stroke thickness in pixels
   var thickness: Double = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -76,9 +76,17 @@ struct Foxglove_PointsAnnotation {
   enum TypeEnum: SwiftProtobuf.Enum {
     typealias RawValue = Int
     case unknown // = 0
+
+    /// Individual points: 0, 1, 2, ...
     case points // = 1
+
+    /// Closed polygon: 0-1, 1-2, ..., (n-1)-n, n-0
     case lineLoop // = 2
+
+    /// Connected line segments: 0-1, 1-2, ..., (n-1)-n
     case lineStrip // = 3
+
+    /// Individual line segments: 0-1, 2-3, 4-5, ...
     case lineList // = 4
     case UNRECOGNIZED(Int)
 
