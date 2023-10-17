@@ -51,8 +51,9 @@ struct Health: Encodable {
 enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
   case back
   case front
-//  case backDepth
-//  case frontDepth
+  
+  case backDepth
+  case frontDepth
 
   var description: String {
     switch self {
@@ -60,6 +61,10 @@ enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
       return "Back"
     case .front:
       return "Front"
+    case .backDepth:
+      return "Back depth"
+    case .frontDepth:
+      return "Front depth"
     }
   }
 
@@ -84,6 +89,10 @@ func configureInputs(in session: AVCaptureSession, for camera: Camera) throws {
     device = .default(.builtInWideAngleCamera, for: .video, position: .back)
   case .front:
     device = .default(.builtInWideAngleCamera, for: .video, position: .front)
+  case .frontDepth:
+    device = .default(.builtInTrueDepthCamera, for: .depthData, position: .front)
+  case .backDepth:
+    device = .default(.builtInLiDARDepthCamera, for: .video, position: .back)
   }
 
   guard let device else {
@@ -92,16 +101,21 @@ func configureInputs(in session: AVCaptureSession, for camera: Camera) throws {
 
   do {
     let input = try AVCaptureDeviceInput(device: device)
+    print("depth format: \(device.activeDepthDataFormat)")
     print("ranges: \(input.device.activeFormat.videoSupportedFrameRateRanges)")
     session.addInput(input)
+    print("active format: \(input.device.activeFormat)")
+    print("active format supported depth formats: \(input.device.activeFormat.supportedDepthDataFormats)")
+    print("active depth format: \(input.device.activeDepthDataFormat)")
 //        input.videoMinFrameDurationOverride = CMTime(seconds: 0.1, preferredTimescale: 30)
   } catch let error {
     print("failed to create device input: \(error)")
   }
+
 }
 
 @MainActor
-class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDelegate, CLLocationManagerDelegate {
+class Server: NSObject, ObservableObject, AVCaptureDepthDataOutputDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, CLLocationManagerDelegate {
   let videoQueue = DispatchQueue(label: "VideoQueue")
 
   @Published
@@ -436,9 +450,21 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         print("error starting session: \(error)")
       }
       session.sessionPreset = .medium
-
-      let output = AVCaptureVideoDataOutput()
-      output.setSampleBufferDelegate(self, queue: self.videoQueue)
+      var output: AVCaptureOutput;
+      switch activeCamera {
+      case .front, .back:
+        let videoOut = AVCaptureVideoDataOutput()
+        videoOut.setSampleBufferDelegate(self, queue: self.videoQueue)
+        output = videoOut
+      case .frontDepth, .backDepth:
+        let depthOut = AVCaptureDepthDataOutput()
+        depthOut.setDelegate(self, callbackQueue: self.videoQueue)
+        depthOut.isFilteringEnabled = true
+        output = depthOut
+        guard let connection = output.connection(with: .depthData) else { fatalError() }
+        connection.isEnabled = true
+      }
+      
       session.addOutput(output)
       session.startRunning()
       Task { @MainActor in self.captureSession = session }
@@ -473,7 +499,27 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       session.commitConfiguration()
     }
   }
+  nonisolated func depthDataOutput(_ output: AVCaptureDepthDataOutput, didOutput depthData: AVDepthData, timestamp: CMTime, connection: AVCaptureConnection) {
+    let imageBuffer = depthData.depthDataMap
+    
+    let img = UIImage(ciImage: CIImage(cvImageBuffer: imageBuffer))
+    guard let jpeg = img.jpegData(compressionQuality: 0.8) else {
+      print("failed to compress jpeg :(")
+      return
+    }
 
+    var protoImg = Foxglove_CompressedImage()
+    protoImg.timestamp = .init(date: .now)
+    protoImg.frameID = "camera"
+    protoImg.format = "jpeg"
+    protoImg.data = jpeg
+
+    let serializedProto = try! protoImg.serializedData()
+
+    Task { @MainActor in
+      server.sendMessage(on: cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: serializedProto)
+    }
+  }
 
   nonisolated func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
     guard let imageBuffer = sampleBuffer.imageBuffer else {
@@ -498,6 +544,12 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       server.sendMessage(on: cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: serializedProto)
     }
   }
+  
+  nonisolated func depthDataOutput(_ output: AVCaptureDepthDataOutput, didDrop depthData: AVDepthData, timestamp: CMTime, connection: AVCaptureConnection, reason: AVCaptureOutput.DataDroppedReason) {
+    Task { @MainActor in
+      self.droppedVideoFrames += 1
+    }
+  }
 
   nonisolated func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
     Task { @MainActor in
@@ -505,7 +557,6 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
 }
-
 
 extension Server: WCSessionDelegate {
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
