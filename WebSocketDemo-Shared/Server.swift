@@ -73,6 +73,11 @@ enum ServerError: Error {
   case noCameraDevice
 }
 
+enum VideoError: Error {
+  case failedToGetParameterSetCount
+  case failedToGetParameterSet(index: Int)
+}
+
 
 func configureInputs(in session: AVCaptureSession, for camera: Camera) throws {
   for input in session.inputs {
@@ -544,9 +549,33 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         protoVideo.timestamp = .init(date: .now)
         protoVideo.frameID = "camera"
         protoVideo.format = "h264"
-        try! sampleBuffer.dataBuffer?.withContiguousStorage({ rawBufferPtr in
-           protoVideo.data = Data(rawBufferPtr)
-        });
+        
+        var annexBData = Data()
+        let startCode: [UInt8] = [0x00, 0x00, 0x00, 0x01]
+        
+        guard let formatDescription = sampleBuffer.formatDescription else {
+          print("No format description")
+          return
+        }
+
+        try! formatDescription.forEachParameterSet { buf in
+          annexBData.append(contentsOf: startCode)
+          annexBData.append(buf)
+        }
+        
+        try! sampleBuffer.dataBuffer?.withContiguousStorage { rawBufferPtr in
+          var offset = 0
+          while offset + 4 < rawBufferPtr.count {
+            let nalUnitLength = Int(UInt32(bigEndian: rawBufferPtr.loadUnaligned(fromByteOffset: offset, as: UInt32.self)))
+            annexBData.append(contentsOf: startCode)
+            let nalUnit = rawBufferPtr[offset+4..<offset+4+nalUnitLength]
+            nalUnit.withMemoryRebound(to: UInt8.self) {
+              annexBData.append($0)
+            }
+            offset += 4 + nalUnitLength
+          }
+        }
+        protoVideo.data = annexBData
         
         let serializedProto = try! protoVideo.serializedData()
         Task { @MainActor in
@@ -602,6 +631,26 @@ extension Server: WCSessionDelegate {
       Task { @MainActor in
         self.server.sendMessage(on: self.healthChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
+    }
+  }
+}
+
+
+extension CMFormatDescription {
+  func forEachParameterSet(_ callback: (UnsafeBufferPointer<UInt8>) -> Void) throws {
+    var parameterSetCount = 0
+    var status = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(self, parameterSetIndex: 0, parameterSetPointerOut: nil, parameterSetSizeOut: nil, parameterSetCountOut: &parameterSetCount, nalUnitHeaderLengthOut: nil)
+    guard noErr == status else {
+      throw VideoError.failedToGetParameterSetCount
+    }
+    for idx in 0..<parameterSetCount {
+      var ptr: UnsafePointer<UInt8>? = nil
+      var size = 0
+      status = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(self, parameterSetIndex: idx, parameterSetPointerOut: &ptr, parameterSetSizeOut: &size, parameterSetCountOut: nil, nalUnitHeaderLengthOut: nil)
+      guard noErr == status else {
+        throw VideoError.failedToGetParameterSet(index: idx)
+      }
+      callback(UnsafeBufferPointer<UInt8>(start: ptr, count: size))
     }
   }
 }
