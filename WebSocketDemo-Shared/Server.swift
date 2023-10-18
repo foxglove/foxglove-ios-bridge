@@ -125,6 +125,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   let locationManager = CLLocationManager()
   var captureSession: AVCaptureSession?
   var compressionSessionOut: VTCompressionSession?
+  var videoOutput: AVCaptureVideoDataOutput?
 
   var subscribers: [AnyCancellable] = []
 
@@ -445,12 +446,15 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       }
       session.sessionPreset = .medium
 
-      let output = AVCaptureVideoDataOutput()
-      output.setSampleBufferDelegate(self, queue: self.videoQueue)
-      session.addOutput(output)
+      let videoOutput = AVCaptureVideoDataOutput()
+      videoOutput.setSampleBufferDelegate(self, queue: self.videoQueue)
+      session.addOutput(videoOutput)
       session.startRunning()
      
-      Task { @MainActor in self.captureSession = session }
+      Task { @MainActor in
+        self.captureSession = session
+        self.videoOutput = videoOutput
+}
     }
   }
 
@@ -493,8 +497,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       if compressionSessionOut == nil {
         var err: OSStatus = noErr
         err = VTCompressionSessionCreate(allocator: kCFAllocatorDefault,
-                                             width: 720,
-                                             height: 1280,
+                                         width: self.videoOutput!.videoSettings[kCVPixelBufferWidthKey as String] as! Int32,
+                                             height: self.videoOutput!.videoSettings[kCVPixelBufferHeightKey as String] as! Int32,
                                              codecType: kCMVideoCodecType_H264,
                                              encoderSpecification: nil,
                                              imageBufferAttributes: nil,
