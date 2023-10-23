@@ -444,7 +444,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       } catch let error {
         print("error starting session: \(error)")
       }
-      session.sessionPreset = .medium
+      session.sessionPreset = .high
+      
 
       let videoOutput = AVCaptureVideoDataOutput()
       videoOutput.setSampleBufferDelegate(self, queue: self.videoQueue)
@@ -526,7 +527,11 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
             print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_AllowTemporalCompression) failed (\(err))")
         }
 
-        
+        // Disable frame reordering
+        err = VTSessionSetProperty(compressionSession, key: kVTCompressionPropertyKey_AllowFrameReordering, value: kCFBooleanFalse)
+        if noErr != err {
+            print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_AllowFrameReordering) failed (\(err))")
+        }
         
       }
    
