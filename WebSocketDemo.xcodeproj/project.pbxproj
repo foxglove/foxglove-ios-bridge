@@ -22,6 +22,7 @@
 		165440CE29CB9147000E8A33 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440CD29CB9147000E8A33 /* IntroView.swift */; };
 		165440D029CB91D3000E8A33 /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440CF29CB91D3000E8A33 /* ConnectionView.swift */; };
 		165440D229CB921E000E8A33 /* ContinueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440D129CB921E000E8A33 /* ContinueButton.swift */; };
+		165E093F2AE98270005A59E0 /* CameraCalibration.bin in Resources */ = {isa = PBXBuildFile; fileRef = 165E093E2AE98270005A59E0 /* CameraCalibration.bin */; };
 		1678C13B29CBB32A00D83167 /* StudioUsageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1678C13A29CBB32A00D83167 /* StudioUsageView.swift */; };
 		16B34C992AE87F1A006ABAD7 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B34C982AE87F1A006ABAD7 /* CameraManager.swift */; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
@@ -193,6 +194,7 @@
 		165440CD29CB9147000E8A33 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		165440CF29CB91D3000E8A33 /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
 		165440D129CB921E000E8A33 /* ContinueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueButton.swift; sourceTree = "<group>"; };
+		165E093E2AE98270005A59E0 /* CameraCalibration.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = CameraCalibration.bin; sourceTree = "<group>"; };
 		1678C13A29CBB32A00D83167 /* StudioUsageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioUsageView.swift; sourceTree = "<group>"; };
 		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
 		16B34C982AE87F1A006ABAD7 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 		16EF087029940C160082E9A0 /* bin */ = {
 			isa = PBXGroup;
 			children = (
+				165E093E2AE98270005A59E0 /* CameraCalibration.bin */,
 				D1D6CF152ADEF54100D062D5 /* CompressedVideo.bin */,
 				16EF087129940C160082E9A0 /* CompressedImage.bin */,
 				169393CC2994522A00A78475 /* LocationFix.bin */,
@@ -669,6 +672,7 @@
 				16F34CF829A6FFA300ACC882 /* LocationFix.bin in Resources */,
 				165440CB29CA9B8D000E8A33 /* Assets.xcassets in Resources */,
 				D1D6CF162ADEF54100D062D5 /* CompressedVideo.bin in Resources */,
+				165E093F2AE98270005A59E0 /* CameraCalibration.bin in Resources */,
 				16F34CF729A6FFA300ACC882 /* CompressedImage.bin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

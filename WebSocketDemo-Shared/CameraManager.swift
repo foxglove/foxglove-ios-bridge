@@ -53,10 +53,15 @@ private func configureInputs(in session: AVCaptureSession, for camera: Camera) t
     let input = try AVCaptureDeviceInput(device: device)
     print("ranges: \(input.device.activeFormat.videoSupportedFrameRateRanges)")
     session.addInput(input)
-//        input.videoMinFrameDurationOverride = CMTime(seconds: 0.1, preferredTimescale: 30)
   } catch let error {
     print("failed to create device input: \(error)")
   }
+}
+
+struct CalibrationData {
+  var intrinsicMatrix: matrix_float3x3
+  var width: Int
+  var height: Int
 }
 
 class CameraManager: NSObject, ObservableObject {
@@ -68,6 +73,7 @@ class CameraManager: NSObject, ObservableObject {
   
   let h264Frames = PassthroughSubject<Data, Never>()
   let jpegFrames = PassthroughSubject<Data, Never>()
+  let calibrationData = PassthroughSubject<CalibrationData, Never>()
   
   @Published var currentError: Error?
   
@@ -122,6 +128,12 @@ class CameraManager: NSObject, ObservableObject {
       let output = AVCaptureVideoDataOutput()
       output.setSampleBufferDelegate(self, queue: self.queue)
       captureSession.addOutput(output)
+      if let connection = output.connection(with: .video) {
+        print("intrinsic supported: \(connection.isCameraIntrinsicMatrixDeliverySupported)")
+        if connection.isCameraIntrinsicMatrixDeliverySupported {
+          connection.isCameraIntrinsicMatrixDeliveryEnabled = true
+        }
+      }
       self.videoOutput = output
       
       do {
@@ -233,6 +245,16 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
     guard let imageBuffer = sampleBuffer.imageBuffer else {
       print("no image buffer :(")
       return
+    }
+    
+    if let matrixData = sampleBuffer.attachments[.cameraIntrinsicMatrix]?.value as? Data,
+       matrixData.count == MemoryLayout<matrix_float3x3>.size {
+      let matrix = matrixData.withUnsafeBytes { $0.load(as: matrix_float3x3.self) }
+      let width = CVPixelBufferGetWidth(imageBuffer)
+      let height = CVPixelBufferGetHeight(imageBuffer)
+      Task { @MainActor in
+        calibrationData.send(CalibrationData(intrinsicMatrix: matrix, width: width, height: height))
+      }
     }
     
     if !useVideoCompression {
