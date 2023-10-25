@@ -68,6 +68,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   var subscribers: [AnyCancellable] = []
 
   let poseChannel: ChannelID
+  let transformsChannel: ChannelID
   let calibrationChannel: ChannelID
   let h264Channel: ChannelID
   let jpegChannel: ChannelID
@@ -177,6 +178,12 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       encoding: "json",
       schemaName: "foxglove.PoseInFrame",
       schema: poseInFrameSchema
+    )
+    transformsChannel = server.addChannel(
+      topic: "transforms",
+      encoding: "json",
+      schemaName: "foxglove.FrameTransforms",
+      schema: frameTransformsSchema
     )
     jpegChannel = server.addChannel(
       topic: "camera_jpeg",
@@ -436,7 +443,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 
   func sendPose(motion: CMDeviceMotion) {
-    let data = try! JSONSerialization.data(withJSONObject: [
+    let poseData = try! JSONSerialization.data(withJSONObject: [
       "timestamp": ["sec":0,"nsec":0],
       "frame_id": "root",
       "pose": [
@@ -450,7 +457,27 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       ],
     ], options: .sortedKeys)
 
-    server.sendMessage(on: poseChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+    server.sendMessage(on: poseChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: poseData)
+    
+    let timestampNanos = DispatchTime.now().uptimeNanoseconds
+    let transformsData = try! JSONSerialization.data(withJSONObject: [
+      "transforms":[
+        [
+          "timestamp": ["sec":Int(timestampNanos / 1_000_000_000),"nsec":Int(timestampNanos % 1_000_000_000)],
+          "parent_frame_id": "root",
+          "child_frame_id": "camera",
+          "translation":["x":0,"y":0,"z":0],
+          "rotation":[
+            "x":motion.attitude.quaternion.x,
+            "y":motion.attitude.quaternion.y,
+            "z":motion.attitude.quaternion.z,
+            "w":motion.attitude.quaternion.w,
+          ],
+        ],
+      ],
+    ], options: .sortedKeys)
+    
+    server.sendMessage(on: transformsChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: transformsData)
   }
 }
 
