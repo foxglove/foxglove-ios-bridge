@@ -95,6 +95,12 @@ public struct ContentView: View {
           }
           if server.sendCamera {
             Text("Dropped frames: \(server.droppedVideoFrames)")
+              .font(.caption)
+            if let cameraError = server.cameraError {
+              Text(cameraError.localizedDescription)
+                .foregroundStyle(.red)
+                .font(.caption2)
+            }
           }
         }.overlay(alignment: .bottom) {
           Picker(

@@ -23,6 +23,7 @@
 		165440D029CB91D3000E8A33 /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440CF29CB91D3000E8A33 /* ConnectionView.swift */; };
 		165440D229CB921E000E8A33 /* ContinueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165440D129CB921E000E8A33 /* ContinueButton.swift */; };
 		1678C13B29CBB32A00D83167 /* StudioUsageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1678C13A29CBB32A00D83167 /* StudioUsageView.swift */; };
+		16B34C992AE87F1A006ABAD7 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B34C982AE87F1A006ABAD7 /* CameraManager.swift */; };
 		16EF080A2992D8A70082E9A0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EF08092992D8A70082E9A0 /* App.swift */; };
 		16EF080E2992D8A90082E9A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EF080D2992D8A90082E9A0 /* Assets.xcassets */; };
 		16EF086D299408100082E9A0 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 16EF086C299408100082E9A0 /* SwiftProtobuf */; };
@@ -194,6 +195,7 @@
 		165440D129CB921E000E8A33 /* ContinueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueButton.swift; sourceTree = "<group>"; };
 		1678C13A29CBB32A00D83167 /* StudioUsageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioUsageView.swift; sourceTree = "<group>"; };
 		169393CC2994522A00A78475 /* LocationFix.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = LocationFix.bin; sourceTree = "<group>"; };
+		16B34C982AE87F1A006ABAD7 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		16EF08062992D8A70082E9A0 /* Foxglove Bridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Foxglove Bridge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16EF08092992D8A70082E9A0 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		16EF080B2992D8A70082E9A0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				16EF0819299302570082E9A0 /* FoxgloveServer.swift */,
 				16EF081B299363840082E9A0 /* schemas.swift */,
 				16EF081D2993777F0082E9A0 /* Server.swift */,
+				16B34C982AE87F1A006ABAD7 /* CameraManager.swift */,
 				16EF0823299406BB0082E9A0 /* Schemas */,
 				165440CA29CA9B8D000E8A33 /* Assets.xcassets */,
 			);
@@ -736,6 +739,7 @@
 				16F34D0229A6FFAB00ACC882 /* Quaternion.pb.swift in Sources */,
 				16F34D0A29A6FFAB00ACC882 /* LaserScan.pb.swift in Sources */,
 				16F34CFE29A6FFAB00ACC882 /* Vector3.pb.swift in Sources */,
+				16B34C992AE87F1A006ABAD7 /* CameraManager.swift in Sources */,
 				16F34D1A29A6FFAB00ACC882 /* LinePrimitive.pb.swift in Sources */,
 				16F34D1629A6FFAB00ACC882 /* PoseInFrame.pb.swift in Sources */,
 				16F34CF229A6FF9C00ACC882 /* getCPUUsage.swift in Sources */,

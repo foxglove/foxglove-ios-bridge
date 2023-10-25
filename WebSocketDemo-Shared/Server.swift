@@ -49,67 +49,8 @@ struct Health: Encodable {
   let timestamp: Timestamp
 }
 
-enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
-  case back
-  case front
-//  case backDepth
-//  case frontDepth
-
-  var description: String {
-    switch self {
-    case .back:
-      return "Back"
-    case .front:
-      return "Front"
-    }
-  }
-
-  var id: Self {
-    return self
-  }
-}
-
-enum ServerError: Error {
-  case noCameraDevice
-}
-
-enum VideoError: Error {
-  case failedToGetParameterSetCount
-  case failedToGetParameterSet(index: Int)
-}
-
-
-func configureInputs(in session: AVCaptureSession, for camera: Camera) throws {
-  for input in session.inputs {
-    session.removeInput(input)
-  }
-  
-  let device: AVCaptureDevice?
-  switch camera {
-  case .back:
-    device = .default(.builtInWideAngleCamera, for: .video, position: .back)
-  case .front:
-    device = .default(.builtInWideAngleCamera, for: .video, position: .front)
-  }
-
-  guard let device else {
-    throw ServerError.noCameraDevice
-  }
-
-  do {
-    let input = try AVCaptureDeviceInput(device: device)
-    print("ranges: \(input.device.activeFormat.videoSupportedFrameRateRanges)")
-    session.addInput(input)
-//        input.videoMinFrameDurationOverride = CMTime(seconds: 0.1, preferredTimescale: 30)
-  } catch let error {
-    print("failed to create device input: \(error)")
-  }
-}
-
 @MainActor
 class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDelegate, CLLocationManagerDelegate {
-  let videoQueue = DispatchQueue(label: "VideoQueue")
-
   @Published
   var addresses: [IPAddress] = []
   private var addressUpdateTimer: Timer?
@@ -120,12 +61,10 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   @Published var actualPort: NWEndpoint.Port?
 
   let server = FoxgloveServer()
-
+  
+  let cameraManager = CameraManager()
   let motionManager = CMMotionManager()
   let locationManager = CLLocationManager()
-  var captureSession: AVCaptureSession?
-  var compressionSessionOut: VTCompressionSession?
-  var videoOutput: AVCaptureVideoDataOutput?
 
   var subscribers: [AnyCancellable] = []
 
@@ -138,7 +77,9 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   let watchSession = WCSession.default
 
-  @Published var droppedVideoFrames = 0
+  @Published private(set) var droppedVideoFrames = 0
+  
+  @Published private(set) var cameraError: Error?
 
   @Published var sendPose = true {
     didSet {
@@ -153,9 +94,9 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   @Published var sendCamera = false {
     didSet {
       if sendCamera {
-        startCameraUpdates()
+        cameraManager.startCameraUpdates()
       } else {
-        stopCameraUpdates()
+        cameraManager.stopCameraUpdates()
       }
     }
   }
@@ -208,10 +149,11 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   @Published var activeCamera: Camera = .back {
     didSet {
-      print("set active camera \(activeCamera)")
-      reconfigureSession()
+      cameraManager.activeCamera = activeCamera
     }
   }
+  
+  
 
   var clientEndpointNames: [String] {
     return server.clientEndpointNames
@@ -286,6 +228,29 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     startCPUUpdates()
     startMemoryUpdates()
     watchSession.delegate = self
+    
+    cameraManager.$droppedFrames
+      .assign(to: \.droppedVideoFrames, on: self)
+      .store(in: &subscribers)
+    
+    cameraManager.$currentError
+      .assign(to: \.cameraError, on: self)
+      .store(in: &subscribers)
+
+    cameraManager.videoFrames
+      .sink { [weak self] in
+        guard let self else {
+          return
+        }
+        var msg = Foxglove_CompressedVideo()
+        msg.timestamp = .init(date: .now)
+        msg.frameID = "camera"
+        msg.format = "h264"
+        msg.data = $0
+        let data = try! msg.serializedData()
+        self.server.sendMessage(on: self.cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+      }
+      .store(in: &subscribers)
 
     updateAddresses()
     addressUpdateTimer = .scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
@@ -432,173 +397,6 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
     server.sendMessage(on: poseChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
   }
-
-  func startCameraUpdates() {
-    droppedVideoFrames = 0
-    let activeCamera = self.activeCamera
-    
-    videoQueue.async {
-      let session = AVCaptureSession()
-      do {
-        try configureInputs(in: session, for: activeCamera)
-      } catch let error {
-        print("error starting session: \(error)")
-      }
-      session.sessionPreset = .high
-      
-
-      let videoOutput = AVCaptureVideoDataOutput()
-      videoOutput.setSampleBufferDelegate(self, queue: self.videoQueue)
-      session.addOutput(videoOutput)
-      session.startRunning()
-     
-      Task { @MainActor in
-        self.captureSession = session
-        self.videoOutput = videoOutput
-}
-    }
-  }
-
-  func stopCameraUpdates() {
-    let session = self.captureSession
-    DispatchQueue.global(qos: .userInitiated).async {
-      session?.stopRunning()
-      Task { @MainActor in
-        self.captureSession = nil
-      }
-    }
-  }
-
-  func reconfigureSession() {
-    guard let session = captureSession else {
-      return
-    }
-    let activeCamera = self.activeCamera
-
-    Task.detached(priority: .userInitiated) {
-      print("changing session")
-
-      session.beginConfiguration()
-      do {
-        try configureInputs(in: session, for: activeCamera)
-      } catch let error {
-        print("error changing session: \(error)")
-      }
-      session.commitConfiguration()
-    }
-  }
-
-
-  nonisolated func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-    guard let imageBuffer = sampleBuffer.imageBuffer else {
-      print("no image buffer :(")
-      return
-    }
-    Task { @MainActor in
-      if compressionSessionOut == nil {
-        var err: OSStatus = noErr
-        err = VTCompressionSessionCreate(allocator: kCFAllocatorDefault,
-                                         width: self.videoOutput!.videoSettings[kCVPixelBufferWidthKey as String] as! Int32,
-                                             height: self.videoOutput!.videoSettings[kCVPixelBufferHeightKey as String] as! Int32,
-                                             codecType: kCMVideoCodecType_H264,
-                                             encoderSpecification: nil,
-                                             imageBufferAttributes: nil,
-                                             compressedDataAllocator: nil,
-                                             outputCallback: nil,
-                                             refcon: nil,
-                                             compressionSessionOut: &compressionSessionOut)
-        guard err == noErr, let compressionSession = compressionSessionOut else {
-          fatalError("VTCompressionSession creation failed (\(err))!")
-        }
-        err = VTSessionSetProperty(compressionSession, key: kVTCompressionPropertyKey_ProfileLevel, value: kVTProfileLevel_H264_Main_AutoLevel)
-        if noErr != err {
-               print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_ProfileLevel) failed (\(err))")
-           }
-        
-        // Indicate that the compression session is in real time, which streaming
-        // requires.
-        err = VTSessionSetProperty(compressionSession, key: kVTCompressionPropertyKey_RealTime, value: kCFBooleanTrue)
-        if noErr != err {
-            print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_RealTime) failed (\(err))")
-        }
-        // Enables temporal compression.
-        err = VTSessionSetProperty(compressionSession, key: kVTCompressionPropertyKey_AllowTemporalCompression, value: kCFBooleanTrue)
-        if noErr != err {
-            print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_AllowTemporalCompression) failed (\(err))")
-        }
-
-        // Disable frame reordering
-        err = VTSessionSetProperty(compressionSession, key: kVTCompressionPropertyKey_AllowFrameReordering, value: kCFBooleanFalse)
-        if noErr != err {
-            print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_AllowFrameReordering) failed (\(err))")
-        }
-        
-      }
-   
-      
-      VTCompressionSessionEncodeFrame(compressionSessionOut!, imageBuffer: sampleBuffer.imageBuffer!, presentationTimeStamp: sampleBuffer.presentationTimeStamp, duration: .invalid, frameProperties: nil, infoFlagsOut: nil) { status, infoFlags, sampleBuffer  in
-        if infoFlags.contains(.frameDropped) {
-            print("Encoder dropped the frame with status \(status)")
-            return
-        }
-        // If frame encoding fails in a live streaming use case, drop any
-        // pending frames that the encoder may emit and force a key frame.
-        // See `kVTEncodeFrameOptionKey_ForceKeyFrame` for information about
-        // forcing a key frame. This sample app doesn't include this
-        // implementation.
-        guard noErr == status else {
-            print("Encoder returned an error for frame with \(status)")
-            return
-        }
-        guard let sampleBuffer else {
-            print("Encoder returned an unexpected NULL sampleBuffer for frame")
-            return
-        }
-        var protoVideo = Foxglove_CompressedVideo()
-        protoVideo.timestamp = .init(date: .now)
-        protoVideo.frameID = "camera"
-        protoVideo.format = "h264"
-        
-        var annexBData = Data()
-        let startCode: [UInt8] = [0x00, 0x00, 0x00, 0x01]
-        
-        guard let formatDescription = sampleBuffer.formatDescription else {
-          print("No format description")
-          return
-        }
-
-        try! formatDescription.forEachParameterSet { buf in
-          annexBData.append(contentsOf: startCode)
-          annexBData.append(buf)
-        }
-        
-        try! sampleBuffer.dataBuffer?.withContiguousStorage { rawBufferPtr in
-          var offset = 0
-          while offset + 4 < rawBufferPtr.count {
-            let nalUnitLength = Int(UInt32(bigEndian: rawBufferPtr.loadUnaligned(fromByteOffset: offset, as: UInt32.self)))
-            annexBData.append(contentsOf: startCode)
-            let nalUnit = rawBufferPtr[offset+4..<offset+4+nalUnitLength]
-            nalUnit.withMemoryRebound(to: UInt8.self) {
-              annexBData.append($0)
-            }
-            offset += 4 + nalUnitLength
-          }
-        }
-        protoVideo.data = annexBData
-        
-        let serializedProto = try! protoVideo.serializedData()
-        Task { @MainActor in
-          self.server.sendMessage(on: self.cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: serializedProto)
-        }
-      }
-    }
-  }
-
-  nonisolated func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-    Task { @MainActor in
-      self.droppedVideoFrames += 1
-    }
-  }
 }
 
 
@@ -640,26 +438,6 @@ extension Server: WCSessionDelegate {
       Task { @MainActor in
         self.server.sendMessage(on: self.healthChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
-    }
-  }
-}
-
-
-extension CMFormatDescription {
-  func forEachParameterSet(_ callback: (UnsafeBufferPointer<UInt8>) -> Void) throws {
-    var parameterSetCount = 0
-    var status = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(self, parameterSetIndex: 0, parameterSetPointerOut: nil, parameterSetSizeOut: nil, parameterSetCountOut: &parameterSetCount, nalUnitHeaderLengthOut: nil)
-    guard noErr == status else {
-      throw VideoError.failedToGetParameterSetCount
-    }
-    for idx in 0..<parameterSetCount {
-      var ptr: UnsafePointer<UInt8>? = nil
-      var size = 0
-      status = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(self, parameterSetIndex: idx, parameterSetPointerOut: &ptr, parameterSetSizeOut: &size, parameterSetCountOut: nil, nalUnitHeaderLengthOut: nil)
-      guard noErr == status else {
-        throw VideoError.failedToGetParameterSet(index: idx)
-      }
-      callback(UnsafeBufferPointer<UInt8>(start: ptr, count: size))
     }
   }
 }
