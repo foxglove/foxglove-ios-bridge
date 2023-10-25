@@ -28,6 +28,19 @@ struct Foxglove_LocationFix {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// Timestamp of the message
+  var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_timestamp = newValue}
+  }
+  /// Returns true if `timestamp` has been explicitly set.
+  var hasTimestamp: Bool {return self._timestamp != nil}
+  /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
+  mutating func clearTimestamp() {self._timestamp = nil}
+
+  /// Frame for the sensor. Latitude and longitude readings are at the origin of the frame.
+  var frameID: String = String()
+
   /// Latitude in degrees
   var latitude: Double = 0
 
@@ -81,6 +94,8 @@ struct Foxglove_LocationFix {
   }
 
   init() {}
+
+  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 #if swift(>=4.2)
@@ -109,6 +124,8 @@ fileprivate let _protobuf_package = "foxglove"
 extension Foxglove_LocationFix: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".LocationFix"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    6: .same(proto: "timestamp"),
+    7: .standard(proto: "frame_id"),
     1: .same(proto: "latitude"),
     2: .same(proto: "longitude"),
     3: .same(proto: "altitude"),
@@ -127,12 +144,18 @@ extension Foxglove_LocationFix: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       case 3: try { try decoder.decodeSingularDoubleField(value: &self.altitude) }()
       case 4: try { try decoder.decodeRepeatedDoubleField(value: &self.positionCovariance) }()
       case 5: try { try decoder.decodeSingularEnumField(value: &self.positionCovarianceType) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.frameID) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.latitude != 0 {
       try visitor.visitSingularDoubleField(value: self.latitude, fieldNumber: 1)
     }
@@ -148,10 +171,18 @@ extension Foxglove_LocationFix: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if self.positionCovarianceType != .unknown {
       try visitor.visitSingularEnumField(value: self.positionCovarianceType, fieldNumber: 5)
     }
+    try { if let v = self._timestamp {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    if !self.frameID.isEmpty {
+      try visitor.visitSingularStringField(value: self.frameID, fieldNumber: 7)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Foxglove_LocationFix, rhs: Foxglove_LocationFix) -> Bool {
+    if lhs._timestamp != rhs._timestamp {return false}
+    if lhs.frameID != rhs.frameID {return false}
     if lhs.latitude != rhs.latitude {return false}
     if lhs.longitude != rhs.longitude {return false}
     if lhs.altitude != rhs.altitude {return false}

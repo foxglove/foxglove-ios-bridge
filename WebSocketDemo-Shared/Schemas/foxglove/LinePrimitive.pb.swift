@@ -92,13 +92,13 @@ struct Foxglove_LinePrimitive {
   enum TypeEnum: SwiftProtobuf.Enum {
     typealias RawValue = Int
 
-    /// 0-1, 1-2, ..., (n-1)-n
+    /// Connected line segments: 0-1, 1-2, ..., (n-1)-n
     case lineStrip // = 0
 
-    /// 0-1, 1-2, ..., (n-1)-n, n-0
+    /// Closed polygon: 0-1, 1-2, ..., (n-1)-n, n-0
     case lineLoop // = 1
 
-    /// 0-1, 2-3, 4-5, ...
+    /// Individual line segments: 0-1, 2-3, 4-5, ...
     case lineList // = 2
     case UNRECOGNIZED(Int)
 

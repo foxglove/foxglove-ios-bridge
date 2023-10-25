@@ -48,62 +48,8 @@ struct Health: Encodable {
   let timestamp: Timestamp
 }
 
-enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
-  case back
-  case front
-//  case backDepth
-//  case frontDepth
-
-  var description: String {
-    switch self {
-    case .back:
-      return "Back"
-    case .front:
-      return "Front"
-    }
-  }
-
-  var id: Self {
-    return self
-  }
-}
-
-enum ServerError: Error {
-  case noCameraDevice
-}
-
-
-func configureInputs(in session: AVCaptureSession, for camera: Camera) throws {
-  for input in session.inputs {
-    session.removeInput(input)
-  }
-  
-  let device: AVCaptureDevice?
-  switch camera {
-  case .back:
-    device = .default(.builtInWideAngleCamera, for: .video, position: .back)
-  case .front:
-    device = .default(.builtInWideAngleCamera, for: .video, position: .front)
-  }
-
-  guard let device else {
-    throw ServerError.noCameraDevice
-  }
-
-  do {
-    let input = try AVCaptureDeviceInput(device: device)
-    print("ranges: \(input.device.activeFormat.videoSupportedFrameRateRanges)")
-    session.addInput(input)
-//        input.videoMinFrameDurationOverride = CMTime(seconds: 0.1, preferredTimescale: 30)
-  } catch let error {
-    print("failed to create device input: \(error)")
-  }
-}
-
 @MainActor
 class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDelegate, CLLocationManagerDelegate {
-  let videoQueue = DispatchQueue(label: "VideoQueue")
-
   @Published
   var addresses: [IPAddress] = []
   private var addressUpdateTimer: Timer?
@@ -114,14 +60,16 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   @Published var actualPort: NWEndpoint.Port?
 
   let server = FoxgloveServer()
-
+  
+  let cameraManager = CameraManager()
   let motionManager = CMMotionManager()
   let locationManager = CLLocationManager()
-  var captureSession: AVCaptureSession?
+
   var subscribers: [AnyCancellable] = []
 
   let poseChannel: ChannelID
-  let cameraChannel: ChannelID
+  let h264Channel: ChannelID
+  let jpegChannel: ChannelID
   let locationChannel: ChannelID
   let cpuChannel: ChannelID
   let memChannel: ChannelID
@@ -129,7 +77,9 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   let watchSession = WCSession.default
 
-  @Published var droppedVideoFrames = 0
+  @Published private(set) var droppedVideoFrames = 0
+  
+  @Published private(set) var cameraError: Error?
 
   @Published var sendPose = true {
     didSet {
@@ -144,10 +94,15 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   @Published var sendCamera = false {
     didSet {
       if sendCamera {
-        startCameraUpdates()
+        cameraManager.startCameraUpdates()
       } else {
-        stopCameraUpdates()
+        cameraManager.stopCameraUpdates()
       }
+    }
+  }
+  @Published var useVideoCompression = true {
+    didSet {
+      cameraManager.useVideoCompression = useVideoCompression
     }
   }
   var hasCameraPermission: Bool {
@@ -199,10 +154,11 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   @Published var activeCamera: Camera = .back {
     didSet {
-      print("set active camera \(activeCamera)")
-      reconfigureSession()
+      cameraManager.activeCamera = activeCamera
     }
   }
+  
+  
 
   var clientEndpointNames: [String] {
     return server.clientEndpointNames
@@ -221,11 +177,17 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       schemaName: "foxglove.PoseInFrame",
       schema: poseInFrameSchema
     )
-    cameraChannel = server.addChannel(
-      topic: "camera",
+    jpegChannel = server.addChannel(
+      topic: "camera_jpeg",
       encoding: "protobuf",
       schemaName: Foxglove_CompressedImage.protoMessageName,
       schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString()
+    )
+    h264Channel = server.addChannel(
+      topic: "camera_h264",
+      encoding: "protobuf",
+      schemaName: Foxglove_CompressedVideo.protoMessageName,
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedVideo", withExtension: "bin")!).base64EncodedString()
     )
     locationChannel = server.addChannel(
       topic: "gps",
@@ -277,6 +239,44 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     startCPUUpdates()
     startMemoryUpdates()
     watchSession.delegate = self
+    
+    cameraManager.$droppedFrames
+      .assign(to: \.droppedVideoFrames, on: self)
+      .store(in: &subscribers)
+    
+    cameraManager.$currentError
+      .assign(to: \.cameraError, on: self)
+      .store(in: &subscribers)
+
+    cameraManager.jpegFrames
+      .sink { [weak self] in
+        guard let self else {
+          return
+        }
+        var msg = Foxglove_CompressedImage()
+        msg.timestamp = .init(date: .now)
+        msg.frameID = "camera"
+        msg.format = "jpeg"
+        msg.data = $0
+        let data = try! msg.serializedData()
+        self.server.sendMessage(on: self.jpegChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+      }
+      .store(in: &subscribers)
+
+    cameraManager.h264Frames
+      .sink { [weak self] in
+        guard let self else {
+          return
+        }
+        var msg = Foxglove_CompressedVideo()
+        msg.timestamp = .init(date: .now)
+        msg.frameID = "camera"
+        msg.format = "h264"
+        msg.data = $0
+        let data = try! msg.serializedData()
+        self.server.sendMessage(on: self.h264Channel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+      }
+      .store(in: &subscribers)
 
     updateAddresses()
     addressUpdateTimer = .scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
@@ -422,87 +422,6 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     ], options: .sortedKeys)
 
     server.sendMessage(on: poseChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
-  }
-
-  func startCameraUpdates() {
-    droppedVideoFrames = 0
-    let activeCamera = self.activeCamera
-    
-    videoQueue.async {
-      let session = AVCaptureSession()
-      do {
-        try configureInputs(in: session, for: activeCamera)
-      } catch let error {
-        print("error starting session: \(error)")
-      }
-      session.sessionPreset = .medium
-
-      let output = AVCaptureVideoDataOutput()
-      output.setSampleBufferDelegate(self, queue: self.videoQueue)
-      session.addOutput(output)
-      session.startRunning()
-      Task { @MainActor in self.captureSession = session }
-    }
-  }
-
-  func stopCameraUpdates() {
-    let session = self.captureSession
-    DispatchQueue.global(qos: .userInitiated).async {
-      session?.stopRunning()
-      Task { @MainActor in
-        self.captureSession = nil
-      }
-    }
-  }
-
-  func reconfigureSession() {
-    guard let session = captureSession else {
-      return
-    }
-    let activeCamera = self.activeCamera
-
-    Task.detached(priority: .userInitiated) {
-      print("changing session")
-
-      session.beginConfiguration()
-      do {
-        try configureInputs(in: session, for: activeCamera)
-      } catch let error {
-        print("error changing session: \(error)")
-      }
-      session.commitConfiguration()
-    }
-  }
-
-
-  nonisolated func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-    guard let imageBuffer = sampleBuffer.imageBuffer else {
-      print("no image buffer :(")
-      return
-    }
-    let img = UIImage(ciImage: CIImage(cvImageBuffer: imageBuffer))
-    guard let jpeg = img.jpegData(compressionQuality: 0.8) else {
-      print("failed to compress jpeg :(")
-      return
-    }
-
-    var protoImg = Foxglove_CompressedImage()
-    protoImg.timestamp = .init(date: .now)
-    protoImg.frameID = "camera"
-    protoImg.format = "jpeg"
-    protoImg.data = jpeg
-
-    let serializedProto = try! protoImg.serializedData()
-
-    Task { @MainActor in
-      server.sendMessage(on: cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: serializedProto)
-    }
-  }
-
-  nonisolated func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-    Task { @MainActor in
-      self.droppedVideoFrames += 1
-    }
   }
 }
 

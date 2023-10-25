@@ -95,8 +95,15 @@ public struct ContentView: View {
           }
           if server.sendCamera {
             Text("Dropped frames: \(server.droppedVideoFrames)")
+              .font(.caption)
+            if let cameraError = server.cameraError {
+              Text(cameraError.localizedDescription)
+                .foregroundStyle(.red)
+                .font(.caption2)
+            }
           }
-        }.overlay(alignment: .bottom) {
+        }
+        .overlay(alignment: .bottom) {
           Picker(
             selection: $server.activeCamera,
             label: Toggle(isOn: $server.sendCamera) {
@@ -111,6 +118,16 @@ public struct ContentView: View {
           }
           .pickerStyle(.segmented)
           .padding()
+        }
+        .overlay(alignment: .topTrailing) {
+          if server.sendCamera {
+            Button {
+              server.useVideoCompression.toggle()
+            } label: {
+              Image(systemName: server.useVideoCompression ? "film.stack" : "photo.stack")
+                .padding(10)
+            }
+          }
         }
         /*
         CardToggle(isOn: $server.sendWatchData, dashed: isAppClip) {

@@ -82,7 +82,7 @@ struct Foxglove_Grid {
     set {_uniqueStorage()._cellStride = newValue}
   }
 
-  /// Fields in `data`
+  /// Fields in `data`. `red`, `green`, `blue`, and `alpha` are optional for customizing the grid's color.
   var fields: [Foxglove_PackedElementField] {
     get {return _storage._fields}
     set {_uniqueStorage()._fields = newValue}
