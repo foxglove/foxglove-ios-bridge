@@ -68,6 +68,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   var subscribers: [AnyCancellable] = []
 
   let poseChannel: ChannelID
+  let calibrationChannel: ChannelID
   let h264Channel: ChannelID
   let jpegChannel: ChannelID
   let locationChannel: ChannelID
@@ -183,6 +184,12 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       schemaName: Foxglove_CompressedImage.protoMessageName,
       schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString()
     )
+    calibrationChannel = server.addChannel(
+      topic: "calibration",
+      encoding: "protobuf",
+      schemaName: Foxglove_CameraCalibration.protoMessageName,
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CameraCalibration", withExtension: "bin")!).base64EncodedString()
+    )
     h264Channel = server.addChannel(
       topic: "camera_h264",
       encoding: "protobuf",
@@ -246,6 +253,28 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     
     cameraManager.$currentError
       .assign(to: \.cameraError, on: self)
+      .store(in: &subscribers)
+
+    cameraManager.calibrationData
+      .sink { [weak self] calibration in
+        guard let self else {
+          return
+        }
+        var msg = Foxglove_CameraCalibration()
+        msg.timestamp = .init(date: .now)
+        msg.frameID = "camera"
+        // Convert column-major to row-major
+        msg.k = (0..<3).flatMap { r in (0..<3).map { c in Double(calibration.intrinsicMatrix[c, r]) } }
+        msg.p = [
+          msg.k[0], msg.k[1], msg.k[2], 0,
+          msg.k[3], msg.k[4], msg.k[5], 0,
+          msg.k[6], msg.k[7], msg.k[8], 0,
+        ]
+        msg.width = UInt32(calibration.width)
+        msg.height = UInt32(calibration.height)
+        let data = try! msg.serializedData()
+        self.server.sendMessage(on: self.calibrationChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+      }
       .store(in: &subscribers)
 
     cameraManager.jpegFrames
