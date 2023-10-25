@@ -102,7 +102,8 @@ public struct ContentView: View {
                 .font(.caption2)
             }
           }
-        }.overlay(alignment: .bottom) {
+        }
+        .overlay(alignment: .bottom) {
           Picker(
             selection: $server.activeCamera,
             label: Toggle(isOn: $server.sendCamera) {
@@ -117,6 +118,16 @@ public struct ContentView: View {
           }
           .pickerStyle(.segmented)
           .padding()
+        }
+        .overlay(alignment: .topTrailing) {
+          if server.sendCamera {
+            Button {
+              server.useVideoCompression.toggle()
+            } label: {
+              Image(systemName: server.useVideoCompression ? "film.stack" : "photo.stack")
+                .padding(10)
+            }
+          }
         }
         /*
         CardToggle(isOn: $server.sendWatchData, dashed: isAppClip) {

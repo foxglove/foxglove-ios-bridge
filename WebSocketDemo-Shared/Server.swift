@@ -69,7 +69,8 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   var subscribers: [AnyCancellable] = []
 
   let poseChannel: ChannelID
-  let cameraChannel: ChannelID
+  let h264Channel: ChannelID
+  let jpegChannel: ChannelID
   let locationChannel: ChannelID
   let cpuChannel: ChannelID
   let memChannel: ChannelID
@@ -98,6 +99,11 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       } else {
         cameraManager.stopCameraUpdates()
       }
+    }
+  }
+  @Published var useVideoCompression = true {
+    didSet {
+      cameraManager.useVideoCompression = useVideoCompression
     }
   }
   var hasCameraPermission: Bool {
@@ -172,8 +178,14 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       schemaName: "foxglove.PoseInFrame",
       schema: poseInFrameSchema
     )
-    cameraChannel = server.addChannel(
-      topic: "camera",
+    jpegChannel = server.addChannel(
+      topic: "camera_jpeg",
+      encoding: "protobuf",
+      schemaName: Foxglove_CompressedImage.protoMessageName,
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString()
+    )
+    h264Channel = server.addChannel(
+      topic: "camera_h264",
       encoding: "protobuf",
       schemaName: Foxglove_CompressedVideo.protoMessageName,
       schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedVideo", withExtension: "bin")!).base64EncodedString()
@@ -237,7 +249,22 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       .assign(to: \.cameraError, on: self)
       .store(in: &subscribers)
 
-    cameraManager.videoFrames
+    cameraManager.jpegFrames
+      .sink { [weak self] in
+        guard let self else {
+          return
+        }
+        var msg = Foxglove_CompressedImage()
+        msg.timestamp = .init(date: .now)
+        msg.frameID = "camera"
+        msg.format = "jpeg"
+        msg.data = $0
+        let data = try! msg.serializedData()
+        self.server.sendMessage(on: self.jpegChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+      }
+      .store(in: &subscribers)
+
+    cameraManager.h264Frames
       .sink { [weak self] in
         guard let self else {
           return
@@ -248,7 +275,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         msg.format = "h264"
         msg.data = $0
         let data = try! msg.serializedData()
-        self.server.sendMessage(on: self.cameraChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+        self.server.sendMessage(on: self.h264Channel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
       .store(in: &subscribers)
 

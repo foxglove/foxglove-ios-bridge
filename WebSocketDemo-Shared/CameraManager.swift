@@ -1,12 +1,12 @@
 import AVFoundation
 import VideoToolbox
 import Combine
+import CoreImage
+import UIKit
 
 enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
   case back
   case front
-//  case backDepth
-//  case frontDepth
 
   var description: String {
     switch self {
@@ -66,7 +66,8 @@ class CameraManager: NSObject, ObservableObject {
   private var videoOutput: AVCaptureVideoDataOutput?
   private var forceKeyFrame = true
   
-  let videoFrames = PassthroughSubject<Data, Never>()
+  let h264Frames = PassthroughSubject<Data, Never>()
+  let jpegFrames = PassthroughSubject<Data, Never>()
   
   @Published var currentError: Error?
   
@@ -77,6 +78,35 @@ class CameraManager: NSObject, ObservableObject {
       print("set active camera \(activeCamera)")
       reconfigureSession()
     }
+  }
+  
+  private var _useVideoCompressionFlag: Int32 = 0
+  public var useVideoCompression: Bool {
+    get {
+      return OSAtomicAdd32(0, &_useVideoCompressionFlag) != 0
+    }
+    set {
+      if newValue {
+        OSAtomicTestAndSet(0, &_useVideoCompressionFlag)
+      } else {
+        OSAtomicTestAndClear(0, &_useVideoCompressionFlag)
+      }
+      
+      queue.async { [self] in
+        guard let captureSession else {
+          return
+        }
+        captureSession.beginConfiguration()
+        captureSession.sessionPreset = newValue ? .high : .medium
+        captureSession.commitConfiguration()
+        forceKeyFrame = true
+      }
+    }
+  }
+  
+  override init() {
+    super.init()
+    useVideoCompression = true
   }
   
   @MainActor
@@ -94,7 +124,7 @@ class CameraManager: NSObject, ObservableObject {
       } catch let error {
         print("error starting session: \(error)")
       }
-      captureSession.sessionPreset = .high
+      captureSession.sessionPreset = useVideoCompression ? .high : .medium
       
       
       let output = AVCaptureVideoDataOutput()
@@ -211,6 +241,18 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
       return
     }
     
+    if !useVideoCompression {
+      let img = UIImage(ciImage: CIImage(cvImageBuffer: imageBuffer))
+      guard let jpeg = img.jpegData(compressionQuality: 0.8) else {
+        print("failed to compress jpeg :(")
+        return
+      }
+      Task { @MainActor in
+        jpegFrames.send(jpeg)
+      }
+      return
+    }
+    
     guard let compressionSession else {
       print("no compression session")
       return
@@ -253,8 +295,9 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
           return
         }
         
+        forceKeyFrame = false
         Task { @MainActor in
-          videoFrames.send(annexBData)
+          h264Frames.send(annexBData)
         }
       }
     }
