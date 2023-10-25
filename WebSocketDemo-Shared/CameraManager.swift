@@ -92,15 +92,7 @@ class CameraManager: NSObject, ObservableObject {
         OSAtomicTestAndClear(0, &_useVideoCompressionFlag)
       }
       
-      queue.async { [self] in
-        guard let captureSession else {
-          return
-        }
-        captureSession.beginConfiguration()
-        captureSession.sessionPreset = newValue ? .high : .medium
-        captureSession.commitConfiguration()
-        forceKeyFrame = true
-      }
+      reconfigureSession()
     }
   }
   
@@ -229,7 +221,9 @@ class CameraManager: NSObject, ObservableObject {
       } catch let error {
         print("error changing session: \(error)")
       }
+      session.sessionPreset = useVideoCompression ? .high : .medium
       session.commitConfiguration()
+      forceKeyFrame = true
     }
   }
 }
