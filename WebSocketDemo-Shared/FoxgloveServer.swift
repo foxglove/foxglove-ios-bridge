@@ -9,10 +9,10 @@ extension NWConnection: Hashable, Comparable, Identifiable {
   public static func < (lhs: NWConnection, rhs: NWConnection) -> Bool {
     switch (lhs.endpoint, rhs.endpoint) {
     case let (.hostPort(host1, _), .hostPort(host: host2, _)):
-      host1.debugDescription < host2.debugDescription
+      return host1.debugDescription < host2.debugDescription
 
     default:
-      ObjectIdentifier(lhs) < ObjectIdentifier(rhs)
+      return ObjectIdentifier(lhs) < ObjectIdentifier(rhs)
     }
   }
 

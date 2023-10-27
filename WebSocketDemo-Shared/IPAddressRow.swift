@@ -24,17 +24,17 @@ struct IPAddressRow: View {
   var icon: Text {
     switch address.interface?.type {
     case .wifi?:
-      Text(Image(systemName: "wifi"))
+      return Text(Image(systemName: "wifi"))
     case .wiredEthernet?:
-      Text(Image(systemName: "cable.connector.horizontal"))
+      return Text(Image(systemName: "cable.connector.horizontal"))
     case .cellular?:
-      Text(Image(systemName: "antenna.radiowaves.left.and.right"))
+      return Text(Image(systemName: "antenna.radiowaves.left.and.right"))
     case .loopback?:
-      Text(Image(systemName: "arrow.counterclockwise"))
+      return Text(Image(systemName: "arrow.counterclockwise"))
     case .other?:
-      Text(Image(systemName: "questionmark"))
+      return Text(Image(systemName: "questionmark"))
     default:
-      Text("")
+      return Text("")
     }
   }
 

@@ -11,9 +11,9 @@ enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
   var description: String {
     switch self {
     case .back:
-      "Back"
+      return "Back"
     case .front:
-      "Front"
+      return "Front"
     }
   }
 
