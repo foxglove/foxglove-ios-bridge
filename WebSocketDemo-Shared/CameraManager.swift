@@ -406,7 +406,7 @@ extension CMSampleBuffer {
               fromByteOffset: offset,
               as: UInt32.self
             )))
-            resultBuffer[offset ..< offset + 4].copyBytes(from: startCode)
+            UnsafeMutableRawBufferPointer(rebasing: resultBuffer[offset ..< offset + 4]).copyBytes(from: startCode)
             offset += 4 + nalUnitLength
           }
         }

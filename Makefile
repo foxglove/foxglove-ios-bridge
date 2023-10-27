@@ -21,4 +21,4 @@ lint-ci:
 
 .PHONY: format-ci
 format-ci:
-	docker run -t --rm -v "$(PWD)":/work ghcr.io/nicklockwood/swiftformat:0.52.8  /work
+	docker run -t --rm -v "$(PWD)":/work ghcr.io/nicklockwood/swiftformat:0.52.8 --lint /work
