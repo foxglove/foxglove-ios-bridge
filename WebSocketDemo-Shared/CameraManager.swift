@@ -179,7 +179,9 @@ class CameraManager: NSObject, ObservableObject {
       width: width,
       height: height,
       codecType: kCMVideoCodecType_H264,
-      encoderSpecification: nil,
+      encoderSpecification: [
+        kVTVideoEncoderSpecification_EnableLowLatencyRateControl: kCFBooleanTrue
+      ] as CFDictionary,
       imageBufferAttributes: nil,
       compressedDataAllocator: nil,
       outputCallback: nil,
@@ -215,6 +217,13 @@ class CameraManager: NSObject, ObservableObject {
     err = VTSessionSetProperty(compressionSession, key: kVTCompressionPropertyKey_AllowFrameReordering, value: kCFBooleanFalse)
     guard err == noErr else {
       print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_AllowFrameReordering) failed (\(err))")
+      throw NSError(domain: NSOSStatusErrorDomain, code: Int(err))
+    }
+
+    // Require key frames every 2 seconds
+    err = VTSessionSetProperty(compressionSession, key: kVTCompressionPropertyKey_MaxKeyFrameIntervalDuration, value: 2 as CFNumber)
+    guard err == noErr else {
+      print("Warning: VTSessionSetProperty(kVTCompressionPropertyKey_MaxKeyFrameIntervalDuration) failed (\(err))")
       throw NSError(domain: NSOSStatusErrorDomain, code: Int(err))
     }
   }
