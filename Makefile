@@ -10,6 +10,8 @@ build:
 		-destination generic/platform=iOS \
 		-scheme "Foxglove Bridge" \
 		SYMROOT="$(PWD)"/build \
+		CODE_SIGN_IDENTITY="" \
+		CODE_SIGNING_REQUIRED=NO \
 		-configuration Release \
 		clean build analyze
 
