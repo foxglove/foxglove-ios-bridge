@@ -284,7 +284,11 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         msg.width = UInt32(calibration.width)
         msg.height = UInt32(calibration.height)
         let data = try! msg.serializedData()
-        server.sendMessage(on: calibrationChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+        self.server.sendMessage(
+          on: self.calibrationChannel,
+          timestamp: DispatchTime.now().uptimeNanoseconds,
+          payload: data
+        )
       }
       .store(in: &subscribers)
 
@@ -299,7 +303,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         msg.format = "jpeg"
         msg.data = $0
         let data = try! msg.serializedData()
-        server.sendMessage(on: jpegChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+        self.server.sendMessage(on: self.jpegChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
       .store(in: &subscribers)
 
@@ -314,7 +318,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         msg.format = "h264"
         msg.data = $0
         let data = try! msg.serializedData()
-        server.sendMessage(on: h264Channel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+        self.server.sendMessage(on: self.h264Channel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
       .store(in: &subscribers)
 
