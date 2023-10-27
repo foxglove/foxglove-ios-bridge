@@ -37,13 +37,13 @@ private func configureInputs(in session: AVCaptureSession, for camera: Camera) t
     session.removeInput(input)
   }
 
-  let device: AVCaptureDevice? = switch camera {
+  let device: AVCaptureDevice?
+  switch camera {
   case .back:
-    .default(.builtInWideAngleCamera, for: .video, position: .back)
+    device = .default(.builtInWideAngleCamera, for: .video, position: .back)
   case .front:
-    .default(.builtInWideAngleCamera, for: .video, position: .front)
+    device = .default(.builtInWideAngleCamera, for: .video, position: .front)
   }
-
   guard let device else {
     throw CameraError.noCameraDevice
   }

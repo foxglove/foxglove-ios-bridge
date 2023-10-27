@@ -138,11 +138,12 @@ class FoxgloveServer: ObservableObject {
           self.sendInfo(connection)
         }
 
-        let closed: Bool = switch connection.state {
+        let closed: Bool
+        switch connection.state {
         case .cancelled, .failed:
-          true
+          closed = true
         default:
-          false
+          closed = false
         }
 
         Task { @MainActor in
