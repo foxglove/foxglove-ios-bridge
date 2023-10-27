@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,19 +30,20 @@ struct Foxglove_SceneEntityDeletion {
 
   /// Timestamp of the deletion. Only matching entities earlier than this timestamp will be deleted.
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_timestamp = newValue}
+    get { _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp() }
+    set { _timestamp = newValue }
   }
+
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {return self._timestamp != nil}
+  var hasTimestamp: Bool { _timestamp != nil }
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {self._timestamp = nil}
+  mutating func clearTimestamp() { _timestamp = nil }
 
   /// Type of deletion action to perform
   var type: Foxglove_SceneEntityDeletion.TypeEnum = .matchingID
 
   /// Identifier which must match if `type` is `MATCHING_ID`.
-  var id: String = String()
+  var id: String = .init()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -71,41 +72,42 @@ struct Foxglove_SceneEntityDeletion {
 
     var rawValue: Int {
       switch self {
-      case .matchingID: return 0
-      case .all: return 1
-      case .UNRECOGNIZED(let i): return i
+      case .matchingID: 0
+      case .all: 1
+      case let .UNRECOGNIZED(i): i
       }
     }
-
   }
 
   init() {}
 
-  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  private var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp?
 }
 
 #if swift(>=4.2)
 
-extension Foxglove_SceneEntityDeletion.TypeEnum: CaseIterable {
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static var allCases: [Foxglove_SceneEntityDeletion.TypeEnum] = [
-    .matchingID,
-    .all,
-  ]
-}
+  extension Foxglove_SceneEntityDeletion.TypeEnum: CaseIterable {
+    // The compiler won't synthesize support with the UNRECOGNIZED case.
+    static var allCases: [Foxglove_SceneEntityDeletion.TypeEnum] = [
+      .matchingID,
+      .all,
+    ]
+  }
 
-#endif  // swift(>=4.2)
+#endif // swift(>=4.2)
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension Foxglove_SceneEntityDeletion: @unchecked Sendable {}
-extension Foxglove_SceneEntityDeletion.TypeEnum: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+  extension Foxglove_SceneEntityDeletion: @unchecked Sendable {}
+  extension Foxglove_SceneEntityDeletion.TypeEnum: @unchecked Sendable {}
+#endif // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "foxglove"
+private let _protobuf_package = "foxglove"
 
-extension Foxglove_SceneEntityDeletion: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Foxglove_SceneEntityDeletion: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   static let protoMessageName: String = _protobuf_package + ".SceneEntityDeletion"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "timestamp"),
@@ -113,42 +115,42 @@ extension Foxglove_SceneEntityDeletion: SwiftProtobuf.Message, SwiftProtobuf._Me
     3: .same(proto: "id"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
-      case 2: try { try decoder.decodeSingularEnumField(value: &self.type) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 1: try decoder.decodeSingularMessageField(value: &_timestamp)
+      case 2: try decoder.decodeSingularEnumField(value: &type)
+      case 3: try decoder.decodeSingularStringField(value: &id)
       default: break
       }
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._timestamp {
+    if let v = _timestamp {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    if self.type != .matchingID {
-      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 2)
     }
-    if !self.id.isEmpty {
-      try visitor.visitSingularStringField(value: self.id, fieldNumber: 3)
+    if type != .matchingID {
+      try visitor.visitSingularEnumField(value: type, fieldNumber: 2)
+    }
+    if !id.isEmpty {
+      try visitor.visitSingularStringField(value: id, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Foxglove_SceneEntityDeletion, rhs: Foxglove_SceneEntityDeletion) -> Bool {
-    if lhs._timestamp != rhs._timestamp {return false}
-    if lhs.type != rhs.type {return false}
-    if lhs.id != rhs.id {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
+  static func == (lhs: Foxglove_SceneEntityDeletion, rhs: Foxglove_SceneEntityDeletion) -> Bool {
+    if lhs._timestamp != rhs._timestamp { return false }
+    if lhs.type != rhs.type { return false }
+    if lhs.id != rhs.id { return false }
+    if lhs.unknownFields != rhs.unknownFields { return false }
     return true
   }
 }

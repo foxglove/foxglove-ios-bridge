@@ -1,10 +1,13 @@
-import SwiftUI
-import CoreMotion
 import AVFoundation
 import Combine
-import Network
 import CoreLocation
+import CoreMotion
+import Network
+import SwiftUI
 import WatchConnectivity
+
+// swiftlint:disable:next blanket_disable_command
+// swiftlint:disable force_try
 
 struct CPUUsage: Encodable, Identifiable {
   let usage: Double
@@ -30,6 +33,7 @@ struct Timestamp: Encodable {
   let sec: UInt32
   let nsec: UInt32
 }
+
 extension Timestamp {
   init(_ date: Date) {
     let seconds = date.timeIntervalSince1970
@@ -43,6 +47,7 @@ extension Timestamp {
     nsec = intNsec
   }
 }
+
 struct Health: Encodable {
   let heart_rate: Double
   let timestamp: Timestamp
@@ -60,7 +65,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   @Published var actualPort: NWEndpoint.Port?
 
   let server = FoxgloveServer()
-  
+
   let cameraManager = CameraManager()
   let motionManager = CMMotionManager()
   let locationManager = CLLocationManager()
@@ -79,7 +84,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   let watchSession = WCSession.default
 
   @Published private(set) var droppedVideoFrames = 0
-  
+
   @Published private(set) var cameraError: Error?
 
   @Published var sendPose = true {
@@ -101,11 +106,13 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       }
     }
   }
+
   @Published var useVideoCompression = true {
     didSet {
       cameraManager.useVideoCompression = useVideoCompression
     }
   }
+
   var hasCameraPermission: Bool {
     AVCaptureDevice.authorizationStatus(for: .video) == .authorized
   }
@@ -119,8 +126,10 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       }
     }
   }
+
   var hasLocationPermission: Bool {
-    locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedAlways
+    locationManager.authorizationStatus == .authorizedWhenInUse || locationManager
+      .authorizationStatus == .authorizedAlways
   }
 
   @Published var sendCPU = true {
@@ -158,11 +167,9 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       cameraManager.activeCamera = activeCamera
     }
   }
-  
-  
 
   var clientEndpointNames: [String] {
-    return server.clientEndpointNames
+    server.clientEndpointNames
   }
 
   var cpuTimer: Timer?
@@ -182,57 +189,61 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       topic: "camera_jpeg",
       encoding: "protobuf",
       schemaName: Foxglove_CompressedImage.protoMessageName,
-      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedImage", withExtension: "bin")!).base64EncodedString()
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedImage", withExtension: "bin")!)
+        .base64EncodedString()
     )
     calibrationChannel = server.addChannel(
       topic: "calibration",
       encoding: "protobuf",
       schemaName: Foxglove_CameraCalibration.protoMessageName,
-      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CameraCalibration", withExtension: "bin")!).base64EncodedString()
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CameraCalibration", withExtension: "bin")!)
+        .base64EncodedString()
     )
     h264Channel = server.addChannel(
       topic: "camera_h264",
       encoding: "protobuf",
       schemaName: Foxglove_CompressedVideo.protoMessageName,
-      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedVideo", withExtension: "bin")!).base64EncodedString()
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedVideo", withExtension: "bin")!)
+        .base64EncodedString()
     )
     locationChannel = server.addChannel(
       topic: "gps",
       encoding: "protobuf",
       schemaName: Foxglove_LocationFix.protoMessageName,
-      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "LocationFix", withExtension: "bin")!).base64EncodedString()
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "LocationFix", withExtension: "bin")!)
+        .base64EncodedString()
     )
     cpuChannel = server.addChannel(topic: "cpu", encoding: "json", schemaName: "CPU", schema:
-#"""
-{
-  "type":"object",
-  "properties":{
-    "usage":{"type":"number"}
-  }
-}
-"""#)
+      #"""
+      {
+        "type":"object",
+        "properties":{
+          "usage":{"type":"number"}
+        }
+      }
+      """#)
     memChannel = server.addChannel(topic: "memory", encoding: "json", schemaName: "Memory", schema:
-#"""
-{
-  "type":"object",
-  "properties":{
-    "usage":{"type":"number"}
-  }
-}
-"""#)
+      #"""
+      {
+        "type":"object",
+        "properties":{
+          "usage":{"type":"number"}
+        }
+      }
+      """#)
     healthChannel = server.addChannel(topic: "health", encoding: "json", schemaName: "Health", schema:
-#"""
-{
-  "type":"object",
-  "properties":{
-    "heart_rate":{"type":"number"},
-    "timestamp":{
-      "type":"object",
-      "properties":{"sec":{"type":"number"},"nsec":{"type":"number"}}
-    }
-  }
-}
-"""#)
+      #"""
+      {
+        "type":"object",
+        "properties":{
+          "heart_rate":{"type":"number"},
+          "timestamp":{
+            "type":"object",
+            "properties":{"sec":{"type":"number"},"nsec":{"type":"number"}}
+          }
+        }
+      }
+      """#)
     super.init()
     server.start(preferredPort: preferredPort.flatMap { UInt16(exactly: $0) })
     server.$port
@@ -246,11 +257,11 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     startCPUUpdates()
     startMemoryUpdates()
     watchSession.delegate = self
-    
+
     cameraManager.$droppedFrames
       .assign(to: \.droppedVideoFrames, on: self)
       .store(in: &subscribers)
-    
+
     cameraManager.$currentError
       .assign(to: \.cameraError, on: self)
       .store(in: &subscribers)
@@ -264,7 +275,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         msg.timestamp = .init(date: .now)
         msg.frameID = "camera"
         // Convert column-major to row-major
-        msg.k = (0..<3).flatMap { r in (0..<3).map { c in Double(calibration.intrinsicMatrix[c, r]) } }
+        msg.k = (0 ..< 3).flatMap { r in (0 ..< 3).map { c in Double(calibration.intrinsicMatrix[c, r]) } }
         msg.p = [
           msg.k[0], msg.k[1], msg.k[2], 0,
           msg.k[3], msg.k[4], msg.k[5], 0,
@@ -273,7 +284,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         msg.width = UInt32(calibration.width)
         msg.height = UInt32(calibration.height)
         let data = try! msg.serializedData()
-        self.server.sendMessage(on: self.calibrationChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+        server.sendMessage(on: calibrationChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
       .store(in: &subscribers)
 
@@ -288,7 +299,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         msg.format = "jpeg"
         msg.data = $0
         let data = try! msg.serializedData()
-        self.server.sendMessage(on: self.jpegChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+        server.sendMessage(on: jpegChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
       .store(in: &subscribers)
 
@@ -303,7 +314,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
         msg.format = "h264"
         msg.data = $0
         let data = try! msg.serializedData()
-        self.server.sendMessage(on: self.h264Channel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+        server.sendMessage(on: h264Channel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
       .store(in: &subscribers)
 
@@ -317,7 +328,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 
   func updateAddresses() {
-    self.addresses = getIPAddresses()
+    addresses = getIPAddresses()
       .filter {
         // Filter out some AirDrop interfaces that are not useful https://apple.stackexchange.com/q/394047/8318
         if $0.interface?.name.hasPrefix("llw") == true || $0.interface?.name.hasPrefix("awdl") == true {
@@ -389,7 +400,6 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     memTimer = nil
   }
 
-
   func startLocationUpdates() {
     locationManager.delegate = self
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -403,7 +413,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     locationManager.stopUpdatingLocation()
   }
 
-  nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+  nonisolated func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     guard let location: CLLocation = locations.last else { return }
 
     var msg = Foxglove_LocationFix()
@@ -425,27 +435,28 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
   func startPoseUpdates() {
     motionManager.deviceMotionUpdateInterval = 0.02
-    motionManager.startDeviceMotionUpdates(to: .main) { motion, error in
+    motionManager.startDeviceMotionUpdates(to: .main) { motion, _ in
       if let motion {
         self.sendPose(motion: motion)
       }
     }
   }
+
   func stopPoseUpdates() {
     motionManager.stopDeviceMotionUpdates()
   }
 
   func sendPose(motion: CMDeviceMotion) {
     let data = try! JSONSerialization.data(withJSONObject: [
-      "timestamp": ["sec":0,"nsec":0],
+      "timestamp": ["sec": 0, "nsec": 0],
       "frame_id": "root",
       "pose": [
-        "position":["x":0,"y":0,"z":0],
-        "orientation":[
-          "x":motion.attitude.quaternion.x,
-          "y":motion.attitude.quaternion.y,
-          "z":motion.attitude.quaternion.z,
-          "w":motion.attitude.quaternion.w,
+        "position": ["x": 0, "y": 0, "z": 0],
+        "orientation": [
+          "x": motion.attitude.quaternion.x,
+          "y": motion.attitude.quaternion.y,
+          "z": motion.attitude.quaternion.z,
+          "w": motion.attitude.quaternion.w,
         ],
       ],
     ], options: .sortedKeys)
@@ -454,28 +465,28 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 }
 
-
 extension Server: WCSessionDelegate {
-  func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+  func session(_: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
     print("watch activation completed: \(activationState), error: \(error)")
   }
 
-  func sessionDidBecomeInactive(_ session: WCSession) {
+  func sessionDidBecomeInactive(_: WCSession) {
     print("watch became inactive")
   }
 
-  func sessionDidDeactivate(_ session: WCSession) {
+  func sessionDidDeactivate(_: WCSession) {
     print("watch deactivated")
   }
 
   func startWatchUpdates() {
     watchSession.activate()
   }
+
   func stopWatchUpdates() {
     print("stop watch updates?")
   }
 
-  func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+  func session(_: WCSession, didReceiveMessage message: [String: Any]) {
     print("message from watch: \(message)")
     guard sendWatchData else {
       return

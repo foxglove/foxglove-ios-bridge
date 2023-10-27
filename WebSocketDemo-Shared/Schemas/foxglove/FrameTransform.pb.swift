@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,58 +30,63 @@ struct Foxglove_FrameTransform {
 
   /// Timestamp of transform
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_timestamp = newValue}
+    get { _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp() }
+    set { _timestamp = newValue }
   }
+
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {return self._timestamp != nil}
+  var hasTimestamp: Bool { _timestamp != nil }
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {self._timestamp = nil}
+  mutating func clearTimestamp() { _timestamp = nil }
 
   /// Name of the parent frame
-  var parentFrameID: String = String()
+  var parentFrameID: String = .init()
 
   /// Name of the child frame
-  var childFrameID: String = String()
+  var childFrameID: String = .init()
 
   /// Translation component of the transform
   var translation: Foxglove_Vector3 {
-    get {return _translation ?? Foxglove_Vector3()}
-    set {_translation = newValue}
+    get { _translation ?? Foxglove_Vector3() }
+    set { _translation = newValue }
   }
+
   /// Returns true if `translation` has been explicitly set.
-  var hasTranslation: Bool {return self._translation != nil}
+  var hasTranslation: Bool { _translation != nil }
   /// Clears the value of `translation`. Subsequent reads from it will return its default value.
-  mutating func clearTranslation() {self._translation = nil}
+  mutating func clearTranslation() { _translation = nil }
 
   /// Rotation component of the transform
   var rotation: Foxglove_Quaternion {
-    get {return _rotation ?? Foxglove_Quaternion()}
-    set {_rotation = newValue}
+    get { _rotation ?? Foxglove_Quaternion() }
+    set { _rotation = newValue }
   }
+
   /// Returns true if `rotation` has been explicitly set.
-  var hasRotation: Bool {return self._rotation != nil}
+  var hasRotation: Bool { _rotation != nil }
   /// Clears the value of `rotation`. Subsequent reads from it will return its default value.
-  mutating func clearRotation() {self._rotation = nil}
+  mutating func clearRotation() { _rotation = nil }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _translation: Foxglove_Vector3? = nil
-  fileprivate var _rotation: Foxglove_Quaternion? = nil
+  private var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp?
+  private var _translation: Foxglove_Vector3?
+  private var _rotation: Foxglove_Quaternion?
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension Foxglove_FrameTransform: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+  extension Foxglove_FrameTransform: @unchecked Sendable {}
+#endif // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "foxglove"
+private let _protobuf_package = "foxglove"
 
-extension Foxglove_FrameTransform: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Foxglove_FrameTransform: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   static let protoMessageName: String = _protobuf_package + ".FrameTransform"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "timestamp"),
@@ -91,35 +96,35 @@ extension Foxglove_FrameTransform: SwiftProtobuf.Message, SwiftProtobuf._Message
     5: .same(proto: "rotation"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.parentFrameID) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.childFrameID) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._translation) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._rotation) }()
+      case 1: try decoder.decodeSingularMessageField(value: &_timestamp)
+      case 2: try decoder.decodeSingularStringField(value: &parentFrameID)
+      case 3: try decoder.decodeSingularStringField(value: &childFrameID)
+      case 4: try decoder.decodeSingularMessageField(value: &_translation)
+      case 5: try decoder.decodeSingularMessageField(value: &_rotation)
       default: break
       }
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._timestamp {
+    if let v = _timestamp {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    if !self.parentFrameID.isEmpty {
-      try visitor.visitSingularStringField(value: self.parentFrameID, fieldNumber: 2)
     }
-    if !self.childFrameID.isEmpty {
-      try visitor.visitSingularStringField(value: self.childFrameID, fieldNumber: 3)
+    if !parentFrameID.isEmpty {
+      try visitor.visitSingularStringField(value: parentFrameID, fieldNumber: 2)
+    }
+    if !childFrameID.isEmpty {
+      try visitor.visitSingularStringField(value: childFrameID, fieldNumber: 3)
     }
     try { if let v = self._translation {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
@@ -130,13 +135,13 @@ extension Foxglove_FrameTransform: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Foxglove_FrameTransform, rhs: Foxglove_FrameTransform) -> Bool {
-    if lhs._timestamp != rhs._timestamp {return false}
-    if lhs.parentFrameID != rhs.parentFrameID {return false}
-    if lhs.childFrameID != rhs.childFrameID {return false}
-    if lhs._translation != rhs._translation {return false}
-    if lhs._rotation != rhs._rotation {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
+  static func == (lhs: Foxglove_FrameTransform, rhs: Foxglove_FrameTransform) -> Bool {
+    if lhs._timestamp != rhs._timestamp { return false }
+    if lhs.parentFrameID != rhs.parentFrameID { return false }
+    if lhs.childFrameID != rhs.childFrameID { return false }
+    if lhs._translation != rhs._translation { return false }
+    if lhs._rotation != rhs._rotation { return false }
+    if lhs.unknownFields != rhs.unknownFields { return false }
     return true
   }
 }

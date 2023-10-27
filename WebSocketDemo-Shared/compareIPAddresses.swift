@@ -1,9 +1,9 @@
 import Foundation
 import Network
 
-fileprivate struct BytewiseLess: Comparable {
+private struct BytewiseLess: Comparable {
   let data: Data
-  static func <(lhs: BytewiseLess, rhs: BytewiseLess) -> Bool {
+  static func < (lhs: BytewiseLess, rhs: BytewiseLess) -> Bool {
     if lhs.data.count < rhs.data.count {
       return true
     }
@@ -18,10 +18,10 @@ fileprivate struct BytewiseLess: Comparable {
   }
 }
 
-fileprivate struct TrueLess: Comparable {
+private struct TrueLess: Comparable {
   let value: Bool
-  static func <(lhs: TrueLess, rhs: TrueLess) -> Bool {
-    return lhs.value && !rhs.value
+  static func < (lhs: TrueLess, rhs: TrueLess) -> Bool {
+    lhs.value && !rhs.value
   }
 }
 
@@ -32,7 +32,7 @@ fileprivate struct TrueLess: Comparable {
  - fall back to comparing raw addresses
  */
 func compareIPAddresses(_ lhs: IPAddress, _ rhs: IPAddress) -> Bool {
-  return (
+  (
     TrueLess(value: lhs is IPv4Address),
     TrueLess(value: lhs.interface?.type == .wifi),
     TrueLess(value: lhs.interface?.type == .wiredEthernet),

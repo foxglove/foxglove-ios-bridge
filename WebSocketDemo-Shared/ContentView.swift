@@ -1,6 +1,6 @@
-import SwiftUI
 import Charts
 import StoreKit
+import SwiftUI
 
 private let isAppClip = Bundle.main.bundleIdentifier?.hasSuffix("appclip") ?? false
 private let feedbackGenerator = UINotificationFeedbackGenerator()
@@ -44,9 +44,9 @@ public struct ContentView: View {
     .onAppear {
       onboardingShown = !onboardingCompleted
     }
-    .sheet(isPresented: $onboardingShown, onDismiss: {
+    .sheet(isPresented: $onboardingShown) {
       onboardingCompleted = true
-    }) {
+    } content: {
       OnboardingView(
         isConnected: !server.clientEndpointNames.isEmpty,
         serverURL: server.addresses.first.flatMap {
@@ -130,25 +130,25 @@ public struct ContentView: View {
           }
         }
         /*
-        CardToggle(isOn: $server.sendWatchData, dashed: isAppClip) {
-          Text("Heart Rate (Apple Watch)")
-            .multilineTextAlignment(.center)
-          if isAppClip {
-            Text("Requires full app")
-              .font(.caption)
-              .foregroundColor(.secondary)
-          }
-        }.disabled(isAppClip)
-          .onTapGesture {
-            if isAppClip && !appStoreOverlayShown {
-              appStoreOverlayShown = true
-              feedbackGenerator.notificationOccurred(.warning)
-            }
-          }
-          .appStoreOverlay(isPresented: $appStoreOverlayShown) {
-            SKOverlay.AppClipConfiguration(position: .bottom)
-          }
-         */
+         CardToggle(isOn: $server.sendWatchData, dashed: isAppClip) {
+           Text("Heart Rate (Apple Watch)")
+             .multilineTextAlignment(.center)
+           if isAppClip {
+             Text("Requires full app")
+               .font(.caption)
+               .foregroundColor(.secondary)
+           }
+         }.disabled(isAppClip)
+           .onTapGesture {
+             if isAppClip && !appStoreOverlayShown {
+               appStoreOverlayShown = true
+               feedbackGenerator.notificationOccurred(.warning)
+             }
+           }
+           .appStoreOverlay(isPresented: $appStoreOverlayShown) {
+             SKOverlay.AppClipConfiguration(position: .bottom)
+           }
+          */
       }.padding()
     }
   }
@@ -158,7 +158,7 @@ public struct ContentView: View {
       if let port = server.actualPort {
         Section {
           let addrs = Array(server.addresses.enumerated())
-          ForEach(addrs, id: \.offset) { (_, addr) in
+          ForEach(addrs, id: \.offset) { _, addr in
             IPAddressRow(address: addr, port: port)
           }
         } header: {
@@ -186,7 +186,8 @@ public struct ContentView: View {
         } footer: {
           let info = Bundle.main.infoDictionary
           if let version = info?["CFBundleShortVersionString"] as? String,
-             let build = info?["CFBundleVersion"] as? String {
+             let build = info?["CFBundleVersion"] as? String
+          {
             Text("Version \(version) (\(build))")
               .frame(maxWidth: .infinity)
           }

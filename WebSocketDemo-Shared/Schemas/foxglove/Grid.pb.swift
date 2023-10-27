@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,86 +30,92 @@ struct Foxglove_Grid {
 
   /// Timestamp of grid
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _storage._timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_uniqueStorage()._timestamp = newValue}
+    get { _storage._timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp() }
+    set { _uniqueStorage()._timestamp = newValue }
   }
+
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {return _storage._timestamp != nil}
+  var hasTimestamp: Bool { _storage._timestamp != nil }
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {_uniqueStorage()._timestamp = nil}
+  mutating func clearTimestamp() { _uniqueStorage()._timestamp = nil }
 
   /// Frame of reference
   var frameID: String {
-    get {return _storage._frameID}
-    set {_uniqueStorage()._frameID = newValue}
+    get { _storage._frameID }
+    set { _uniqueStorage()._frameID = newValue }
   }
 
-  /// Origin of grid's corner relative to frame of reference; grid is positioned in the x-y plane relative to this origin
+  /// Origin of grid's corner relative to frame of reference; grid is positioned in the x-y plane relative to this
+  /// origin
   var pose: Foxglove_Pose {
-    get {return _storage._pose ?? Foxglove_Pose()}
-    set {_uniqueStorage()._pose = newValue}
+    get { _storage._pose ?? Foxglove_Pose() }
+    set { _uniqueStorage()._pose = newValue }
   }
+
   /// Returns true if `pose` has been explicitly set.
-  var hasPose: Bool {return _storage._pose != nil}
+  var hasPose: Bool { _storage._pose != nil }
   /// Clears the value of `pose`. Subsequent reads from it will return its default value.
-  mutating func clearPose() {_uniqueStorage()._pose = nil}
+  mutating func clearPose() { _uniqueStorage()._pose = nil }
 
   /// Number of grid columns
   var columnCount: UInt32 {
-    get {return _storage._columnCount}
-    set {_uniqueStorage()._columnCount = newValue}
+    get { _storage._columnCount }
+    set { _uniqueStorage()._columnCount = newValue }
   }
 
   /// Size of single grid cell along x and y axes, relative to `pose`
   var cellSize: Foxglove_Vector2 {
-    get {return _storage._cellSize ?? Foxglove_Vector2()}
-    set {_uniqueStorage()._cellSize = newValue}
+    get { _storage._cellSize ?? Foxglove_Vector2() }
+    set { _uniqueStorage()._cellSize = newValue }
   }
+
   /// Returns true if `cellSize` has been explicitly set.
-  var hasCellSize: Bool {return _storage._cellSize != nil}
+  var hasCellSize: Bool { _storage._cellSize != nil }
   /// Clears the value of `cellSize`. Subsequent reads from it will return its default value.
-  mutating func clearCellSize() {_uniqueStorage()._cellSize = nil}
+  mutating func clearCellSize() { _uniqueStorage()._cellSize = nil }
 
   /// Number of bytes between rows in `data`
   var rowStride: UInt32 {
-    get {return _storage._rowStride}
-    set {_uniqueStorage()._rowStride = newValue}
+    get { _storage._rowStride }
+    set { _uniqueStorage()._rowStride = newValue }
   }
 
   /// Number of bytes between cells within a row in `data`
   var cellStride: UInt32 {
-    get {return _storage._cellStride}
-    set {_uniqueStorage()._cellStride = newValue}
+    get { _storage._cellStride }
+    set { _uniqueStorage()._cellStride = newValue }
   }
 
   /// Fields in `data`. `red`, `green`, `blue`, and `alpha` are optional for customizing the grid's color.
   var fields: [Foxglove_PackedElementField] {
-    get {return _storage._fields}
-    set {_uniqueStorage()._fields = newValue}
+    get { _storage._fields }
+    set { _uniqueStorage()._fields = newValue }
   }
 
   /// Grid cell data, interpreted using `fields`, in row-major (y-major) order
   var data: Data {
-    get {return _storage._data}
-    set {_uniqueStorage()._data = newValue}
+    get { _storage._data }
+    set { _uniqueStorage()._data = newValue }
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _storage = _StorageClass.defaultInstance
+  private var _storage = _StorageClass.defaultInstance
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension Foxglove_Grid: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+  extension Foxglove_Grid: @unchecked Sendable {}
+#endif // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "foxglove"
+private let _protobuf_package = "foxglove"
 
-extension Foxglove_Grid: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Foxglove_Grid: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   static let protoMessageName: String = _protobuf_package + ".Grid"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "timestamp"),
@@ -124,15 +130,15 @@ extension Foxglove_Grid: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   ]
 
   fileprivate class _StorageClass {
-    var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-    var _frameID: String = String()
-    var _pose: Foxglove_Pose? = nil
+    var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp?
+    var _frameID: String = .init()
+    var _pose: Foxglove_Pose?
     var _columnCount: UInt32 = 0
-    var _cellSize: Foxglove_Vector2? = nil
+    var _cellSize: Foxglove_Vector2?
     var _rowStride: UInt32 = 0
     var _cellStride: UInt32 = 0
     var _fields: [Foxglove_PackedElementField] = []
-    var _data: Data = Data()
+    var _data: Data = .init()
 
     static let defaultInstance = _StorageClass()
 
@@ -158,7 +164,7 @@ extension Foxglove_Grid: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     return _storage
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -166,22 +172,22 @@ extension Foxglove_Grid: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
         // allocates stack space for every case branch when no optimizations are
         // enabled. https://github.com/apple/swift-protobuf/issues/1034
         switch fieldNumber {
-        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._timestamp) }()
-        case 2: try { try decoder.decodeSingularStringField(value: &_storage._frameID) }()
-        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._pose) }()
-        case 4: try { try decoder.decodeSingularFixed32Field(value: &_storage._columnCount) }()
-        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._cellSize) }()
-        case 6: try { try decoder.decodeSingularFixed32Field(value: &_storage._rowStride) }()
-        case 7: try { try decoder.decodeSingularFixed32Field(value: &_storage._cellStride) }()
-        case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._fields) }()
-        case 9: try { try decoder.decodeSingularBytesField(value: &_storage._data) }()
+        case 1: try decoder.decodeSingularMessageField(value: &_storage._timestamp)
+        case 2: try decoder.decodeSingularStringField(value: &_storage._frameID)
+        case 3: try decoder.decodeSingularMessageField(value: &_storage._pose)
+        case 4: try decoder.decodeSingularFixed32Field(value: &_storage._columnCount)
+        case 5: try decoder.decodeSingularMessageField(value: &_storage._cellSize)
+        case 6: try decoder.decodeSingularFixed32Field(value: &_storage._rowStride)
+        case 7: try decoder.decodeSingularFixed32Field(value: &_storage._cellStride)
+        case 8: try decoder.decodeRepeatedMessageField(value: &_storage._fields)
+        case 9: try decoder.decodeSingularBytesField(value: &_storage._data)
         default: break
         }
       }
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every if/case branch local when no optimizations
@@ -218,25 +224,28 @@ extension Foxglove_Grid: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Foxglove_Grid, rhs: Foxglove_Grid) -> Bool {
+  static func == (lhs: Foxglove_Grid, rhs: Foxglove_Grid) -> Bool {
     if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+      let storagesAreEqual: Bool = withExtendedLifetime((
+        lhs._storage,
+        rhs._storage
+      )) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0
         let rhs_storage = _args.1
-        if _storage._timestamp != rhs_storage._timestamp {return false}
-        if _storage._frameID != rhs_storage._frameID {return false}
-        if _storage._pose != rhs_storage._pose {return false}
-        if _storage._columnCount != rhs_storage._columnCount {return false}
-        if _storage._cellSize != rhs_storage._cellSize {return false}
-        if _storage._rowStride != rhs_storage._rowStride {return false}
-        if _storage._cellStride != rhs_storage._cellStride {return false}
-        if _storage._fields != rhs_storage._fields {return false}
-        if _storage._data != rhs_storage._data {return false}
+        if _storage._timestamp != rhs_storage._timestamp { return false }
+        if _storage._frameID != rhs_storage._frameID { return false }
+        if _storage._pose != rhs_storage._pose { return false }
+        if _storage._columnCount != rhs_storage._columnCount { return false }
+        if _storage._cellSize != rhs_storage._cellSize { return false }
+        if _storage._rowStride != rhs_storage._rowStride { return false }
+        if _storage._cellStride != rhs_storage._cellStride { return false }
+        if _storage._fields != rhs_storage._fields { return false }
+        if _storage._data != rhs_storage._data { return false }
         return true
       }
-      if !storagesAreEqual {return false}
+      if !storagesAreEqual { return false }
     }
-    if lhs.unknownFields != rhs.unknownFields {return false}
+    if lhs.unknownFields != rhs.unknownFields { return false }
     return true
   }
 }

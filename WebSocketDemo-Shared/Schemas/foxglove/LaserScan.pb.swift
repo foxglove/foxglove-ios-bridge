@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,26 +30,29 @@ struct Foxglove_LaserScan {
 
   /// Timestamp of scan
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_timestamp = newValue}
+    get { _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp() }
+    set { _timestamp = newValue }
   }
+
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {return self._timestamp != nil}
+  var hasTimestamp: Bool { _timestamp != nil }
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {self._timestamp = nil}
+  mutating func clearTimestamp() { _timestamp = nil }
 
   /// Frame of reference
-  var frameID: String = String()
+  var frameID: String = .init()
 
-  /// Origin of scan relative to frame of reference; points are positioned in the x-y plane relative to this origin; angles are interpreted as counterclockwise rotations around the z axis with 0 rad being in the +x direction
+  /// Origin of scan relative to frame of reference; points are positioned in the x-y plane relative to this origin;
+  /// angles are interpreted as counterclockwise rotations around the z axis with 0 rad being in the +x direction
   var pose: Foxglove_Pose {
-    get {return _pose ?? Foxglove_Pose()}
-    set {_pose = newValue}
+    get { _pose ?? Foxglove_Pose() }
+    set { _pose = newValue }
   }
+
   /// Returns true if `pose` has been explicitly set.
-  var hasPose: Bool {return self._pose != nil}
+  var hasPose: Bool { _pose != nil }
   /// Clears the value of `pose`. Subsequent reads from it will return its default value.
-  mutating func clearPose() {self._pose = nil}
+  mutating func clearPose() { _pose = nil }
 
   /// Bearing of first point, in radians
   var startAngle: Double = 0
@@ -67,19 +70,21 @@ struct Foxglove_LaserScan {
 
   init() {}
 
-  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _pose: Foxglove_Pose? = nil
+  private var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp?
+  private var _pose: Foxglove_Pose?
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension Foxglove_LaserScan: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+  extension Foxglove_LaserScan: @unchecked Sendable {}
+#endif // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "foxglove"
+private let _protobuf_package = "foxglove"
 
-extension Foxglove_LaserScan: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Foxglove_LaserScan: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   static let protoMessageName: String = _protobuf_package + ".LaserScan"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "timestamp"),
@@ -91,62 +96,62 @@ extension Foxglove_LaserScan: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     7: .same(proto: "intensities"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.frameID) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._pose) }()
-      case 4: try { try decoder.decodeSingularDoubleField(value: &self.startAngle) }()
-      case 5: try { try decoder.decodeSingularDoubleField(value: &self.endAngle) }()
-      case 6: try { try decoder.decodeRepeatedDoubleField(value: &self.ranges) }()
-      case 7: try { try decoder.decodeRepeatedDoubleField(value: &self.intensities) }()
+      case 1: try decoder.decodeSingularMessageField(value: &_timestamp)
+      case 2: try decoder.decodeSingularStringField(value: &frameID)
+      case 3: try decoder.decodeSingularMessageField(value: &_pose)
+      case 4: try decoder.decodeSingularDoubleField(value: &startAngle)
+      case 5: try decoder.decodeSingularDoubleField(value: &endAngle)
+      case 6: try decoder.decodeRepeatedDoubleField(value: &ranges)
+      case 7: try decoder.decodeRepeatedDoubleField(value: &intensities)
       default: break
       }
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._timestamp {
+    if let v = _timestamp {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    if !self.frameID.isEmpty {
-      try visitor.visitSingularStringField(value: self.frameID, fieldNumber: 2)
+    }
+    if !frameID.isEmpty {
+      try visitor.visitSingularStringField(value: frameID, fieldNumber: 2)
     }
     try { if let v = self._pose {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
-    if self.startAngle != 0 {
-      try visitor.visitSingularDoubleField(value: self.startAngle, fieldNumber: 4)
+    if startAngle != 0 {
+      try visitor.visitSingularDoubleField(value: startAngle, fieldNumber: 4)
     }
-    if self.endAngle != 0 {
-      try visitor.visitSingularDoubleField(value: self.endAngle, fieldNumber: 5)
+    if endAngle != 0 {
+      try visitor.visitSingularDoubleField(value: endAngle, fieldNumber: 5)
     }
-    if !self.ranges.isEmpty {
-      try visitor.visitPackedDoubleField(value: self.ranges, fieldNumber: 6)
+    if !ranges.isEmpty {
+      try visitor.visitPackedDoubleField(value: ranges, fieldNumber: 6)
     }
-    if !self.intensities.isEmpty {
-      try visitor.visitPackedDoubleField(value: self.intensities, fieldNumber: 7)
+    if !intensities.isEmpty {
+      try visitor.visitPackedDoubleField(value: intensities, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Foxglove_LaserScan, rhs: Foxglove_LaserScan) -> Bool {
-    if lhs._timestamp != rhs._timestamp {return false}
-    if lhs.frameID != rhs.frameID {return false}
-    if lhs._pose != rhs._pose {return false}
-    if lhs.startAngle != rhs.startAngle {return false}
-    if lhs.endAngle != rhs.endAngle {return false}
-    if lhs.ranges != rhs.ranges {return false}
-    if lhs.intensities != rhs.intensities {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
+  static func == (lhs: Foxglove_LaserScan, rhs: Foxglove_LaserScan) -> Bool {
+    if lhs._timestamp != rhs._timestamp { return false }
+    if lhs.frameID != rhs.frameID { return false }
+    if lhs._pose != rhs._pose { return false }
+    if lhs.startAngle != rhs.startAngle { return false }
+    if lhs.endAngle != rhs.endAngle { return false }
+    if lhs.ranges != rhs.ranges { return false }
+    if lhs.intensities != rhs.intensities { return false }
+    if lhs.unknownFields != rhs.unknownFields { return false }
     return true
   }
 }

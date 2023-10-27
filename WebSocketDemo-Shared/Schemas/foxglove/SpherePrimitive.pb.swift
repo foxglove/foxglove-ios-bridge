@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,52 +30,57 @@ struct Foxglove_SpherePrimitive {
 
   /// Position of the center of the sphere and orientation of the sphere
   var pose: Foxglove_Pose {
-    get {return _pose ?? Foxglove_Pose()}
-    set {_pose = newValue}
+    get { _pose ?? Foxglove_Pose() }
+    set { _pose = newValue }
   }
+
   /// Returns true if `pose` has been explicitly set.
-  var hasPose: Bool {return self._pose != nil}
+  var hasPose: Bool { _pose != nil }
   /// Clears the value of `pose`. Subsequent reads from it will return its default value.
-  mutating func clearPose() {self._pose = nil}
+  mutating func clearPose() { _pose = nil }
 
   /// Size (diameter) of the sphere along each axis
   var size: Foxglove_Vector3 {
-    get {return _size ?? Foxglove_Vector3()}
-    set {_size = newValue}
+    get { _size ?? Foxglove_Vector3() }
+    set { _size = newValue }
   }
+
   /// Returns true if `size` has been explicitly set.
-  var hasSize: Bool {return self._size != nil}
+  var hasSize: Bool { _size != nil }
   /// Clears the value of `size`. Subsequent reads from it will return its default value.
-  mutating func clearSize() {self._size = nil}
+  mutating func clearSize() { _size = nil }
 
   /// Color of the sphere
   var color: Foxglove_Color {
-    get {return _color ?? Foxglove_Color()}
-    set {_color = newValue}
+    get { _color ?? Foxglove_Color() }
+    set { _color = newValue }
   }
+
   /// Returns true if `color` has been explicitly set.
-  var hasColor: Bool {return self._color != nil}
+  var hasColor: Bool { _color != nil }
   /// Clears the value of `color`. Subsequent reads from it will return its default value.
-  mutating func clearColor() {self._color = nil}
+  mutating func clearColor() { _color = nil }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _pose: Foxglove_Pose? = nil
-  fileprivate var _size: Foxglove_Vector3? = nil
-  fileprivate var _color: Foxglove_Color? = nil
+  private var _pose: Foxglove_Pose?
+  private var _size: Foxglove_Vector3?
+  private var _color: Foxglove_Color?
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension Foxglove_SpherePrimitive: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+  extension Foxglove_SpherePrimitive: @unchecked Sendable {}
+#endif // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "foxglove"
+private let _protobuf_package = "foxglove"
 
-extension Foxglove_SpherePrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Foxglove_SpherePrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   static let protoMessageName: String = _protobuf_package + ".SpherePrimitive"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "pose"),
@@ -83,28 +88,28 @@ extension Foxglove_SpherePrimitive: SwiftProtobuf.Message, SwiftProtobuf._Messag
     3: .same(proto: "color"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._pose) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._size) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._color) }()
+      case 1: try decoder.decodeSingularMessageField(value: &_pose)
+      case 2: try decoder.decodeSingularMessageField(value: &_size)
+      case 3: try decoder.decodeSingularMessageField(value: &_color)
       default: break
       }
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._pose {
+    if let v = _pose {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
+    }
     try { if let v = self._size {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
@@ -114,11 +119,11 @@ extension Foxglove_SpherePrimitive: SwiftProtobuf.Message, SwiftProtobuf._Messag
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Foxglove_SpherePrimitive, rhs: Foxglove_SpherePrimitive) -> Bool {
-    if lhs._pose != rhs._pose {return false}
-    if lhs._size != rhs._size {return false}
-    if lhs._color != rhs._color {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
+  static func == (lhs: Foxglove_SpherePrimitive, rhs: Foxglove_SpherePrimitive) -> Bool {
+    if lhs._pose != rhs._pose { return false }
+    if lhs._size != rhs._size { return false }
+    if lhs._color != rhs._color { return false }
+    if lhs.unknownFields != rhs.unknownFields { return false }
     return true
   }
 }

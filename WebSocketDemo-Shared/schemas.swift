@@ -1,3 +1,6 @@
+// swiftlint:disable:next blanket_disable_command
+// swiftlint:disable line_length
+
 let poseInFrameSchema = """
 {
   "title": "foxglove.PoseInFrame",

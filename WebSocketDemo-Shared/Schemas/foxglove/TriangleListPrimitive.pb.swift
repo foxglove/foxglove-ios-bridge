@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,52 +30,58 @@ struct Foxglove_TriangleListPrimitive {
 
   /// Origin of triangles relative to reference frame
   var pose: Foxglove_Pose {
-    get {return _pose ?? Foxglove_Pose()}
-    set {_pose = newValue}
+    get { _pose ?? Foxglove_Pose() }
+    set { _pose = newValue }
   }
+
   /// Returns true if `pose` has been explicitly set.
-  var hasPose: Bool {return self._pose != nil}
+  var hasPose: Bool { _pose != nil }
   /// Clears the value of `pose`. Subsequent reads from it will return its default value.
-  mutating func clearPose() {self._pose = nil}
+  mutating func clearPose() { _pose = nil }
 
   /// Vertices to use for triangles, interpreted as a list of triples (0-1-2, 3-4-5, ...)
   var points: [Foxglove_Point3] = []
 
   /// Solid color to use for the whole shape. One of `color` or `colors` must be provided.
   var color: Foxglove_Color {
-    get {return _color ?? Foxglove_Color()}
-    set {_color = newValue}
+    get { _color ?? Foxglove_Color() }
+    set { _color = newValue }
   }
-  /// Returns true if `color` has been explicitly set.
-  var hasColor: Bool {return self._color != nil}
-  /// Clears the value of `color`. Subsequent reads from it will return its default value.
-  mutating func clearColor() {self._color = nil}
 
-  /// Per-vertex colors (if specified, must have the same length as `points`). One of `color` or `colors` must be provided.
+  /// Returns true if `color` has been explicitly set.
+  var hasColor: Bool { _color != nil }
+  /// Clears the value of `color`. Subsequent reads from it will return its default value.
+  mutating func clearColor() { _color = nil }
+
+  /// Per-vertex colors (if specified, must have the same length as `points`). One of `color` or `colors` must be
+  /// provided.
   var colors: [Foxglove_Color] = []
 
   /// Indices into the `points` and `colors` attribute arrays, which can be used to avoid duplicating attribute data.
-  /// 
-  /// If omitted or empty, indexing will not be used. This default behavior is equivalent to specifying [0, 1, ..., N-1] for the indices (where N is the number of `points` provided).
+  ///
+  /// If omitted or empty, indexing will not be used. This default behavior is equivalent to specifying [0, 1, ..., N-1]
+  /// for the indices (where N is the number of `points` provided).
   var indices: [UInt32] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _pose: Foxglove_Pose? = nil
-  fileprivate var _color: Foxglove_Color? = nil
+  private var _pose: Foxglove_Pose?
+  private var _color: Foxglove_Color?
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension Foxglove_TriangleListPrimitive: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+  extension Foxglove_TriangleListPrimitive: @unchecked Sendable {}
+#endif // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "foxglove"
+private let _protobuf_package = "foxglove"
 
-extension Foxglove_TriangleListPrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Foxglove_TriangleListPrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   static let protoMessageName: String = _protobuf_package + ".TriangleListPrimitive"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "pose"),
@@ -85,52 +91,52 @@ extension Foxglove_TriangleListPrimitive: SwiftProtobuf.Message, SwiftProtobuf._
     5: .same(proto: "indices"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._pose) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.points) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._color) }()
-      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.colors) }()
-      case 5: try { try decoder.decodeRepeatedFixed32Field(value: &self.indices) }()
+      case 1: try decoder.decodeSingularMessageField(value: &_pose)
+      case 2: try decoder.decodeRepeatedMessageField(value: &points)
+      case 3: try decoder.decodeSingularMessageField(value: &_color)
+      case 4: try decoder.decodeRepeatedMessageField(value: &colors)
+      case 5: try decoder.decodeRepeatedFixed32Field(value: &indices)
       default: break
       }
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._pose {
+    if let v = _pose {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    if !self.points.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.points, fieldNumber: 2)
+    }
+    if !points.isEmpty {
+      try visitor.visitRepeatedMessageField(value: points, fieldNumber: 2)
     }
     try { if let v = self._color {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
-    if !self.colors.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.colors, fieldNumber: 4)
+    if !colors.isEmpty {
+      try visitor.visitRepeatedMessageField(value: colors, fieldNumber: 4)
     }
-    if !self.indices.isEmpty {
-      try visitor.visitPackedFixed32Field(value: self.indices, fieldNumber: 5)
+    if !indices.isEmpty {
+      try visitor.visitPackedFixed32Field(value: indices, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Foxglove_TriangleListPrimitive, rhs: Foxglove_TriangleListPrimitive) -> Bool {
-    if lhs._pose != rhs._pose {return false}
-    if lhs.points != rhs.points {return false}
-    if lhs._color != rhs._color {return false}
-    if lhs.colors != rhs.colors {return false}
-    if lhs.indices != rhs.indices {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
+  static func == (lhs: Foxglove_TriangleListPrimitive, rhs: Foxglove_TriangleListPrimitive) -> Bool {
+    if lhs._pose != rhs._pose { return false }
+    if lhs.points != rhs.points { return false }
+    if lhs._color != rhs._color { return false }
+    if lhs.colors != rhs.colors { return false }
+    if lhs.indices != rhs.indices { return false }
+    if lhs.unknownFields != rhs.unknownFields { return false }
     return true
   }
 }

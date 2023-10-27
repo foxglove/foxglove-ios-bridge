@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,16 +30,17 @@ struct Foxglove_PosesInFrame {
 
   /// Timestamp of pose
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_timestamp = newValue}
+    get { _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp() }
+    set { _timestamp = newValue }
   }
+
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {return self._timestamp != nil}
+  var hasTimestamp: Bool { _timestamp != nil }
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {self._timestamp = nil}
+  mutating func clearTimestamp() { _timestamp = nil }
 
   /// Frame of reference for pose position and orientation
-  var frameID: String = String()
+  var frameID: String = .init()
 
   /// Poses in 3D space
   var poses: [Foxglove_Pose] = []
@@ -48,18 +49,20 @@ struct Foxglove_PosesInFrame {
 
   init() {}
 
-  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  private var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp?
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension Foxglove_PosesInFrame: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+  extension Foxglove_PosesInFrame: @unchecked Sendable {}
+#endif // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "foxglove"
+private let _protobuf_package = "foxglove"
 
-extension Foxglove_PosesInFrame: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Foxglove_PosesInFrame: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   static let protoMessageName: String = _protobuf_package + ".PosesInFrame"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "timestamp"),
@@ -67,42 +70,42 @@ extension Foxglove_PosesInFrame: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     3: .same(proto: "poses"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.frameID) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.poses) }()
+      case 1: try decoder.decodeSingularMessageField(value: &_timestamp)
+      case 2: try decoder.decodeSingularStringField(value: &frameID)
+      case 3: try decoder.decodeRepeatedMessageField(value: &poses)
       default: break
       }
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._timestamp {
+    if let v = _timestamp {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    if !self.frameID.isEmpty {
-      try visitor.visitSingularStringField(value: self.frameID, fieldNumber: 2)
     }
-    if !self.poses.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.poses, fieldNumber: 3)
+    if !frameID.isEmpty {
+      try visitor.visitSingularStringField(value: frameID, fieldNumber: 2)
+    }
+    if !poses.isEmpty {
+      try visitor.visitRepeatedMessageField(value: poses, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Foxglove_PosesInFrame, rhs: Foxglove_PosesInFrame) -> Bool {
-    if lhs._timestamp != rhs._timestamp {return false}
-    if lhs.frameID != rhs.frameID {return false}
-    if lhs.poses != rhs.poses {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
+  static func == (lhs: Foxglove_PosesInFrame, rhs: Foxglove_PosesInFrame) -> Bool {
+    if lhs._timestamp != rhs._timestamp { return false }
+    if lhs.frameID != rhs.frameID { return false }
+    if lhs.poses != rhs.poses { return false }
+    if lhs.unknownFields != rhs.unknownFields { return false }
     return true
   }
 }

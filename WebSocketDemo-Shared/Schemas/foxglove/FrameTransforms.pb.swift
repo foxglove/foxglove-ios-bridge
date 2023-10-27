@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -37,41 +37,43 @@ struct Foxglove_FrameTransforms {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension Foxglove_FrameTransforms: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+  extension Foxglove_FrameTransforms: @unchecked Sendable {}
+#endif // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "foxglove"
+private let _protobuf_package = "foxglove"
 
-extension Foxglove_FrameTransforms: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Foxglove_FrameTransforms: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   static let protoMessageName: String = _protobuf_package + ".FrameTransforms"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "transforms"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.transforms) }()
+      case 1: try decoder.decodeRepeatedMessageField(value: &transforms)
       default: break
       }
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.transforms.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.transforms, fieldNumber: 1)
+  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
+    if !transforms.isEmpty {
+      try visitor.visitRepeatedMessageField(value: transforms, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Foxglove_FrameTransforms, rhs: Foxglove_FrameTransforms) -> Bool {
-    if lhs.transforms != rhs.transforms {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
+  static func == (lhs: Foxglove_FrameTransforms, rhs: Foxglove_FrameTransforms) -> Bool {
+    if lhs.transforms != rhs.transforms { return false }
+    if lhs.unknownFields != rhs.unknownFields { return false }
     return true
   }
 }

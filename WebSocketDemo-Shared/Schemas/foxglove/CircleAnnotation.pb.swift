@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,23 +30,25 @@ struct Foxglove_CircleAnnotation {
 
   /// Timestamp of circle
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_timestamp = newValue}
+    get { _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp() }
+    set { _timestamp = newValue }
   }
+
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {return self._timestamp != nil}
+  var hasTimestamp: Bool { _timestamp != nil }
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {self._timestamp = nil}
+  mutating func clearTimestamp() { _timestamp = nil }
 
   /// Center of the circle in 2D image coordinates (pixels)
   var position: Foxglove_Point2 {
-    get {return _position ?? Foxglove_Point2()}
-    set {_position = newValue}
+    get { _position ?? Foxglove_Point2() }
+    set { _position = newValue }
   }
+
   /// Returns true if `position` has been explicitly set.
-  var hasPosition: Bool {return self._position != nil}
+  var hasPosition: Bool { _position != nil }
   /// Clears the value of `position`. Subsequent reads from it will return its default value.
-  mutating func clearPosition() {self._position = nil}
+  mutating func clearPosition() { _position = nil }
 
   /// Circle diameter in pixels
   var diameter: Double = 0
@@ -56,43 +58,47 @@ struct Foxglove_CircleAnnotation {
 
   /// Fill color
   var fillColor: Foxglove_Color {
-    get {return _fillColor ?? Foxglove_Color()}
-    set {_fillColor = newValue}
+    get { _fillColor ?? Foxglove_Color() }
+    set { _fillColor = newValue }
   }
+
   /// Returns true if `fillColor` has been explicitly set.
-  var hasFillColor: Bool {return self._fillColor != nil}
+  var hasFillColor: Bool { _fillColor != nil }
   /// Clears the value of `fillColor`. Subsequent reads from it will return its default value.
-  mutating func clearFillColor() {self._fillColor = nil}
+  mutating func clearFillColor() { _fillColor = nil }
 
   /// Outline color
   var outlineColor: Foxglove_Color {
-    get {return _outlineColor ?? Foxglove_Color()}
-    set {_outlineColor = newValue}
+    get { _outlineColor ?? Foxglove_Color() }
+    set { _outlineColor = newValue }
   }
+
   /// Returns true if `outlineColor` has been explicitly set.
-  var hasOutlineColor: Bool {return self._outlineColor != nil}
+  var hasOutlineColor: Bool { _outlineColor != nil }
   /// Clears the value of `outlineColor`. Subsequent reads from it will return its default value.
-  mutating func clearOutlineColor() {self._outlineColor = nil}
+  mutating func clearOutlineColor() { _outlineColor = nil }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _position: Foxglove_Point2? = nil
-  fileprivate var _fillColor: Foxglove_Color? = nil
-  fileprivate var _outlineColor: Foxglove_Color? = nil
+  private var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp?
+  private var _position: Foxglove_Point2?
+  private var _fillColor: Foxglove_Color?
+  private var _outlineColor: Foxglove_Color?
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension Foxglove_CircleAnnotation: @unchecked Sendable {}
-#endif  // swift(>=5.5) && canImport(_Concurrency)
+  extension Foxglove_CircleAnnotation: @unchecked Sendable {}
+#endif // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "foxglove"
+private let _protobuf_package = "foxglove"
 
-extension Foxglove_CircleAnnotation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Foxglove_CircleAnnotation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   static let protoMessageName: String = _protobuf_package + ".CircleAnnotation"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "timestamp"),
@@ -103,39 +109,39 @@ extension Foxglove_CircleAnnotation: SwiftProtobuf.Message, SwiftProtobuf._Messa
     6: .standard(proto: "outline_color"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._position) }()
-      case 3: try { try decoder.decodeSingularDoubleField(value: &self.diameter) }()
-      case 4: try { try decoder.decodeSingularDoubleField(value: &self.thickness) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._fillColor) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._outlineColor) }()
+      case 1: try decoder.decodeSingularMessageField(value: &_timestamp)
+      case 2: try decoder.decodeSingularMessageField(value: &_position)
+      case 3: try decoder.decodeSingularDoubleField(value: &diameter)
+      case 4: try decoder.decodeSingularDoubleField(value: &thickness)
+      case 5: try decoder.decodeSingularMessageField(value: &_fillColor)
+      case 6: try decoder.decodeSingularMessageField(value: &_outlineColor)
       default: break
       }
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._timestamp {
+    if let v = _timestamp {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
+    }
     try { if let v = self._position {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if self.diameter != 0 {
-      try visitor.visitSingularDoubleField(value: self.diameter, fieldNumber: 3)
+    if diameter != 0 {
+      try visitor.visitSingularDoubleField(value: diameter, fieldNumber: 3)
     }
-    if self.thickness != 0 {
-      try visitor.visitSingularDoubleField(value: self.thickness, fieldNumber: 4)
+    if thickness != 0 {
+      try visitor.visitSingularDoubleField(value: thickness, fieldNumber: 4)
     }
     try { if let v = self._fillColor {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
@@ -146,14 +152,14 @@ extension Foxglove_CircleAnnotation: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Foxglove_CircleAnnotation, rhs: Foxglove_CircleAnnotation) -> Bool {
-    if lhs._timestamp != rhs._timestamp {return false}
-    if lhs._position != rhs._position {return false}
-    if lhs.diameter != rhs.diameter {return false}
-    if lhs.thickness != rhs.thickness {return false}
-    if lhs._fillColor != rhs._fillColor {return false}
-    if lhs._outlineColor != rhs._outlineColor {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
+  static func == (lhs: Foxglove_CircleAnnotation, rhs: Foxglove_CircleAnnotation) -> Bool {
+    if lhs._timestamp != rhs._timestamp { return false }
+    if lhs._position != rhs._position { return false }
+    if lhs.diameter != rhs.diameter { return false }
+    if lhs.thickness != rhs.thickness { return false }
+    if lhs._fillColor != rhs._fillColor { return false }
+    if lhs._outlineColor != rhs._outlineColor { return false }
+    if lhs.unknownFields != rhs.unknownFields { return false }
     return true
   }
 }

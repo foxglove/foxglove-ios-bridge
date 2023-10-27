@@ -13,7 +13,7 @@ extension EnvironmentValues {
 
 extension View {
   func onContinue(_ action: @escaping () -> Void) -> some View {
-    self.environment(\.onContinue, action)
+    environment(\.onContinue, action)
   }
 }
 

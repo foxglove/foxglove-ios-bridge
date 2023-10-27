@@ -1,9 +1,9 @@
-import SwiftUI
 import Network
+import SwiftUI
 
 extension IPAddress {
   var withoutInterface: IPAddress {
-    return Self.init(rawValue, nil) ?? self
+    Self(rawValue, nil) ?? self
   }
 
   var urlString: String {
@@ -24,17 +24,17 @@ struct IPAddressRow: View {
   var icon: Text {
     switch address.interface?.type {
     case .wifi?:
-      return Text(Image(systemName: "wifi"))
+      Text(Image(systemName: "wifi"))
     case .wiredEthernet?:
-      return Text(Image(systemName: "cable.connector.horizontal"))
+      Text(Image(systemName: "cable.connector.horizontal"))
     case .cellular?:
-      return Text(Image(systemName: "antenna.radiowaves.left.and.right"))
+      Text(Image(systemName: "antenna.radiowaves.left.and.right"))
     case .loopback?:
-      return Text(Image(systemName: "arrow.counterclockwise"))
+      Text(Image(systemName: "arrow.counterclockwise"))
     case .other?:
-      return Text(Image(systemName: "questionmark"))
+      Text(Image(systemName: "questionmark"))
     default:
-      return Text("")
+      Text("")
     }
   }
 
@@ -63,7 +63,7 @@ struct IPAddressRow: View {
         var url = URL(string: "https://studio.foxglove.dev/")!
         url.append(queryItems: [
           URLQueryItem(name: "ds", value: "foxglove-websocket"),
-          URLQueryItem(name: "ds.url", value: "ws://\(address.withoutInterface.urlString):\(String(port.rawValue))")
+          URLQueryItem(name: "ds.url", value: "ws://\(address.withoutInterface.urlString):\(String(port.rawValue))"),
         ])
         return url
       }()
