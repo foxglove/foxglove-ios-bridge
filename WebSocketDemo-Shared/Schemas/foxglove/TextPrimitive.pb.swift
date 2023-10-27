@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -28,17 +28,15 @@ struct Foxglove_TextPrimitive {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// Position of the center of the text box and orientation of the text. Identity orientation means the text is
-  /// oriented in the xy-plane and flows from -x to +x.
+  /// Position of the center of the text box and orientation of the text. Identity orientation means the text is oriented in the xy-plane and flows from -x to +x.
   var pose: Foxglove_Pose {
-    get { _pose ?? Foxglove_Pose() }
-    set { _pose = newValue }
+    get {return _pose ?? Foxglove_Pose()}
+    set {_pose = newValue}
   }
-
   /// Returns true if `pose` has been explicitly set.
-  var hasPose: Bool { _pose != nil }
+  var hasPose: Bool {return self._pose != nil}
   /// Clears the value of `pose`. Subsequent reads from it will return its default value.
-  mutating func clearPose() { _pose = nil }
+  mutating func clearPose() {self._pose = nil}
 
   /// Whether the text should respect `pose.orientation` (false) or always face the camera (true)
   var billboard: Bool = false
@@ -46,43 +44,39 @@ struct Foxglove_TextPrimitive {
   /// Font size (height of one line of text)
   var fontSize: Double = 0
 
-  /// Indicates whether `font_size` is a fixed size in screen pixels (true), or specified in world coordinates and
-  /// scales with distance from the camera (false)
+  /// Indicates whether `font_size` is a fixed size in screen pixels (true), or specified in world coordinates and scales with distance from the camera (false)
   var scaleInvariant: Bool = false
 
   /// Color of the text
   var color: Foxglove_Color {
-    get { _color ?? Foxglove_Color() }
-    set { _color = newValue }
+    get {return _color ?? Foxglove_Color()}
+    set {_color = newValue}
   }
-
   /// Returns true if `color` has been explicitly set.
-  var hasColor: Bool { _color != nil }
+  var hasColor: Bool {return self._color != nil}
   /// Clears the value of `color`. Subsequent reads from it will return its default value.
-  mutating func clearColor() { _color = nil }
+  mutating func clearColor() {self._color = nil}
 
   /// Text
-  var text: String = .init()
+  var text: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  private var _pose: Foxglove_Pose?
-  private var _color: Foxglove_Color?
+  fileprivate var _pose: Foxglove_Pose? = nil
+  fileprivate var _color: Foxglove_Color? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-  extension Foxglove_TextPrimitive: @unchecked Sendable {}
-#endif // swift(>=5.5) && canImport(_Concurrency)
+extension Foxglove_TextPrimitive: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-private let _protobuf_package = "foxglove"
+fileprivate let _protobuf_package = "foxglove"
 
-extension Foxglove_TextPrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
-  SwiftProtobuf._ProtoNameProviding
-{
+extension Foxglove_TextPrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".TextPrimitive"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "pose"),
@@ -93,57 +87,57 @@ extension Foxglove_TextPrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     6: .same(proto: "text"),
   ]
 
-  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try decoder.decodeSingularMessageField(value: &_pose)
-      case 2: try decoder.decodeSingularBoolField(value: &billboard)
-      case 3: try decoder.decodeSingularDoubleField(value: &fontSize)
-      case 4: try decoder.decodeSingularBoolField(value: &scaleInvariant)
-      case 5: try decoder.decodeSingularMessageField(value: &_color)
-      case 6: try decoder.decodeSingularStringField(value: &text)
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._pose) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.billboard) }()
+      case 3: try { try decoder.decodeSingularDoubleField(value: &self.fontSize) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.scaleInvariant) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._color) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.text) }()
       default: break
       }
     }
   }
 
-  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if let v = _pose {
+    try { if let v = self._pose {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if self.billboard != false {
+      try visitor.visitSingularBoolField(value: self.billboard, fieldNumber: 2)
     }
-    if billboard != false {
-      try visitor.visitSingularBoolField(value: billboard, fieldNumber: 2)
+    if self.fontSize != 0 {
+      try visitor.visitSingularDoubleField(value: self.fontSize, fieldNumber: 3)
     }
-    if fontSize != 0 {
-      try visitor.visitSingularDoubleField(value: fontSize, fieldNumber: 3)
-    }
-    if scaleInvariant != false {
-      try visitor.visitSingularBoolField(value: scaleInvariant, fieldNumber: 4)
+    if self.scaleInvariant != false {
+      try visitor.visitSingularBoolField(value: self.scaleInvariant, fieldNumber: 4)
     }
     try { if let v = self._color {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     } }()
-    if !text.isEmpty {
-      try visitor.visitSingularStringField(value: text, fieldNumber: 6)
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 6)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func == (lhs: Foxglove_TextPrimitive, rhs: Foxglove_TextPrimitive) -> Bool {
-    if lhs._pose != rhs._pose { return false }
-    if lhs.billboard != rhs.billboard { return false }
-    if lhs.fontSize != rhs.fontSize { return false }
-    if lhs.scaleInvariant != rhs.scaleInvariant { return false }
-    if lhs._color != rhs._color { return false }
-    if lhs.text != rhs.text { return false }
-    if lhs.unknownFields != rhs.unknownFields { return false }
+  static func ==(lhs: Foxglove_TextPrimitive, rhs: Foxglove_TextPrimitive) -> Bool {
+    if lhs._pose != rhs._pose {return false}
+    if lhs.billboard != rhs.billboard {return false}
+    if lhs.fontSize != rhs.fontSize {return false}
+    if lhs.scaleInvariant != rhs.scaleInvariant {return false}
+    if lhs._color != rhs._color {return false}
+    if lhs.text != rhs.text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }

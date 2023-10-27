@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -28,28 +28,25 @@ struct Foxglove_CylinderPrimitive {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// Position of the center of the cylinder and orientation of the cylinder. The flat face(s) are perpendicular to the
-  /// z-axis.
+  /// Position of the center of the cylinder and orientation of the cylinder. The flat face(s) are perpendicular to the z-axis.
   var pose: Foxglove_Pose {
-    get { _pose ?? Foxglove_Pose() }
-    set { _pose = newValue }
+    get {return _pose ?? Foxglove_Pose()}
+    set {_pose = newValue}
   }
-
   /// Returns true if `pose` has been explicitly set.
-  var hasPose: Bool { _pose != nil }
+  var hasPose: Bool {return self._pose != nil}
   /// Clears the value of `pose`. Subsequent reads from it will return its default value.
-  mutating func clearPose() { _pose = nil }
+  mutating func clearPose() {self._pose = nil}
 
   /// Size of the cylinder's bounding box
   var size: Foxglove_Vector3 {
-    get { _size ?? Foxglove_Vector3() }
-    set { _size = newValue }
+    get {return _size ?? Foxglove_Vector3()}
+    set {_size = newValue}
   }
-
   /// Returns true if `size` has been explicitly set.
-  var hasSize: Bool { _size != nil }
+  var hasSize: Bool {return self._size != nil}
   /// Clears the value of `size`. Subsequent reads from it will return its default value.
-  mutating func clearSize() { _size = nil }
+  mutating func clearSize() {self._size = nil}
 
   /// 0-1, ratio of the diameter of the cylinder's bottom face (min z) to the bottom of the bounding box
   var bottomScale: Double = 0
@@ -59,35 +56,32 @@ struct Foxglove_CylinderPrimitive {
 
   /// Color of the cylinder
   var color: Foxglove_Color {
-    get { _color ?? Foxglove_Color() }
-    set { _color = newValue }
+    get {return _color ?? Foxglove_Color()}
+    set {_color = newValue}
   }
-
   /// Returns true if `color` has been explicitly set.
-  var hasColor: Bool { _color != nil }
+  var hasColor: Bool {return self._color != nil}
   /// Clears the value of `color`. Subsequent reads from it will return its default value.
-  mutating func clearColor() { _color = nil }
+  mutating func clearColor() {self._color = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  private var _pose: Foxglove_Pose?
-  private var _size: Foxglove_Vector3?
-  private var _color: Foxglove_Color?
+  fileprivate var _pose: Foxglove_Pose? = nil
+  fileprivate var _size: Foxglove_Vector3? = nil
+  fileprivate var _color: Foxglove_Color? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-  extension Foxglove_CylinderPrimitive: @unchecked Sendable {}
-#endif // swift(>=5.5) && canImport(_Concurrency)
+extension Foxglove_CylinderPrimitive: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-private let _protobuf_package = "foxglove"
+fileprivate let _protobuf_package = "foxglove"
 
-extension Foxglove_CylinderPrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
-  SwiftProtobuf._ProtoNameProviding
-{
+extension Foxglove_CylinderPrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".CylinderPrimitive"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "pose"),
@@ -97,38 +91,38 @@ extension Foxglove_CylinderPrimitive: SwiftProtobuf.Message, SwiftProtobuf._Mess
     5: .same(proto: "color"),
   ]
 
-  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try decoder.decodeSingularMessageField(value: &_pose)
-      case 2: try decoder.decodeSingularMessageField(value: &_size)
-      case 3: try decoder.decodeSingularDoubleField(value: &bottomScale)
-      case 4: try decoder.decodeSingularDoubleField(value: &topScale)
-      case 5: try decoder.decodeSingularMessageField(value: &_color)
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._pose) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._size) }()
+      case 3: try { try decoder.decodeSingularDoubleField(value: &self.bottomScale) }()
+      case 4: try { try decoder.decodeSingularDoubleField(value: &self.topScale) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._color) }()
       default: break
       }
     }
   }
 
-  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if let v = _pose {
+    try { if let v = self._pose {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     try { if let v = self._size {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if bottomScale != 0 {
-      try visitor.visitSingularDoubleField(value: bottomScale, fieldNumber: 3)
+    if self.bottomScale != 0 {
+      try visitor.visitSingularDoubleField(value: self.bottomScale, fieldNumber: 3)
     }
-    if topScale != 0 {
-      try visitor.visitSingularDoubleField(value: topScale, fieldNumber: 4)
+    if self.topScale != 0 {
+      try visitor.visitSingularDoubleField(value: self.topScale, fieldNumber: 4)
     }
     try { if let v = self._color {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
@@ -136,13 +130,13 @@ extension Foxglove_CylinderPrimitive: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func == (lhs: Foxglove_CylinderPrimitive, rhs: Foxglove_CylinderPrimitive) -> Bool {
-    if lhs._pose != rhs._pose { return false }
-    if lhs._size != rhs._size { return false }
-    if lhs.bottomScale != rhs.bottomScale { return false }
-    if lhs.topScale != rhs.topScale { return false }
-    if lhs._color != rhs._color { return false }
-    if lhs.unknownFields != rhs.unknownFields { return false }
+  static func ==(lhs: Foxglove_CylinderPrimitive, rhs: Foxglove_CylinderPrimitive) -> Bool {
+    if lhs._pose != rhs._pose {return false}
+    if lhs._size != rhs._size {return false}
+    if lhs.bottomScale != rhs.bottomScale {return false}
+    if lhs.topScale != rhs.topScale {return false}
+    if lhs._color != rhs._color {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }

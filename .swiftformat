@@ -1,3 +1,4 @@
 --swiftversion 5.9
 --indent 2
 --maxwidth 120
+--exclude WebSocketDemo-Shared/Schemas/foxglove

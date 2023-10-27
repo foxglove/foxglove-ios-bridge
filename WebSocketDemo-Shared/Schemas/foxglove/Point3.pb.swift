@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -43,16 +43,14 @@ struct Foxglove_Point3 {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-  extension Foxglove_Point3: @unchecked Sendable {}
-#endif // swift(>=5.5) && canImport(_Concurrency)
+extension Foxglove_Point3: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-private let _protobuf_package = "foxglove"
+fileprivate let _protobuf_package = "foxglove"
 
-extension Foxglove_Point3: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
-  SwiftProtobuf._ProtoNameProviding
-{
+extension Foxglove_Point3: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Point3"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "x"),
@@ -60,38 +58,38 @@ extension Foxglove_Point3: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     3: .same(proto: "z"),
   ]
 
-  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try decoder.decodeSingularDoubleField(value: &x)
-      case 2: try decoder.decodeSingularDoubleField(value: &y)
-      case 3: try decoder.decodeSingularDoubleField(value: &z)
+      case 1: try { try decoder.decodeSingularDoubleField(value: &self.x) }()
+      case 2: try { try decoder.decodeSingularDoubleField(value: &self.y) }()
+      case 3: try { try decoder.decodeSingularDoubleField(value: &self.z) }()
       default: break
       }
     }
   }
 
-  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
-    if x != 0 {
-      try visitor.visitSingularDoubleField(value: x, fieldNumber: 1)
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.x != 0 {
+      try visitor.visitSingularDoubleField(value: self.x, fieldNumber: 1)
     }
-    if y != 0 {
-      try visitor.visitSingularDoubleField(value: y, fieldNumber: 2)
+    if self.y != 0 {
+      try visitor.visitSingularDoubleField(value: self.y, fieldNumber: 2)
     }
-    if z != 0 {
-      try visitor.visitSingularDoubleField(value: z, fieldNumber: 3)
+    if self.z != 0 {
+      try visitor.visitSingularDoubleField(value: self.z, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func == (lhs: Foxglove_Point3, rhs: Foxglove_Point3) -> Bool {
-    if lhs.x != rhs.x { return false }
-    if lhs.y != rhs.y { return false }
-    if lhs.z != rhs.z { return false }
-    if lhs.unknownFields != rhs.unknownFields { return false }
+  static func ==(lhs: Foxglove_Point3, rhs: Foxglove_Point3) -> Bool {
+    if lhs.x != rhs.x {return false}
+    if lhs.y != rhs.y {return false}
+    if lhs.z != rhs.z {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }

@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -40,49 +40,47 @@ struct Foxglove_SceneUpdate {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-  extension Foxglove_SceneUpdate: @unchecked Sendable {}
-#endif // swift(>=5.5) && canImport(_Concurrency)
+extension Foxglove_SceneUpdate: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-private let _protobuf_package = "foxglove"
+fileprivate let _protobuf_package = "foxglove"
 
-extension Foxglove_SceneUpdate: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
-  SwiftProtobuf._ProtoNameProviding
-{
+extension Foxglove_SceneUpdate: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SceneUpdate"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "deletions"),
     2: .same(proto: "entities"),
   ]
 
-  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try decoder.decodeRepeatedMessageField(value: &deletions)
-      case 2: try decoder.decodeRepeatedMessageField(value: &entities)
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.deletions) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.entities) }()
       default: break
       }
     }
   }
 
-  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
-    if !deletions.isEmpty {
-      try visitor.visitRepeatedMessageField(value: deletions, fieldNumber: 1)
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.deletions.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.deletions, fieldNumber: 1)
     }
-    if !entities.isEmpty {
-      try visitor.visitRepeatedMessageField(value: entities, fieldNumber: 2)
+    if !self.entities.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.entities, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func == (lhs: Foxglove_SceneUpdate, rhs: Foxglove_SceneUpdate) -> Bool {
-    if lhs.deletions != rhs.deletions { return false }
-    if lhs.entities != rhs.entities { return false }
-    if lhs.unknownFields != rhs.unknownFields { return false }
+  static func ==(lhs: Foxglove_SceneUpdate, rhs: Foxglove_SceneUpdate) -> Bool {
+    if lhs.deletions != rhs.deletions {return false}
+    if lhs.entities != rhs.entities {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }

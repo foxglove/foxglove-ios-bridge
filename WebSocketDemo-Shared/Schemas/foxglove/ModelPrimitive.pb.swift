@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,82 +30,74 @@ struct Foxglove_ModelPrimitive {
 
   /// Origin of model relative to reference frame
   var pose: Foxglove_Pose {
-    get { _storage._pose ?? Foxglove_Pose() }
-    set { _uniqueStorage()._pose = newValue }
+    get {return _storage._pose ?? Foxglove_Pose()}
+    set {_uniqueStorage()._pose = newValue}
   }
-
   /// Returns true if `pose` has been explicitly set.
-  var hasPose: Bool { _storage._pose != nil }
+  var hasPose: Bool {return _storage._pose != nil}
   /// Clears the value of `pose`. Subsequent reads from it will return its default value.
-  mutating func clearPose() { _uniqueStorage()._pose = nil }
+  mutating func clearPose() {_uniqueStorage()._pose = nil}
 
   /// Scale factor to apply to the model along each axis
   var scale: Foxglove_Vector3 {
-    get { _storage._scale ?? Foxglove_Vector3() }
-    set { _uniqueStorage()._scale = newValue }
+    get {return _storage._scale ?? Foxglove_Vector3()}
+    set {_uniqueStorage()._scale = newValue}
   }
-
   /// Returns true if `scale` has been explicitly set.
-  var hasScale: Bool { _storage._scale != nil }
+  var hasScale: Bool {return _storage._scale != nil}
   /// Clears the value of `scale`. Subsequent reads from it will return its default value.
-  mutating func clearScale() { _uniqueStorage()._scale = nil }
+  mutating func clearScale() {_uniqueStorage()._scale = nil}
 
   /// Solid color to use for the whole model if `override_color` is true.
   var color: Foxglove_Color {
-    get { _storage._color ?? Foxglove_Color() }
-    set { _uniqueStorage()._color = newValue }
+    get {return _storage._color ?? Foxglove_Color()}
+    set {_uniqueStorage()._color = newValue}
   }
-
   /// Returns true if `color` has been explicitly set.
-  var hasColor: Bool { _storage._color != nil }
+  var hasColor: Bool {return _storage._color != nil}
   /// Clears the value of `color`. Subsequent reads from it will return its default value.
-  mutating func clearColor() { _uniqueStorage()._color = nil }
+  mutating func clearColor() {_uniqueStorage()._color = nil}
 
   /// Whether to use the color specified in `color` instead of any materials embedded in the original model.
   var overrideColor: Bool {
-    get { _storage._overrideColor }
-    set { _uniqueStorage()._overrideColor = newValue }
+    get {return _storage._overrideColor}
+    set {_uniqueStorage()._overrideColor = newValue}
   }
 
   /// URL pointing to model file. One of `url` or `data` should be provided.
   var url: String {
-    get { _storage._url }
-    set { _uniqueStorage()._url = newValue }
+    get {return _storage._url}
+    set {_uniqueStorage()._url = newValue}
   }
 
-  /// [Media type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of embedded model (e.g.
-  /// `model/gltf-binary`). Required if `data` is provided instead of `url`. Overrides the inferred media type if `url`
-  /// is provided.
+  /// [Media type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of embedded model (e.g. `model/gltf-binary`). Required if `data` is provided instead of `url`. Overrides the inferred media type if `url` is provided.
   var mediaType: String {
-    get { _storage._mediaType }
-    set { _uniqueStorage()._mediaType = newValue }
+    get {return _storage._mediaType}
+    set {_uniqueStorage()._mediaType = newValue}
   }
 
-  /// Embedded model. One of `url` or `data` should be provided. If `data` is provided, `media_type` must be set to
-  /// indicate the type of the data.
+  /// Embedded model. One of `url` or `data` should be provided. If `data` is provided, `media_type` must be set to indicate the type of the data.
   var data: Data {
-    get { _storage._data }
-    set { _uniqueStorage()._data = newValue }
+    get {return _storage._data}
+    set {_uniqueStorage()._data = newValue}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  private var _storage = _StorageClass.defaultInstance
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-  extension Foxglove_ModelPrimitive: @unchecked Sendable {}
-#endif // swift(>=5.5) && canImport(_Concurrency)
+extension Foxglove_ModelPrimitive: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-private let _protobuf_package = "foxglove"
+fileprivate let _protobuf_package = "foxglove"
 
-extension Foxglove_ModelPrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
-  SwiftProtobuf._ProtoNameProviding
-{
+extension Foxglove_ModelPrimitive: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ModelPrimitive"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "pose"),
@@ -118,13 +110,13 @@ extension Foxglove_ModelPrimitive: SwiftProtobuf.Message, SwiftProtobuf._Message
   ]
 
   fileprivate class _StorageClass {
-    var _pose: Foxglove_Pose?
-    var _scale: Foxglove_Vector3?
-    var _color: Foxglove_Color?
+    var _pose: Foxglove_Pose? = nil
+    var _scale: Foxglove_Vector3? = nil
+    var _color: Foxglove_Color? = nil
     var _overrideColor: Bool = false
-    var _url: String = .init()
-    var _mediaType: String = .init()
-    var _data: Data = .init()
+    var _url: String = String()
+    var _mediaType: String = String()
+    var _data: Data = Data()
 
     static let defaultInstance = _StorageClass()
 
@@ -148,7 +140,7 @@ extension Foxglove_ModelPrimitive: SwiftProtobuf.Message, SwiftProtobuf._Message
     return _storage
   }
 
-  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -156,20 +148,20 @@ extension Foxglove_ModelPrimitive: SwiftProtobuf.Message, SwiftProtobuf._Message
         // allocates stack space for every case branch when no optimizations are
         // enabled. https://github.com/apple/swift-protobuf/issues/1034
         switch fieldNumber {
-        case 1: try decoder.decodeSingularMessageField(value: &_storage._pose)
-        case 2: try decoder.decodeSingularMessageField(value: &_storage._scale)
-        case 3: try decoder.decodeSingularMessageField(value: &_storage._color)
-        case 4: try decoder.decodeSingularBoolField(value: &_storage._overrideColor)
-        case 5: try decoder.decodeSingularStringField(value: &_storage._url)
-        case 6: try decoder.decodeSingularStringField(value: &_storage._mediaType)
-        case 7: try decoder.decodeSingularBytesField(value: &_storage._data)
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._pose) }()
+        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._scale) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._color) }()
+        case 4: try { try decoder.decodeSingularBoolField(value: &_storage._overrideColor) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._url) }()
+        case 6: try { try decoder.decodeSingularStringField(value: &_storage._mediaType) }()
+        case 7: try { try decoder.decodeSingularBytesField(value: &_storage._data) }()
         default: break
         }
       }
     }
   }
 
-  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every if/case branch local when no optimizations
@@ -200,26 +192,23 @@ extension Foxglove_ModelPrimitive: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func == (lhs: Foxglove_ModelPrimitive, rhs: Foxglove_ModelPrimitive) -> Bool {
+  static func ==(lhs: Foxglove_ModelPrimitive, rhs: Foxglove_ModelPrimitive) -> Bool {
     if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((
-        lhs._storage,
-        rhs._storage
-      )) { (_args: (_StorageClass, _StorageClass)) in
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0
         let rhs_storage = _args.1
-        if _storage._pose != rhs_storage._pose { return false }
-        if _storage._scale != rhs_storage._scale { return false }
-        if _storage._color != rhs_storage._color { return false }
-        if _storage._overrideColor != rhs_storage._overrideColor { return false }
-        if _storage._url != rhs_storage._url { return false }
-        if _storage._mediaType != rhs_storage._mediaType { return false }
-        if _storage._data != rhs_storage._data { return false }
+        if _storage._pose != rhs_storage._pose {return false}
+        if _storage._scale != rhs_storage._scale {return false}
+        if _storage._color != rhs_storage._color {return false}
+        if _storage._overrideColor != rhs_storage._overrideColor {return false}
+        if _storage._url != rhs_storage._url {return false}
+        if _storage._mediaType != rhs_storage._mediaType {return false}
+        if _storage._data != rhs_storage._data {return false}
         return true
       }
-      if !storagesAreEqual { return false }
+      if !storagesAreEqual {return false}
     }
-    if lhs.unknownFields != rhs.unknownFields { return false }
+    if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }

@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,75 +30,69 @@ struct Foxglove_TextAnnotation {
 
   /// Timestamp of annotation
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get { _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp() }
-    set { _timestamp = newValue }
+    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_timestamp = newValue}
   }
-
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool { _timestamp != nil }
+  var hasTimestamp: Bool {return self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() { _timestamp = nil }
+  mutating func clearTimestamp() {self._timestamp = nil}
 
   /// Bottom-left origin of the text label in 2D image coordinates (pixels)
   var position: Foxglove_Point2 {
-    get { _position ?? Foxglove_Point2() }
-    set { _position = newValue }
+    get {return _position ?? Foxglove_Point2()}
+    set {_position = newValue}
   }
-
   /// Returns true if `position` has been explicitly set.
-  var hasPosition: Bool { _position != nil }
+  var hasPosition: Bool {return self._position != nil}
   /// Clears the value of `position`. Subsequent reads from it will return its default value.
-  mutating func clearPosition() { _position = nil }
+  mutating func clearPosition() {self._position = nil}
 
   /// Text to display
-  var text: String = .init()
+  var text: String = String()
 
   /// Font size in pixels
   var fontSize: Double = 0
 
   /// Text color
   var textColor: Foxglove_Color {
-    get { _textColor ?? Foxglove_Color() }
-    set { _textColor = newValue }
+    get {return _textColor ?? Foxglove_Color()}
+    set {_textColor = newValue}
   }
-
   /// Returns true if `textColor` has been explicitly set.
-  var hasTextColor: Bool { _textColor != nil }
+  var hasTextColor: Bool {return self._textColor != nil}
   /// Clears the value of `textColor`. Subsequent reads from it will return its default value.
-  mutating func clearTextColor() { _textColor = nil }
+  mutating func clearTextColor() {self._textColor = nil}
 
   /// Background fill color
   var backgroundColor: Foxglove_Color {
-    get { _backgroundColor ?? Foxglove_Color() }
-    set { _backgroundColor = newValue }
+    get {return _backgroundColor ?? Foxglove_Color()}
+    set {_backgroundColor = newValue}
   }
-
   /// Returns true if `backgroundColor` has been explicitly set.
-  var hasBackgroundColor: Bool { _backgroundColor != nil }
+  var hasBackgroundColor: Bool {return self._backgroundColor != nil}
   /// Clears the value of `backgroundColor`. Subsequent reads from it will return its default value.
-  mutating func clearBackgroundColor() { _backgroundColor = nil }
+  mutating func clearBackgroundColor() {self._backgroundColor = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  private var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp?
-  private var _position: Foxglove_Point2?
-  private var _textColor: Foxglove_Color?
-  private var _backgroundColor: Foxglove_Color?
+  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _position: Foxglove_Point2? = nil
+  fileprivate var _textColor: Foxglove_Color? = nil
+  fileprivate var _backgroundColor: Foxglove_Color? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-  extension Foxglove_TextAnnotation: @unchecked Sendable {}
-#endif // swift(>=5.5) && canImport(_Concurrency)
+extension Foxglove_TextAnnotation: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-private let _protobuf_package = "foxglove"
+fileprivate let _protobuf_package = "foxglove"
 
-extension Foxglove_TextAnnotation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
-  SwiftProtobuf._ProtoNameProviding
-{
+extension Foxglove_TextAnnotation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".TextAnnotation"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "timestamp"),
@@ -109,39 +103,39 @@ extension Foxglove_TextAnnotation: SwiftProtobuf.Message, SwiftProtobuf._Message
     6: .standard(proto: "background_color"),
   ]
 
-  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try decoder.decodeSingularMessageField(value: &_timestamp)
-      case 2: try decoder.decodeSingularMessageField(value: &_position)
-      case 3: try decoder.decodeSingularStringField(value: &text)
-      case 4: try decoder.decodeSingularDoubleField(value: &fontSize)
-      case 5: try decoder.decodeSingularMessageField(value: &_textColor)
-      case 6: try decoder.decodeSingularMessageField(value: &_backgroundColor)
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._position) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 4: try { try decoder.decodeSingularDoubleField(value: &self.fontSize) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._textColor) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._backgroundColor) }()
       default: break
       }
     }
   }
 
-  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if let v = _timestamp {
+    try { if let v = self._timestamp {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     try { if let v = self._position {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if !text.isEmpty {
-      try visitor.visitSingularStringField(value: text, fieldNumber: 3)
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 3)
     }
-    if fontSize != 0 {
-      try visitor.visitSingularDoubleField(value: fontSize, fieldNumber: 4)
+    if self.fontSize != 0 {
+      try visitor.visitSingularDoubleField(value: self.fontSize, fieldNumber: 4)
     }
     try { if let v = self._textColor {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
@@ -152,14 +146,14 @@ extension Foxglove_TextAnnotation: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func == (lhs: Foxglove_TextAnnotation, rhs: Foxglove_TextAnnotation) -> Bool {
-    if lhs._timestamp != rhs._timestamp { return false }
-    if lhs._position != rhs._position { return false }
-    if lhs.text != rhs.text { return false }
-    if lhs.fontSize != rhs.fontSize { return false }
-    if lhs._textColor != rhs._textColor { return false }
-    if lhs._backgroundColor != rhs._backgroundColor { return false }
-    if lhs.unknownFields != rhs.unknownFields { return false }
+  static func ==(lhs: Foxglove_TextAnnotation, rhs: Foxglove_TextAnnotation) -> Bool {
+    if lhs._timestamp != rhs._timestamp {return false}
+    if lhs._position != rhs._position {return false}
+    if lhs.text != rhs.text {return false}
+    if lhs.fontSize != rhs.fontSize {return false}
+    if lhs._textColor != rhs._textColor {return false}
+    if lhs._backgroundColor != rhs._backgroundColor {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }

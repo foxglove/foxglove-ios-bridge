@@ -17,7 +17,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -30,17 +30,16 @@ struct Foxglove_LocationFix {
 
   /// Timestamp of the message
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get { _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp() }
-    set { _timestamp = newValue }
+    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_timestamp = newValue}
   }
-
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool { _timestamp != nil }
+  var hasTimestamp: Bool {return self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() { _timestamp = nil }
+  mutating func clearTimestamp() {self._timestamp = nil}
 
   /// Frame for the sensor. Latitude and longitude readings are at the origin of the frame.
-  var frameID: String = .init()
+  var frameID: String = String()
 
   /// Latitude in degrees
   var latitude: Double = 0
@@ -51,8 +50,7 @@ struct Foxglove_LocationFix {
   /// Altitude in meters
   var altitude: Double = 0
 
-  /// Position covariance (m^2) defined relative to a tangential plane through the reported position. The components are
-  /// East, North, and Up (ENU), in row-major order.
+  /// Position covariance (m^2) defined relative to a tangential plane through the reported position. The components are East, North, and Up (ENU), in row-major order.
   var positionCovariance: [Double] = []
 
   /// If `position_covariance` is available, `position_covariance_type` must be set to indicate the type of covariance.
@@ -85,46 +83,45 @@ struct Foxglove_LocationFix {
 
     var rawValue: Int {
       switch self {
-      case .unknown: 0
-      case .approximated: 1
-      case .diagonalKnown: 2
-      case .known: 3
-      case let .UNRECOGNIZED(i): i
+      case .unknown: return 0
+      case .approximated: return 1
+      case .diagonalKnown: return 2
+      case .known: return 3
+      case .UNRECOGNIZED(let i): return i
       }
     }
+
   }
 
   init() {}
 
-  private var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp?
+  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 #if swift(>=4.2)
 
-  extension Foxglove_LocationFix.PositionCovarianceType: CaseIterable {
-    // The compiler won't synthesize support with the UNRECOGNIZED case.
-    static var allCases: [Foxglove_LocationFix.PositionCovarianceType] = [
-      .unknown,
-      .approximated,
-      .diagonalKnown,
-      .known,
-    ]
-  }
+extension Foxglove_LocationFix.PositionCovarianceType: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [Foxglove_LocationFix.PositionCovarianceType] = [
+    .unknown,
+    .approximated,
+    .diagonalKnown,
+    .known,
+  ]
+}
 
-#endif // swift(>=4.2)
+#endif  // swift(>=4.2)
 
 #if swift(>=5.5) && canImport(_Concurrency)
-  extension Foxglove_LocationFix: @unchecked Sendable {}
-  extension Foxglove_LocationFix.PositionCovarianceType: @unchecked Sendable {}
-#endif // swift(>=5.5) && canImport(_Concurrency)
+extension Foxglove_LocationFix: @unchecked Sendable {}
+extension Foxglove_LocationFix.PositionCovarianceType: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-private let _protobuf_package = "foxglove"
+fileprivate let _protobuf_package = "foxglove"
 
-extension Foxglove_LocationFix: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
-  SwiftProtobuf._ProtoNameProviding
-{
+extension Foxglove_LocationFix: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".LocationFix"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     6: .same(proto: "timestamp"),
@@ -136,62 +133,62 @@ extension Foxglove_LocationFix: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     5: .standard(proto: "position_covariance_type"),
   ]
 
-  mutating func decodeMessage(decoder: inout some SwiftProtobuf.Decoder) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try decoder.decodeSingularDoubleField(value: &latitude)
-      case 2: try decoder.decodeSingularDoubleField(value: &longitude)
-      case 3: try decoder.decodeSingularDoubleField(value: &altitude)
-      case 4: try decoder.decodeRepeatedDoubleField(value: &positionCovariance)
-      case 5: try decoder.decodeSingularEnumField(value: &positionCovarianceType)
-      case 6: try decoder.decodeSingularMessageField(value: &_timestamp)
-      case 7: try decoder.decodeSingularStringField(value: &frameID)
+      case 1: try { try decoder.decodeSingularDoubleField(value: &self.latitude) }()
+      case 2: try { try decoder.decodeSingularDoubleField(value: &self.longitude) }()
+      case 3: try { try decoder.decodeSingularDoubleField(value: &self.altitude) }()
+      case 4: try { try decoder.decodeRepeatedDoubleField(value: &self.positionCovariance) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self.positionCovarianceType) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.frameID) }()
       default: break
       }
     }
   }
 
-  func traverse(visitor: inout some SwiftProtobuf.Visitor) throws {
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if latitude != 0 {
-      try visitor.visitSingularDoubleField(value: latitude, fieldNumber: 1)
+    if self.latitude != 0 {
+      try visitor.visitSingularDoubleField(value: self.latitude, fieldNumber: 1)
     }
-    if longitude != 0 {
-      try visitor.visitSingularDoubleField(value: longitude, fieldNumber: 2)
+    if self.longitude != 0 {
+      try visitor.visitSingularDoubleField(value: self.longitude, fieldNumber: 2)
     }
-    if altitude != 0 {
-      try visitor.visitSingularDoubleField(value: altitude, fieldNumber: 3)
+    if self.altitude != 0 {
+      try visitor.visitSingularDoubleField(value: self.altitude, fieldNumber: 3)
     }
-    if !positionCovariance.isEmpty {
-      try visitor.visitPackedDoubleField(value: positionCovariance, fieldNumber: 4)
+    if !self.positionCovariance.isEmpty {
+      try visitor.visitPackedDoubleField(value: self.positionCovariance, fieldNumber: 4)
     }
-    if positionCovarianceType != .unknown {
-      try visitor.visitSingularEnumField(value: positionCovarianceType, fieldNumber: 5)
+    if self.positionCovarianceType != .unknown {
+      try visitor.visitSingularEnumField(value: self.positionCovarianceType, fieldNumber: 5)
     }
     try { if let v = self._timestamp {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     } }()
-    if !frameID.isEmpty {
-      try visitor.visitSingularStringField(value: frameID, fieldNumber: 7)
+    if !self.frameID.isEmpty {
+      try visitor.visitSingularStringField(value: self.frameID, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func == (lhs: Foxglove_LocationFix, rhs: Foxglove_LocationFix) -> Bool {
-    if lhs._timestamp != rhs._timestamp { return false }
-    if lhs.frameID != rhs.frameID { return false }
-    if lhs.latitude != rhs.latitude { return false }
-    if lhs.longitude != rhs.longitude { return false }
-    if lhs.altitude != rhs.altitude { return false }
-    if lhs.positionCovariance != rhs.positionCovariance { return false }
-    if lhs.positionCovarianceType != rhs.positionCovarianceType { return false }
-    if lhs.unknownFields != rhs.unknownFields { return false }
+  static func ==(lhs: Foxglove_LocationFix, rhs: Foxglove_LocationFix) -> Bool {
+    if lhs._timestamp != rhs._timestamp {return false}
+    if lhs.frameID != rhs.frameID {return false}
+    if lhs.latitude != rhs.latitude {return false}
+    if lhs.longitude != rhs.longitude {return false}
+    if lhs.altitude != rhs.altitude {return false}
+    if lhs.positionCovariance != rhs.positionCovariance {return false}
+    if lhs.positionCovarianceType != rhs.positionCovarianceType {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
