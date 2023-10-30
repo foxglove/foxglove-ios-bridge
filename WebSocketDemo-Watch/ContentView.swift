@@ -1,6 +1,6 @@
+import HealthKit
 import SwiftUI
 import WatchConnectivity
-import HealthKit
 
 @MainActor
 class SessionManager: NSObject, ObservableObject, WCSessionDelegate {
@@ -34,7 +34,11 @@ class SessionManager: NSObject, ObservableObject, WCSessionDelegate {
     }
   }
 
-  nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+  nonisolated func session(
+    _: WCSession,
+    activationDidCompleteWith activationState: WCSessionActivationState,
+    error: Error?
+  ) {
     guard activationState == .activated else {
       print("activation failed \(error)")
       return
@@ -61,21 +65,26 @@ class SessionManager: NSObject, ObservableObject, WCSessionDelegate {
       session.pause()
       workoutSession = session
       print("started session")
-    } catch let error {
+    } catch {
       print("error creating workout: \(error)")
     }
     let type = HKQuantityType(.heartRate)
-    let query = HKAnchoredObjectQuery(type: type, predicate: HKQuery.predicateForSamples(withStart: .now, end: nil), anchor: nil, limit: HKObjectQueryNoLimit) { query, samples, deleted, anchor, error in
+    let query = HKAnchoredObjectQuery(
+      type: type,
+      predicate: HKQuery.predicateForSamples(withStart: .now, end: nil),
+      anchor: nil,
+      limit: HKObjectQueryNoLimit
+    ) { _, samples, deleted, anchor, error in
       print("results: \(samples), deleted \(deleted), anchor \(anchor), error \(error)")
     }
-    query.updateHandler = { [weak self] query, samples, deleted, anchor, error in
+    query.updateHandler = { [weak self] _, samples, deleted, anchor, error in
       guard let self else { return }
       print("update: \(samples), deleted \(deleted), anchor \(anchor), error \(error)")
 
       guard let samples else { return }
       for case let sample as HKQuantitySample in samples {
         let bpm = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-        self.session.sendMessage(["heart_rate": bpm], replyHandler: nil)
+        session.sendMessage(["heart_rate": bpm], replyHandler: nil)
         Task { @MainActor in
           self.currentHeartRate = bpm
         }

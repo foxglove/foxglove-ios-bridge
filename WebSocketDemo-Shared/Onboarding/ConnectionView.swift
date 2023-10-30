@@ -42,7 +42,7 @@ struct ConnectionView: View {
         }
       }
     }
-      .disabled(!isConnected)
+    .disabled(!isConnected)
   }
 
   var body: some View {
@@ -94,7 +94,10 @@ struct ConnectionView: View {
               .foregroundColor(.secondary)
               .font(.system(size: bulletSize))
             VStack(alignment: .leading, spacing: 6) {
-              Text("Click the \(Image(systemName: "shield.lefthalf.filled")) icon in the address bar, then click “Load Unsafe Scripts”")
+              Text(
+                // swiftlint:disable:next line_length
+                "Click the \(Image(systemName: "shield.lefthalf.filled")) icon in the address bar, then click “Load Unsafe Scripts”"
+              )
               Text("This setting allows a “`https://`” page to connect to a “`ws://`” URL")
                 .font(.caption)
                 .foregroundColor(.secondary)

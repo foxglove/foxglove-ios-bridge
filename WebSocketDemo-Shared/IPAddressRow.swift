@@ -1,9 +1,9 @@
-import SwiftUI
 import Network
+import SwiftUI
 
 extension IPAddress {
   var withoutInterface: IPAddress {
-    return Self.init(rawValue, nil) ?? self
+    Self(rawValue, nil) ?? self
   }
 
   var urlString: String {
@@ -63,7 +63,7 @@ struct IPAddressRow: View {
         var url = URL(string: "https://studio.foxglove.dev/")!
         url.append(queryItems: [
           URLQueryItem(name: "ds", value: "foxglove-websocket"),
-          URLQueryItem(name: "ds.url", value: "ws://\(address.withoutInterface.urlString):\(String(port.rawValue))")
+          URLQueryItem(name: "ds.url", value: "ws://\(address.withoutInterface.urlString):\(String(port.rawValue))"),
         ])
         return url
       }()

@@ -1,11 +1,14 @@
-import Network
-import Foundation
 import CoreMotion
+import Foundation
+import Network
+
+// swiftlint:disable:next blanket_disable_command
+// swiftlint:disable force_try todo
 
 extension NWConnection: Hashable, Comparable, Identifiable {
   public static func < (lhs: NWConnection, rhs: NWConnection) -> Bool {
     switch (lhs.endpoint, rhs.endpoint) {
-    case (.hostPort(let host1, _), .hostPort(host: let host2, _)):
+    case let (.hostPort(host1, _), .hostPort(host: host2, _)):
       return host1.debugDescription < host2.debugDescription
 
     default:
@@ -14,7 +17,7 @@ extension NWConnection: Hashable, Comparable, Identifiable {
   }
 
   public static func == (lhs: NWConnection, rhs: NWConnection) -> Bool {
-    return lhs === rhs
+    lhs === rhs
   }
 
   public func hash(into hasher: inout Hasher) {
@@ -22,7 +25,7 @@ extension NWConnection: Hashable, Comparable, Identifiable {
   }
 
   public var id: ObjectIdentifier {
-    return ObjectIdentifier(self)
+    ObjectIdentifier(self)
   }
 }
 
@@ -37,7 +40,7 @@ class ClientInfo {
 
   init(connection: NWConnection) {
     self.connection = connection
-    self.name = connection.endpoint.debugDescription
+    name = connection.endpoint.debugDescription
   }
 }
 
@@ -62,7 +65,7 @@ class FoxgloveServer: ObservableObject {
 
   @MainActor
   var clientEndpointNames: [String] {
-    return clients.keys.sorted().map { $0.endpoint.debugDescription }
+    clients.keys.sorted().map(\.endpoint.debugDescription)
   }
 
   @MainActor var channels: [ChannelID: Channel] = [:]
@@ -74,7 +77,7 @@ class FoxgloveServer: ObservableObject {
       print(params.defaultProtocolStack.applicationProtocols)
 
       let opts = NWProtocolWebSocket.Options()
-      opts.setClientRequestHandler(queue) { subprotocols, additionalHeaders in
+      opts.setClientRequestHandler(queue) { subprotocols, _ in
         let subproto = "foxglove.websocket.v1"
         if subprotocols.contains(subproto) {
           return NWProtocolWebSocket.Response(status: .accept, subprotocol: subproto)
@@ -103,7 +106,7 @@ class FoxgloveServer: ObservableObject {
         self?.handleNewConnection(newConnection)
       }
       listener.start(queue: queue)
-    } catch let error {
+    } catch {
       print("Error \(error)")
     }
   }
@@ -122,7 +125,7 @@ class FoxgloveServer: ObservableObject {
           self.handleClientMessage(info, data, context, isComplete, error)
           receive()
         }
-        //TODO: emit error
+        // TODO: emit error
         if let error {
           print("receive error: \(error)")
         }
@@ -137,7 +140,7 @@ class FoxgloveServer: ObservableObject {
 
         let closed: Bool
         switch connection.state {
-        case .cancelled, .failed(_):
+        case .cancelled, .failed:
           closed = true
         default:
           closed = false
@@ -174,9 +177,8 @@ class FoxgloveServer: ObservableObject {
     }
     receive()
 
-    connection.start(queue: self.queue)
+    connection.start(queue: queue)
   }
-
 
   static let binaryMessage = NWConnection.ContentContext(identifier: "", metadata: [
     NWProtocolWebSocket.Metadata(opcode: .binary),
@@ -226,7 +228,7 @@ class FoxgloveServer: ObservableObject {
             "schema": schema,
           ],
         ], to: conn)
-      } catch let error {
+      } catch {
         // TODO: emit error
         print("addchannel error: \(error)")
       }
@@ -234,7 +236,6 @@ class FoxgloveServer: ObservableObject {
 
     return newID
   }
-
 
   /**
    * Remove a previously advertised channel and inform any connected clients.
@@ -253,13 +254,13 @@ class FoxgloveServer: ObservableObject {
       }
 
       do {
-        //TODO: serialize once
+        // TODO: serialize once
         try sendJson([
           "op": "unadvertise",
           "channelIds": [channelID],
         ], to: conn)
-      } catch let error {
-        //TODO: emit error
+      } catch {
+        // TODO: emit error
         print("remove error \(error)")
       }
     }
@@ -278,53 +279,74 @@ class FoxgloveServer: ObservableObject {
     }
   }
 
-  private func sendMessageData(on connection: NWConnection, subscriptionID: SubscriptionID, timestamp: UInt64, payload: Data) {
+  private func sendMessageData(
+    on connection: NWConnection,
+    subscriptionID: SubscriptionID,
+    timestamp: UInt64,
+    payload: Data
+  ) {
     var header = Data(count: 1 + 4 + 8)
     header[0] = BinaryOpcode.messageData.rawValue
     withUnsafeBytes(of: subscriptionID.littleEndian) {
-      header.replaceSubrange(1..<5, with: $0.baseAddress!, count: $0.count)
+      header.replaceSubrange(1 ..< 5, with: $0.baseAddress!, count: $0.count)
     }
     withUnsafeBytes(of: timestamp.littleEndian) {
-      header.replaceSubrange(5..<13, with: $0.baseAddress!, count: $0.count)
+      header.replaceSubrange(5 ..< 13, with: $0.baseAddress!, count: $0.count)
     }
-    connection.send(content: header, contentContext: Self.binaryMessage, isComplete: false, completion: .contentProcessed { error in
-      if let error = error {
-        print("error sending1: \(error)")
+    connection.send(
+      content: header,
+      contentContext: Self.binaryMessage,
+      isComplete: false,
+      completion: .contentProcessed { error in
+        if let error {
+          print("error sending1: \(error)")
+        }
       }
-    })
-    connection.send(content: payload, contentContext: Self.binaryMessage, isComplete: true, completion: .contentProcessed { error in
-      if let error = error {
-        print("error sending2: \(error)")
+    )
+    connection.send(
+      content: payload,
+      contentContext: Self.binaryMessage,
+      isComplete: true,
+      completion: .contentProcessed { error in
+        if let error {
+          print("error sending2: \(error)")
+        }
       }
-    })
+    )
   }
 
   private func sendJson(_ obj: Any, to connection: NWConnection) throws {
     let data = try JSONSerialization.data(withJSONObject: obj)
 
-    connection.send(content: data, contentContext: Self.jsonMessage, completion: .contentProcessed({ error in
+    connection.send(content: data, contentContext: Self.jsonMessage, completion: .contentProcessed { error in
       if let error {
         print("send error: \(error)")
       }
-    }))
+    })
   }
 
   private func sendBinary(_ data: Data, to connection: NWConnection) throws {
-    connection.send(content: data, contentContext: Self.binaryMessage, completion: .contentProcessed({ error in
+    connection.send(content: data, contentContext: Self.binaryMessage, completion: .contentProcessed { error in
       if let error {
         print("send error: \(error)")
       }
-    }))
+    })
   }
 
-  private func handleClientMessage(_ client: ClientInfo, _ data: Data, _ context: NWConnection.ContentContext, _ isComplete: Bool, _ error: NWError?) {
+  private func handleClientMessage(
+    _ client: ClientInfo,
+    _ data: Data,
+    _ context: NWConnection.ContentContext,
+    _: Bool,
+    _ error: NWError?
+  ) {
     do {
       let metadata = context.protocolMetadata(definition: NWProtocolWebSocket.definition)
       let isText = (metadata as? NWProtocolWebSocket.Metadata)?.opcode == .text
       if isText {
         let msg = try JSONDecoder().decode(ClientMessage.self, from: data)
         switch msg {
-        case .subscribe(let msg):
+        case let .subscribe(msg):
           Task { @MainActor in
             for sub in msg.subscriptions {
               // TODO: emit status messages for warnings (see TS impl)
@@ -338,15 +360,15 @@ class FoxgloveServer: ObservableObject {
             }
             // TODO: emit subscribe
           }
-        case .unsubscribe(let msg):
+        case let .unsubscribe(msg):
           Task { @MainActor in
             for sub in msg.subscriptionIds {
               guard let chanID = client.subscriptions[sub] else {
-                //TODO: error
+                // TODO: error
                 continue
               }
               client.subscriptions[sub] = nil
-              //TODO: cleanup index usage?
+              // TODO: cleanup index usage?
               client.subscriptionsByChannel[chanID]?.remove(sub)
               if client.subscriptionsByChannel[chanID]?.isEmpty == true {
                 client.subscriptionsByChannel[chanID] = nil
@@ -361,8 +383,8 @@ class FoxgloveServer: ObservableObject {
       } else {
         print("Got client message: data \(data)")
       }
-    } catch let error {
-      //TODO: emit error
+    } catch {
+      // TODO: emit error
       print("client msg error: \(error)")
     }
   }
@@ -382,6 +404,7 @@ struct Subscribe: Decodable {
     let id: SubscriptionID
     let channelId: ChannelID
   }
+
   let subscriptions: [Subscription]
 }
 
@@ -401,8 +424,8 @@ enum ClientMessage: Decodable {
   init(from decoder: Decoder) throws {
     let op = try decoder.container(keyedBy: CodingKeys.self).decode(String.self, forKey: .op)
     switch ClientOp(rawValue: op) {
-    case .subscribe: self = .subscribe(try Subscribe(from: decoder))
-    case .unsubscribe: self = .unsubscribe(try Unsubscribe(from: decoder))
+    case .subscribe: self = try .subscribe(Subscribe(from: decoder))
+    case .unsubscribe: self = try .unsubscribe(Unsubscribe(from: decoder))
     case nil:
       throw FoxgloveServerError.unrecognizedOpcode(op)
     }

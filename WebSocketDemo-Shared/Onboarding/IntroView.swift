@@ -1,11 +1,11 @@
 import SwiftUI
 
-fileprivate class Dummy {}
+private class Dummy {}
 
 extension Text {
   // https://stackoverflow.com/a/64731044/23649
   func fixedHeight() -> some View {
-    self.fixedSize(horizontal: false, vertical: true)
+    fixedSize(horizontal: false, vertical: true)
   }
 }
 
@@ -63,8 +63,8 @@ struct IntroView: View {
 
         Spacer(minLength: 16).fixedSize()
         Text("""
-Stream data from your \(deviceModel)’s built-in sensors to Foxglove Studio for instant visualization.
-""")
+        Stream data from your \(deviceModel)’s built-in sensors to Foxglove Studio for instant visualization.
+        """)
         .fixedHeight()
         .lineSpacing(4)
 

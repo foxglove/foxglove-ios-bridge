@@ -1,0 +1,15 @@
+excluded:
+  - .build
+  - .swiftpm-packages
+  - WebSocketDemo-Shared/Schemas/foxglove
+
+disabled_rules:
+  - function_body_length
+  - type_body_length
+  - file_length
+  - cyclomatic_complexity
+  - identifier_name
+  - opening_brace # conflicts with swiftformat
+
+trailing_comma:
+  mandatory_comma: true

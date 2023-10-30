@@ -1,6 +1,7 @@
-import Foundation
 import Darwin.Mach.task_info
+import Foundation
 
+// swiftlint:disable:next line_length
 // https://github.com/dani-gavrilov/GDPerformanceView-Swift/blob/171a656040135d667f4228c3ec82f2384770d87d/GDPerformanceView-Swift/GDPerformanceMonitoring/PerformanceСalculator.swift#L129
 func getMemoryUsage() -> (used: UInt64, total: UInt64) {
   var taskInfo = task_vm_info_data_t()

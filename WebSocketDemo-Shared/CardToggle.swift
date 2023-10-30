@@ -9,8 +9,8 @@ struct CardToggle<Content: View>: View {
 
   @Environment(\.isEnabled) var isEnabled
 
-  internal init(isOn: Binding<Bool>, dashed: Bool = false, @ViewBuilder content: @escaping () -> Content) {
-    self._isOn = isOn
+  init(isOn: Binding<Bool>, dashed: Bool = false, @ViewBuilder content: @escaping () -> Content) {
+    _isOn = isOn
     self.dashed = dashed
     self.content = content
   }

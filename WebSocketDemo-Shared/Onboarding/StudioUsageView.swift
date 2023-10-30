@@ -1,10 +1,10 @@
-import SwiftUI
 import SafariServices
+import SwiftUI
 
 struct SafariView: UIViewControllerRepresentable {
   let url: URL
 
-  func makeUIViewController(context: Context) -> SFSafariViewController {
+  func makeUIViewController(context _: Context) -> SFSafariViewController {
     let config = SFSafariViewController.Configuration()
     // Bar collapsing looks buggy when presented in a sheet.
     config.barCollapsingEnabled = false
@@ -12,7 +12,7 @@ struct SafariView: UIViewControllerRepresentable {
     return SFSafariViewController(url: url, configuration: config)
   }
 
-  func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {
+  func updateUIViewController(_: SFSafariViewController, context _: Context) {
     print("Warning: unable to update SFSafariViewController")
   }
 }
@@ -92,8 +92,10 @@ struct StudioUsageView: View {
         Spacer(minLength: 32).fixedSize()
 
         Text("""
-Try adding the **3D**, **Image**, **Map**, and **Plot** panels to your layout to start exploring your \(deviceModel)’s sensor data.
-""")
+        Try adding the **3D**, **Image**, **Map**, and **Plot** panels to your layout to start exploring your \(
+          deviceModel
+        )’s sensor data.
+        """)
         Spacer(minLength: 32).fixedSize()
         Button("View Docs") {
           showDocs = true
