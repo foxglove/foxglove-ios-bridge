@@ -56,14 +56,14 @@ struct IntroView: View {
             .frame(width: 50, height: 50)
         }
 
-        Text("Explore \(deviceModel) data in Foxglove Studio")
+        Text("Explore \(deviceModel) data with Foxglove")
           .fixedHeight()
           .font(.title)
           .fontWeight(.heavy)
 
         Spacer(minLength: 16).fixedSize()
         Text("""
-        Stream data from your \(deviceModel)’s built-in sensors to Foxglove Studio for instant visualization.
+        Stream data from your \(deviceModel)’s built-in sensors to Foxglove for instant visualization.
         """)
         .fixedHeight()
         .lineSpacing(4)

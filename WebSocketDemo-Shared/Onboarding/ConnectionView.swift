@@ -58,7 +58,7 @@ struct ConnectionView: View {
 
         Spacer(minLength: 20).fixedSize()
 
-        Text("Connect \(deviceModel) to Foxglove Studio")
+        Text("Connect \(deviceModel) to Foxglove")
           .fixedHeight()
           .font(.title)
           .fontWeight(.heavy)
@@ -70,7 +70,7 @@ struct ConnectionView: View {
             Image(systemName: "1.circle")
               .foregroundColor(.secondary)
               .font(.system(size: bulletSize))
-            Text("Navigate to https://studio.foxglove.dev on your computer (Google Chrome recommended)")
+            Text("Navigate to https://app.foxglove.dev on your computer (Google Chrome recommended)")
           }
           HStack(alignment: .center) {
             Image(systemName: "2.circle")

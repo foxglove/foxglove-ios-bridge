@@ -60,7 +60,7 @@ struct IPAddressRow: View {
         .tracking(-0.5)
       Spacer()
       let shareURL: URL = {
-        var url = URL(string: "https://studio.foxglove.dev/")!
+        var url = URL(string: "https://app.foxglove.dev/~/view")!
         url.append(queryItems: [
           URLQueryItem(name: "ds", value: "foxglove-websocket"),
           URLQueryItem(name: "ds.url", value: "ws://\(address.withoutInterface.urlString):\(String(port.rawValue))"),

@@ -105,7 +105,7 @@ struct StudioUsageView: View {
         ContinueButton("Done")
       }
     }.sheet(isPresented: $showDocs) {
-      SafariView(url: URL(string: "https://foxglove.dev/docs/studio/panels/introduction")!)
+      SafariView(url: URL(string: "https://docs.foxglove.dev/docs/visualization/panels/introduction")!)
         .edgesIgnoringSafeArea(.all)
     }
   }
