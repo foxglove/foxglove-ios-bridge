@@ -851,8 +851,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WebSocketDemo-Watch/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove Studio.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove Studio.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "dev.foxglove.websocket-bridge-demo";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -884,8 +884,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WebSocketDemo-Watch/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove Studio.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove Studio.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "When enabled, your heart rate data will be streamed over the WebSocket connection. Visualize your health data using the Plot or Raw Messages panels in Foxglove.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "dev.foxglove.websocket-bridge-demo";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1034,8 +1034,8 @@
 				INFOPLIST_FILE = WebSocketDemo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove Studio.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When enabled, your raw location data points will be streamed over the WebSocket connection. The data will be encoded in foxglove.LocationFix messages. Visualize your location using the Map panel in Foxglove Studio.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When enabled, your raw location data points will be streamed over the WebSocket connection. The data will be encoded in foxglove.LocationFix messages. Visualize your location using the Map panel in Foxglove.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1072,8 +1072,8 @@
 				INFOPLIST_FILE = WebSocketDemo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove Studio.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When enabled, your raw location data points will be streamed over the WebSocket connection. The data will be encoded in foxglove.LocationFix messages. Visualize your location using the Map panel in Foxglove Studio.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When enabled, your raw location data points will be streamed over the WebSocket connection. The data will be encoded in foxglove.LocationFix messages. Visualize your location using the Map panel in Foxglove.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1108,8 +1108,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WebSocketDemo-AppClip/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
-				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove Studio.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When enabled, your raw location data points will be streamed over the WebSocket connection. The data will be encoded in foxglove.LocationFix messages. Visualize your location using the Map panel in Foxglove Studio.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When enabled, your raw location data points will be streamed over the WebSocket connection. The data will be encoded in foxglove.LocationFix messages. Visualize your location using the Map panel in Foxglove.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1143,8 +1143,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WebSocketDemo-AppClip/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Foxglove Bridge";
-				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove Studio.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When enabled, your raw location data points will be streamed over the WebSocket connection. The data will be encoded in foxglove.LocationFix messages. Visualize your location using the Map panel in Foxglove Studio.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "When enabled, camera images will be streamed over the WebSocket connection. The data will be encoded in foxglove.CompressedImage messages. Visualize your camera feed using the Image panel in Foxglove.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When enabled, your raw location data points will be streamed over the WebSocket connection. The data will be encoded in foxglove.LocationFix messages. Visualize your location using the Map panel in Foxglove.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
