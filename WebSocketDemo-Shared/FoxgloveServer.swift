@@ -147,7 +147,7 @@ class FoxgloveServer: ObservableObject {
         }
 
         Task { @MainActor in
-          if state == .ready && !self.channels.isEmpty {
+          if state == .ready, !self.channels.isEmpty {
             try self.sendJson([
               "op": "advertise",
               "channels": self.channels.values.map {
