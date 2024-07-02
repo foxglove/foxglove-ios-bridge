@@ -134,12 +134,12 @@ class FoxgloveServer: ObservableObject {
       connection.stateUpdateHandler = { state in
         print("connection state \(state)")
 
-        if connection.state == .ready {
+        if state == .ready {
           self.sendInfo(connection)
         }
 
         let closed: Bool
-        switch connection.state {
+        switch state {
         case .cancelled, .failed:
           closed = true
         default:
@@ -147,7 +147,7 @@ class FoxgloveServer: ObservableObject {
         }
 
         Task { @MainActor in
-          if !self.channels.isEmpty {
+          if state == .ready, !self.channels.isEmpty {
             try self.sendJson([
               "op": "advertise",
               "channels": self.channels.values.map {
