@@ -11,10 +11,22 @@
       "filename" : "logo.sticker"
     },
     {
+      "filename" : "actuate-2024.sticker"
+    },
+    {
       "filename" : "logo-icon-round.sticker"
     },
     {
-      "filename" : "websockets.sticker"
+      "filename" : "actuate-robot-biped.sticker"
+    },
+    {
+      "filename" : "actuate-im-a-robot.sticker"
+    },
+    {
+      "filename" : "actuate-robot-arm.sticker"
+    },
+    {
+      "filename" : "actuate-robot-wheeled.sticker"
     },
     {
       "filename" : "ros1.sticker"
@@ -27,6 +39,9 @@
     },
     {
       "filename" : "ros-dots.sticker"
+    },
+    {
+      "filename" : "websockets.sticker"
     }
   ]
 }
