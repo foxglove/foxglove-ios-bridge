@@ -17,10 +17,6 @@ https://user-images.githubusercontent.com/14237/232120004-7e30932d-37de-43fb-9bc
 
 The Foxglove WebSocket Bridge app is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-## Contributing
-
-Note: All contributors must agree to our [Contributor License Agreement](https://github.com/foxglove/cla).
-
 ## Releasing
 
 To make a release of the app, perform the following steps:
