@@ -5,7 +5,7 @@ import Network
 // swiftlint:disable:next blanket_disable_command
 // swiftlint:disable force_try todo
 
-extension NWConnection: Hashable, Comparable, Identifiable {
+extension NWConnection: @retroactive Hashable, @retroactive Comparable, @retroactive Identifiable {
   public static func < (lhs: NWConnection, rhs: NWConnection) -> Bool {
     switch (lhs.endpoint, rhs.endpoint) {
     case let (.hostPort(host1, _), .hostPort(host: host2, _)):
@@ -77,6 +77,7 @@ class FoxgloveServer: ObservableObject {
       print(params.defaultProtocolStack.applicationProtocols)
 
       let opts = NWProtocolWebSocket.Options()
+      opts.autoReplyPing = true
       opts.setClientRequestHandler(queue) { subprotocols, _ in
         let subproto = "foxglove.websocket.v1"
         if subprotocols.contains(subproto) {

@@ -121,12 +121,15 @@ public struct ContentView: View {
         }
         .overlay(alignment: .topTrailing) {
           if server.sendCamera {
-            Button {
-              server.useVideoCompression.toggle()
-            } label: {
-              Image(systemName: server.useVideoCompression ? "film.stack" : "photo.stack")
-                .padding(10)
+            Picker("Compression", selection: $server.compressionMode) {
+              ForEach(CompressionMode.allCases) { mode in
+                Label(mode.description, systemImage: mode == .JPEG ? "photo.stack" : "film.stack")
+                  .tag(mode)
+              }
             }
+            .pickerStyle(.menu)
+            .labelStyle(.iconOnly)
+            .padding(.top, 6)
           }
         }
         /*
@@ -198,47 +201,11 @@ public struct ContentView: View {
   }
 
   var cpuChart: some View {
-    Chart(server.cpuHistory) {
-      LineMark(
-        x: .value("Time", $0.date),
-        y: .value("Usage", $0.usage)
-      )
-    }
-    .frame(height: 60)
-    .chartXAxis(.hidden)
-    .padding([.bottom, .top], 5)
-    .chartYAxis {
-      AxisMarks {
-        AxisGridLine()
-        AxisTick()
-        let value = $0.as(Double.self)!
-        AxisValueLabel {
-          Text("\(value, format: .percent)")
-        }
-      }
-    }
+    UsageChart(history: server.cpuHistory)
   }
 
   var memoryChart: some View {
-    Chart(server.memHistory) {
-      LineMark(
-        x: .value("Time", $0.date),
-        y: .value("Usage", $0.usage)
-      )
-    }
-    .frame(height: 60)
-    .chartXAxis(.hidden)
-    .padding([.bottom, .top], 5)
-    .chartYAxis {
-      AxisMarks {
-        AxisGridLine()
-        AxisTick()
-        let value = $0.as(Double.self)!
-        AxisValueLabel {
-          Text("\(value, format: .percent)")
-        }
-      }
-    }
+    UsageChart(history: server.memHistory)
   }
 }
 

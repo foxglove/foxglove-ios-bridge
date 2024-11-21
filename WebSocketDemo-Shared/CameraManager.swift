@@ -22,6 +22,24 @@ enum Camera: CaseIterable, Identifiable, CustomStringConvertible {
   }
 }
 
+enum CompressionMode: Int32, CaseIterable, Identifiable, CustomStringConvertible {
+  case JPEG
+  case H264
+  case H265
+
+  var description: String {
+    switch self {
+    case .JPEG: return "JPEG"
+    case .H264: return "H.264"
+    case .H265: return "H.265"
+    }
+  }
+
+  var id: Int32 {
+    rawValue
+  }
+}
+
 enum CameraError: Error {
   case noCameraDevice
   case unknownSize
@@ -71,6 +89,7 @@ class CameraManager: NSObject, ObservableObject {
   private var forceKeyFrame = true
 
   let h264Frames = PassthroughSubject<Data, Never>()
+  let h265Frames = PassthroughSubject<Data, Never>()
   let jpegFrames = PassthroughSubject<Data, Never>()
   let calibrationData = PassthroughSubject<CalibrationData, Never>()
 
@@ -85,17 +104,13 @@ class CameraManager: NSObject, ObservableObject {
     }
   }
 
-  private var _useVideoCompressionFlag: Int32 = 0
-  public var useVideoCompression: Bool {
+  private var _compressionMode: Int32 = CompressionMode.JPEG.rawValue
+  public var compressionMode: CompressionMode {
     get {
-      OSAtomicAdd32(0, &_useVideoCompressionFlag) != 0
+      CompressionMode(rawValue: _compressionMode)!
     }
     set {
-      if newValue {
-        OSAtomicTestAndSet(0, &_useVideoCompressionFlag)
-      } else {
-        OSAtomicTestAndClear(0, &_useVideoCompressionFlag)
-      }
+      repeat {} while !OSAtomicCompareAndSwap32(_compressionMode, newValue.rawValue, &_compressionMode)
 
       reconfigureSession()
     }
@@ -103,7 +118,6 @@ class CameraManager: NSObject, ObservableObject {
 
   override init() {
     super.init()
-    useVideoCompression = true
   }
 
   @MainActor
@@ -120,8 +134,12 @@ class CameraManager: NSObject, ObservableObject {
         try configureInputs(in: captureSession, for: activeCamera)
       } catch {
         print("error starting session: \(error)")
+        Task { @MainActor in
+          currentError = error
+        }
+        return
       }
-      captureSession.sessionPreset = useVideoCompression ? .high : .medium
+      captureSession.sessionPreset = compressionMode == .JPEG ? .medium : .high
 
       let output = AVCaptureVideoDataOutput()
       output.setSampleBufferDelegate(self, queue: queue)
@@ -134,13 +152,15 @@ class CameraManager: NSObject, ObservableObject {
       }
       videoOutput = output
 
-      do {
-        try createCompressionSession(for: output)
-      } catch let err {
-        Task { @MainActor in
-          currentError = err
+      if compressionMode != .JPEG {
+        do {
+          try createCompressionSession(for: output)
+        } catch let err {
+          Task { @MainActor in
+            currentError = err
+          }
+          return
         }
-        return
       }
       Task { @MainActor in
         currentError = nil
@@ -159,6 +179,22 @@ class CameraManager: NSObject, ObservableObject {
   }
 
   private func createCompressionSession(for output: AVCaptureVideoDataOutput) throws {
+    let mode = compressionMode
+
+    let codecType: CMVideoCodecType
+    let profileLevel: CFString
+
+    switch mode {
+    case .JPEG:
+      preconditionFailure("Expected video compression, not JPEG")
+    case .H264:
+      codecType = kCMVideoCodecType_H264
+      profileLevel = kVTProfileLevel_H264_Main_AutoLevel
+    case .H265:
+      codecType = kCMVideoCodecType_HEVC
+      profileLevel = kVTProfileLevel_HEVC_Main_AutoLevel
+    }
+
     if let compressionSession {
       VTCompressionSessionInvalidate(compressionSession)
       self.compressionSession = nil
@@ -176,7 +212,7 @@ class CameraManager: NSObject, ObservableObject {
       allocator: kCFAllocatorDefault,
       width: width,
       height: height,
-      codecType: kCMVideoCodecType_H264,
+      codecType: codecType,
       encoderSpecification: [
         kVTVideoEncoderSpecification_EnableLowLatencyRateControl: kCFBooleanTrue,
       ] as CFDictionary,
@@ -194,7 +230,7 @@ class CameraManager: NSObject, ObservableObject {
     err = VTSessionSetProperty(
       compressionSession,
       key: kVTCompressionPropertyKey_ProfileLevel,
-      value: kVTProfileLevel_H264_Main_AutoLevel
+      value: profileLevel
     )
     guard err == noErr else {
       print("VTSessionSetProperty(kVTCompressionPropertyKey_ProfileLevel) failed (\(err))")
@@ -256,8 +292,18 @@ class CameraManager: NSObject, ObservableObject {
       } catch {
         print("error changing session: \(error)")
       }
-      session.sessionPreset = useVideoCompression ? .high : .medium
+      session.sessionPreset = compressionMode == .JPEG ? .medium : .high
       session.commitConfiguration()
+      if compressionMode != .JPEG, let videoOutput {
+        do {
+          try createCompressionSession(for: videoOutput)
+        } catch let err {
+          Task { @MainActor in
+            currentError = err
+          }
+          return
+        }
+      }
       forceKeyFrame = true
     }
   }
@@ -281,7 +327,11 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
       }
     }
 
-    if !useVideoCompression {
+    let mode = compressionMode
+
+    let outputSubject: PassthroughSubject<Data, Never>
+    switch mode {
+    case .JPEG:
       let img = UIImage(ciImage: CIImage(cvImageBuffer: imageBuffer))
       guard let jpeg = img.jpegData(compressionQuality: 0.8) else {
         print("failed to compress jpeg :(")
@@ -291,6 +341,11 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
         jpegFrames.send(jpeg)
       }
       return
+
+    case .H264:
+      outputSubject = h264Frames
+    case .H265:
+      outputSubject = h265Frames
     }
 
     guard let compressionSession else {
@@ -329,7 +384,7 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
           return
         }
 
-        guard let annexBData = sampleBuffer.dataBufferAsAnnexB() else {
+        guard let annexBData = sampleBuffer.dataBufferAsAnnexB(compressionMode: mode) else {
           print("Unable to translate to Annex B format")
           forceKeyFrame = true
           return
@@ -337,7 +392,7 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
 
         forceKeyFrame = false
         Task { @MainActor in
-          h264Frames.send(annexBData)
+          outputSubject.send(annexBData)
         }
       }
     }
@@ -368,7 +423,9 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
     }
 
     Task { @MainActor in
-      currentError = nil
+      if currentError != nil {
+        currentError = nil
+      }
     }
   }
 
@@ -381,7 +438,7 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
 
 extension CMSampleBuffer {
   /// Convert a CMSampleBuffer holding a CMBlockBuffer in AVCC format into Annex B format.
-  func dataBufferAsAnnexB() -> Data? {
+  func dataBufferAsAnnexB(compressionMode: CompressionMode) -> Data? {
     guard let dataBuffer, let formatDescription else {
       return nil
     }
@@ -390,9 +447,19 @@ extension CMSampleBuffer {
       var result = Data()
       let startCode = Data([0x00, 0x00, 0x00, 0x01])
 
-      try formatDescription.forEachParameterSet { buf in
-        result.append(startCode)
-        result.append(buf)
+      switch compressionMode {
+      case .JPEG:
+        preconditionFailure("Expected H264 or H265 compression mode")
+      case .H264:
+        try formatDescription.forEachParameterSetH264 { buf in
+          result.append(startCode)
+          result.append(buf)
+        }
+      case .H265:
+        try formatDescription.forEachParameterSetH265 { buf in
+          result.append(startCode)
+          result.append(buf)
+        }
       }
 
       try dataBuffer.withContiguousStorage { rawBuffer in
@@ -421,7 +488,7 @@ extension CMSampleBuffer {
 }
 
 extension CMFormatDescription {
-  func forEachParameterSet(_ callback: (UnsafeBufferPointer<UInt8>) -> Void) throws {
+  func forEachParameterSetH264(_ callback: (UnsafeBufferPointer<UInt8>) -> Void) throws {
     var parameterSetCount = 0
     var status = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(
       self,
@@ -439,6 +506,38 @@ extension CMFormatDescription {
       var ptr: UnsafePointer<UInt8>?
       var size = 0
       status = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(
+        self,
+        parameterSetIndex: idx,
+        parameterSetPointerOut: &ptr,
+        parameterSetSizeOut: &size,
+        parameterSetCountOut: nil,
+        nalUnitHeaderLengthOut: nil
+      )
+      guard noErr == status else {
+        throw VideoError.failedToGetParameterSet(index: idx)
+      }
+      callback(UnsafeBufferPointer(start: ptr, count: size))
+    }
+  }
+
+  func forEachParameterSetH265(_ callback: (UnsafeBufferPointer<UInt8>) -> Void) throws {
+    var parameterSetCount = 0
+    var status = CMVideoFormatDescriptionGetHEVCParameterSetAtIndex(
+      self,
+      parameterSetIndex: 0,
+      parameterSetPointerOut: nil,
+      parameterSetSizeOut: nil,
+      parameterSetCountOut: &parameterSetCount,
+      nalUnitHeaderLengthOut: nil
+    )
+    guard noErr == status else {
+      throw VideoError.failedToGetParameterSetCount
+    }
+
+    for idx in 0 ..< parameterSetCount {
+      var ptr: UnsafePointer<UInt8>?
+      var size = 0
+      status = CMVideoFormatDescriptionGetHEVCParameterSetAtIndex(
         self,
         parameterSetIndex: idx,
         parameterSetPointerOut: &ptr,
