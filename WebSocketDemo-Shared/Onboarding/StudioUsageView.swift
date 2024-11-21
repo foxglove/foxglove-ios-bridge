@@ -38,7 +38,7 @@ struct OrbitingViews: View {
           let x: Double = radius * cos(phase)
           let y: Double = radius * sin(phase)
           let depth: Double = sin(tiltAngle) * sin(phase)
-          let perspective: Double = 0.3
+          let perspective = 0.3
           let scale: Double = 1 + depth * perspective
           element
             .frame(width: itemSize, height: itemSize)

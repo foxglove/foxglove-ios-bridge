@@ -124,7 +124,7 @@ public struct ContentView: View {
             Picker("Compression", selection: $server.compressionMode) {
               ForEach(CompressionMode.allCases) { mode in
                 Label(mode.description, systemImage: mode == .JPEG ? "photo.stack" : "film.stack")
-                .tag(mode)
+                  .tag(mode)
               }
             }
             .pickerStyle(.menu)

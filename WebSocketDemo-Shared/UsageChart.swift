@@ -23,7 +23,7 @@ class UsageHistory<T: UsageDatum>: ObservableObject {
   }
 
   var values: ArraySlice<T> {
-    return allValues.suffix(20)
+    allValues.suffix(20)
   }
 }
 
@@ -40,7 +40,8 @@ struct UsageChartInner<T: UsageDatum>: View {
   }
 }
 
-/// A chart of historical data over time, wrapped in a separate component to avoid the re-rendering parent when values change
+/// A chart of historical data over time, wrapped in a separate component to avoid the re-rendering parent when values
+/// change
 struct UsageChart<T: UsageDatum>: View {
   var history: UsageHistory<T>
 
