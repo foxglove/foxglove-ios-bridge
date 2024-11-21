@@ -9,7 +9,7 @@ import WatchConnectivity
 // swiftlint:disable:next blanket_disable_command
 // swiftlint:disable force_try
 
-struct CPUUsage: Encodable, Identifiable {
+struct CPUUsage: UsageDatum {
   let usage: Double
   let date: Date
   let id = UUID()
@@ -19,7 +19,7 @@ struct CPUUsage: Encodable, Identifiable {
   }
 }
 
-struct MemoryUsage: Encodable, Identifiable {
+struct MemoryUsage: UsageDatum {
   let usage: Double
   let date: Date
   let id = UUID()
@@ -75,6 +75,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   let poseChannel: ChannelID
   let calibrationChannel: ChannelID
   let h264Channel: ChannelID
+  let h265Channel: ChannelID
   let jpegChannel: ChannelID
   let locationChannel: ChannelID
   let cpuChannel: ChannelID
@@ -107,9 +108,9 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     }
   }
 
-  @Published var useVideoCompression = true {
+  @Published var compressionMode = CompressionMode.JPEG {
     didSet {
-      cameraManager.useVideoCompression = useVideoCompression
+      cameraManager.compressionMode = compressionMode
     }
   }
 
@@ -173,10 +174,10 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 
   var cpuTimer: Timer?
-  @Published var cpuHistory: [CPUUsage] = []
+  let cpuHistory = UsageHistory<CPUUsage>()
 
   var memTimer: Timer?
-  @Published var memHistory: [MemoryUsage] = []
+  let memHistory = UsageHistory<MemoryUsage>()
 
   override init() {
     poseChannel = server.addChannel(
@@ -201,6 +202,13 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
     )
     h264Channel = server.addChannel(
       topic: "camera_h264",
+      encoding: "protobuf",
+      schemaName: Foxglove_CompressedVideo.protoMessageName,
+      schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedVideo", withExtension: "bin")!)
+        .base64EncodedString()
+    )
+    h265Channel = server.addChannel(
+      topic: "camera_h265",
       encoding: "protobuf",
       schemaName: Foxglove_CompressedVideo.protoMessageName,
       schema: try! Data(contentsOf: Bundle(for: Self.self).url(forResource: "CompressedVideo", withExtension: "bin")!)
@@ -322,6 +330,21 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
       }
       .store(in: &subscribers)
 
+    cameraManager.h265Frames
+      .sink { [weak self] in
+        guard let self else {
+          return
+        }
+        var msg = Foxglove_CompressedVideo()
+        msg.timestamp = .init(date: .now)
+        msg.frameID = "camera"
+        msg.format = "h265"
+        msg.data = $0
+        let data = try! msg.serializedData()
+        self.server.sendMessage(on: self.h265Channel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
+      }
+      .store(in: &subscribers)
+
     updateAddresses()
     addressUpdateTimer = .scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
       guard let self else { return }
@@ -348,7 +371,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 
   func startCPUUpdates() {
-    cpuHistory = []
+    cpuHistory.clear()
     let timer = Timer(timeInterval: 0.25, repeats: true) { [self] _ in
       let cpuUsage = CPUUsage(
         usage: getCPUUsage(),
@@ -360,9 +383,6 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
       Task { @MainActor in
         self.cpuHistory.append(cpuUsage)
-        if self.cpuHistory.count > 20 {
-          self.cpuHistory.remove(at: 0)
-        }
         self.server.sendMessage(on: self.cpuChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
     }
@@ -376,7 +396,7 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
   }
 
   func startMemoryUpdates() {
-    memHistory = []
+    memHistory.clear()
     let timer = Timer(timeInterval: 0.25, repeats: true) { [self] _ in
       let usage = getMemoryUsage()
       let memUsage = MemoryUsage(
@@ -389,9 +409,6 @@ class Server: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDe
 
       Task { @MainActor in
         self.memHistory.append(memUsage)
-        if self.memHistory.count > 20 {
-          self.memHistory.remove(at: 0)
-        }
         self.server.sendMessage(on: self.memChannel, timestamp: DispatchTime.now().uptimeNanoseconds, payload: data)
       }
     }
