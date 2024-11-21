@@ -129,6 +129,7 @@ public struct ContentView: View {
             }
             .pickerStyle(.menu)
             .labelStyle(.iconOnly)
+            .padding(.top, 6)
           }
         }
         /*
