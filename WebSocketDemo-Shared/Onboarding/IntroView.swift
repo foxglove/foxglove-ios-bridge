@@ -51,7 +51,7 @@ struct IntroView: View {
             .opacity(0.3)
             .padding(.leading, 10)
             .padding(.trailing, 18)
-          Image("studio-logo", bundle: Bundle(for: Dummy.self))
+          Image("app-logo", bundle: Bundle(for: Dummy.self))
             .resizable()
             .frame(width: 50, height: 50)
         }
